@@ -10,3 +10,5 @@ A single static `index.html` with no build step — Calistoga/Inter via Google F
 - **Build output directory:** `/` (repo root)
 
 No framework, no dependencies — just deploy the static file as-is.
+
+`wrangler.json` is included for deploying via the Cloudflare Workers static assets path (`wrangler deploy`) as an alternative to the Pages dashboard flow above.
