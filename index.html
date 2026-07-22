@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ash Patel — Senior Product Designer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ash Patel, Senior Product Designer shaping digital experiences for fin tech. Portfolio coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(160deg, oklch(0.98 0.006 80), oklch(0.965 0.008 70) 60%, oklch(0.97 0.006 90));
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    color: oklch(0.22 0.01 60);
+  }
+
+  header {
+    padding: clamp(20px, 4vw, 40px) clamp(20px, 6vw, 64px);
+  }
+
+  .logo {
+    font-family: 'Calistoga', serif;
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 clamp(20px, 6vw, 64px);
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: clamp(20px, 6vw, 40px);
+  }
+
+  h1 {
+    font-family: 'Calistoga', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 11vw, 112px);
+    line-height: 1.1;
+    margin: 0 0 clamp(16px, 2.4vw, 24px) 0;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  .subline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 clamp(24px, 4vw, 40px) 0;
+  }
+
+  .subline p {
+    font-size: clamp(17px, 2vw, 21px);
+    line-height: 1.5;
+    margin: 0;
+    color: oklch(0.4 0.015 60);
+    font-weight: 400;
+  }
+
+  .linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    text-decoration: none;
+    color: oklch(0.22 0.01 60);
+    font-size: clamp(15px, 1.6vw, 17px);
+    font-weight: 500;
+    padding-bottom: 4px;
+    transition: color 150ms ease-out;
+  }
+
+  .linkedin-link:hover {
+    color: oklch(0.4 0.08 250);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 500ms ease-out forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">mrpatel</div>
+  </header>
+
+  <main>
+    <div class="content">
+      <h1>
+        <span class="fade-up" style="animation-delay: 100ms;">Hi I'm Ash Patel,</span>
+        <span class="fade-up" style="animation-delay: 250ms;">a Senior Product Designer.</span>
+      </h1>
+
+      <div class="subline">
+        <p class="fade-up" style="animation-delay: 1000ms;">Shaping digital experiences for fin tech.</p>
+        <p class="fade-up" style="animation-delay: 1000ms;">Folio coming soon.</p>
+      </div>
+
+      <a class="linkedin-link fade-up" style="animation-delay: 2000ms;" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener noreferrer">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#ffffff" d="M7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.89 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29z"/></svg>
+        <span>Connect on LinkedIn</span>
+      </a>
+    </div>
+  </main>
+
+</body>
+</html>
