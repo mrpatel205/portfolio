@@ -264,6 +264,12 @@
   /* ---------- Home hero: orange gradient fades to the white page as soon as the user scrolls ---------- */
   var homeHero = document.querySelector('.home-hero');
   if (homeHero) {
+    var rushed = false;
+    var rushHero = function () { // scrolled before the intro sequence finished: play the rest in order, faster
+      if (rushed || window.scrollY < 40) return;
+      rushed = true; homeHero.classList.add('hero-rush');
+    };
+    window.addEventListener('scroll', rushHero, { passive: true });
     var fadeHero = function () { homeHero.classList.toggle('is-faded', window.scrollY > 40); };
     window.addEventListener('scroll', fadeHero, { passive: true });
     fadeHero();

@@ -839,7 +839,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-hero__id { position: absolute; top: 3.25rem; left: var(--page-margin); }
 .home-hero__title { letter-spacing: -0.01em; padding-bottom: var(--space-6); } /* 32px under the tagline, matching the cover */
 .home-hero__mark {
-  display: flex; align-items: flex-start; margin: 0; padding-top: 4.25rem; /* wordmark top sits 106px from the page top */
+  display: flex; align-items: flex-start; margin: 0 0 0 -0.047em; padding-top: 4.25rem; /* -0.047em cancels the M's left side bearing so the ink lines up with the caption and nav logo */ /* wordmark top sits 106px from the page top */
   font-size: min(16.875rem, 18.8vw); line-height: 1; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap;
 }
 .home-hero__mark span { font-size: 0.27em; font-weight: 400; letter-spacing: 0; line-height: 1; margin-left: 0.1em; margin-top: 0.1em; }
@@ -980,3 +980,17 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .js .home-lead mark { color: inherit; transition: color 0.5s var(--ease) 0.3s; }
 .js .home-lead p.is-in mark { color: #ea4e22; }
 @media (prefers-reduced-motion: reduce) { .js .home-lead mark { color: #ea4e22; transition: none; } }
+
+/* ---------- Home hero sequence (2026-10-04) ----------
+   Strategy → and craft, → from the same hands. + wordmark. Slow ease-in fade, each starts as the previous is ~2/3 done. */
+.js .hero-in { display: inline-block; opacity: 0; animation: hero-in 1.2s ease-in forwards; animation-delay: calc(0.2s + var(--n, 0) * 0.7s); }
+.js .hero-rush .hero-in { animation-duration: 0.4s; animation-delay: calc(var(--n, 0) * 0.1s); } /* scrolled before it finished: same order, compressed */
+.js .home-hero__id.hero-in, .js .home-hero__mark.hero-in { display: block; }
+.js .home-hero__mark.hero-in { display: flex; }
+@keyframes hero-in { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .js .hero-in { opacity: 1; animation: none; } }
+
+/* Home: the hero gradient runs up behind the nav (no white bar) and the nav turns white as the gradient fades on scroll */
+.site-nav { transition: background-color 0.7s ease-in-out, border-color 0.7s ease-in-out; }
+body[data-page="home"]:not(:has(.home-hero.is-faded)) .site-nav { background: transparent; border-bottom-color: transparent; }
+@media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
