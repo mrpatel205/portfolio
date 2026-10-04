@@ -1,13 +1,14 @@
 <!-- current: work -->
 <x-case-study slug="teller" page="work/teller"
-  title="Teller transformation · NAB case study · MRPATEL"
+  title="One counter, every transaction · NAB case study · MRPATEL"
   description="Designing NAB's branch teller transactions one transaction type at a time, for a single big-bang release.">
 <!-- Built from components: see tools/components.py for what each x- tag does.
-     In progress: only the hero and Approach are built so far. The rest of the page
-     (Situation, Task, Skills, Key challenges, Impact, Learnings) follows the Figma frame. -->
+     Open: Situation part 2 has no subheading (Figma placeholder "[Section label]"); challenge 06
+     second skill (Usability testing) is my pick for the Figma "[Skill]" placeholder; Final designs 1+3 are not built (placeholders in Figma). -->
 
-<x-hero placeholder>
-  <x-title>Teller transformation</x-title>
+<x-hero image="/assets/img/teller/hero.png" width="1312" height="656"
+  alt="A teller's monitor in a NAB branch showing the nabONE Deposit screen: Count cash and deposit amount, with counted notes, coins and a total.">
+  <x-title>One counter, <br>every transaction</x-title>
   <x-meta>
     <x-item label="Company">NAB</x-item>
     <x-item label="Industry">Fin-Tech</x-item>
@@ -15,6 +16,39 @@
     <x-item label="Channel">React mini web app</x-item>
   </x-meta>
 </x-hero>
+
+<x-scene id="situation" heading="Situation" subheading="Building for every branch, every banker">
+  <p>At National Australia Bank, eBOBS had powered branch teller transactions — withdrawals, deposits, payments — for nearly 40 years across all 437 of NAB's branches in Australia, run daily by an estimated 1,000+ frontline bankers.</p>
+  <x-visual src="/assets/img/teller/situation-ebobs.png" width="640" height="496" caption="eBOBS (representation)"
+    alt="A representation of the eBOBS teller screen: a dense, text-based layout of fields and numeric codes."/>
+</x-scene>
+
+<x-scene id="situation-switching">
+  <p>Many transactions meant switching systems: checking policy thresholds information, and entering one of many of 4-digit numeric codes tellers had to memorise to initiate a transaction.</p>
+  <p>It was reliable and earned genuine loyalty once tellers learned it. But it came with a high barrier to entry. For the business it was too costly to maintain, with too few engineers knowing how to build on the legacy code.</p>
+  <x-visual src="/assets/img/teller/situation-shortcodes.png" width="640" height="496" caption="Teller transaction shortcodes"
+    alt="A teller's desk with a handwritten note of transaction shortcodes beside the keyboard."/>
+</x-scene>
+
+<x-scene id="situation-response" subheading="The response">
+  <p>Over three years, the programme brought together a cross-functional team of 6 designers and 3 agile squads, working closely with the SME partner Future of Retail, toward a shared vision: removing all switching of systems by migrating withdrawal, deposit, and payment transactions into nabONE — the colleague banking channel built on a modern, API-enabled web stack and NAB's new design system.</p>
+</x-scene>
+
+<x-scene id="task" heading="Task" subheading="Withdrawals &amp; Deposits">
+  <p>I picked the Withdrawals epic half way through the programme, after the previous design team had nailed down the core interaction model along with initial designs in Nab's old design system. My job was to own the key complexity in the base experience, uplift everything to the new design system, and take it all the way through to a complete, responsive handover for engineering.</p>
+  <p>Deposits had no head start — I owned it from the design brief through to shipped, responsive design, across every sub-transaction type it spawned.</p>
+</x-scene>
+
+<x-skills>
+  <x-skill icon="workflow">Systems Thinking</x-skill>
+  <x-skill icon="component">Design Systems Contribution</x-skill>
+  <x-skill icon="eye">Contextual Enquiry</x-skill>
+  <x-skill icon="users">Usability Testing</x-skill>
+  <x-skill icon="sparkles">Rapid AI Prototyping</x-skill>
+  <x-skill icon="pen-tool">Visual Design</x-skill>
+  <x-skill icon="clipboard-list">Survey Creation and Synthesis</x-skill>
+  <x-skill icon="route">User and Wireflows</x-skill>
+</x-skills>
 
 <x-story id="approach" heading="Approach" subheading="Process, sized to constraints" svg="teller-approach" stages="4">
   <p>The programme was planned as one big-bang release covering <span class="story-mark" data-stage="1">every withdrawal, payment and deposit transaction type</span>, but we designed them <span class="story-mark" data-stage="1">one at a time</span>. <span data-from="2">Each ran <span class="story-mark" data-stage="2">its own design process</span>, <span class="story-mark" data-stage="3">sized to its breadth and complexity, and to the time and capacity we actually had</span>.</span></p>
@@ -34,6 +68,79 @@
   </x-group>
 </x-metrics>
 
-<x-next href="/work/budgets/" title="Making budgeting (that little bit) easier" target="budgets" label="Previous case study"/>
+<x-final-visuals id="final-designs-1" heading="Final designs: desktop, tablet and mobile"
+  src="/assets/img/teller/final-1.png" width="1312" height="800"
+  steps-label="The Withdrawal screen on desktop, tablet and mobile"
+  alt="The Withdrawal screen, Calculate cash break up, shown on desktop, tablet and mobile: Automatic and Custom options, the amount requested, and the teller cash recycler and cash drawer note counts.">
+  <x-screen src="/assets/img/teller/f1-a.png" width="1000" height="711" alt="Desktop: Withdrawal, Calculate cash break up, with the teller cash recycler and cash drawer in three columns."/>
+  <x-screen src="/assets/img/teller/f1-b.png" width="750" height="1000" alt="Tablet: the same screen with the cash drawer below the teller cash recycler."/>
+  <x-screen src="/assets/img/teller/f1-c.png" width="461" height="1000" alt="Mobile: the same screen in a single column."/>
+</x-final-visuals>
+
+<x-final-visuals id="final-designs-3" heading="Final designs: Withdrawal core flow"
+  src="/assets/img/teller/final-3.png" width="1312" height="800"
+  steps-label="The Withdrawal core flow, in four screens"
+  alt="The Withdrawal core flow in four screens: account and transaction details empty and filled in, the Tasks complete summary, and the Withdrawal summary with a success message.">
+  <x-screen src="/assets/img/teller/f3-a.png" width="1000" height="882" alt="Account and transaction details, empty, with a transaction type and amount to fill in."/>
+  <x-screen src="/assets/img/teller/f3-b.png" width="901" height="1000" alt="Account and transaction details, filled in, with authority details added."/>
+  <x-screen src="/assets/img/teller/f3-c.png" width="1000" height="625" alt="Tasks complete: a summary of each completed task with a Complete transaction button."/>
+  <x-screen src="/assets/img/teller/f3-d.png" width="961" height="1000" alt="Withdrawal summary: a success message, then account, authority and amount details."/>
+</x-final-visuals>
+
+<x-accordion variant="read-more" id="challenges" heading="Key challenges">
+  <p>This wasn't a blank canvas — the data, workflows, and trust already existed, built over years with the system it replaced, and the real test was earning that confidence back. That shaped everything: a dependency that shifted mid-project, practices that needed questioning, and work split between a wider team and solo ownership. Open any challenge below.</p>
+  <x-panel id="old-habits" heading="Removing old teller habits" subtitle="Designing trust into a cash count">
+    <x-skill icon="users">Usability testing</x-skill>
+    <x-skill icon="eye">Contextual enquiry</x-skill>
+    <x-context>Tellers read nabONE through an eBOBS lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>I split the TCR into standard accounting inputs and TCR-specific patterns, and tested the TCR-specific ones hardest, since they carried the most risk of old habits misleading tellers. Withdrawal got an Automatic/Custom toggle that hides break-up fields until needed. Deposit's two-screen count became one live screen with Roll back to recount. “Amounts match” and “Counted: $X” tested well as reassurance.</p>
+  </x-panel>
+  <x-panel id="system-switching" heading="Removing system switching" subtitle="One task list instead of eight systems">
+    <x-skill icon="workflow">Systems thinking</x-skill>
+    <x-skill icon="route">User and wireflows</x-skill>
+    <x-context>A significant cash withdrawal could mean switching between up to 8 systems. Tellers held the order and the policy rules in their heads. That worked for veterans, but not for new tellers without eBOBS muscle memory.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>I drove the early call between a full page and a side sheet, then shaped the Hub: a dynamic task list for withdrawals and payments that consolidates steps and shows only what a transaction needs, with conditional logic across flows. The system now carries policy tellers used to memorise. Deposits skipped the Hub on purpose: 80% of deposit tasks were already quick.</p>
+  </x-panel>
+  <x-panel id="design-system" heading="Unfamiliar platform, unready design system" subtitle="From consumer to contributor">
+    <x-skill icon="component">Design systems contribution</x-skill>
+    <x-skill icon="pen-tool">Visual design</x-skill>
+    <x-context>nabONE's design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and NAB's atomic design conventions, learning the tool and the system's logic at the same time.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>I built fluency fast, then started giving back. I contributed components to the shared library for colleague use cases, including a horizontal radio group and a progress tracker built with the Business Lending team, plus patterns other teams adopted. Through the nabONE Design Guild, I helped extend the system from customer journeys into colleague ones.</p>
+  </x-panel>
+  <x-panel id="branch-observation" heading="Branch observation" subtitle="Uncovering what the requirements missed">
+    <x-skill icon="eye">Contextual enquiry</x-skill>
+    <x-skill icon="clipboard-list">Survey creation and synthesis</x-skill>
+    <x-context>Withdrawal observation happened in fragments: half-days squeezed between other work, under pressure to deliver high-fidelity screens. Deposits carried far more machine interaction, so designing it without real branch context was too big a risk.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>For Deposits, I built in a four-day immersion across four branches before designing anything, checking the requirements against what tellers actually did. It surfaced two gaps no document had captured: a TCR inventory warning colour, and a way to roll back cash already fed in mid-count. Both became part of the Deposits design.</p>
+  </x-panel>
+  <x-panel id="devices" heading="The devices" subtitle="No one saw the full picture">
+    <x-skill icon="workflow">Systems thinking</x-skill>
+    <x-skill icon="eye">Contextual enquiry</x-skill>
+    <x-context>eBOBS read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24&quot; monitors, often across several resized windows the brief never mentioned.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>I designed every Deposits flow end to end, including simple, mixed, third-party and cheque acceptance, and the device states around them: TCR in use, inventory API down, no notes in the TCR, transaction already in progress. For narrow windows, I rebuilt the TCR panel's order rather than scaling it down. That layout is still untested at narrow widths.</p>
+  </x-panel>
+  <x-panel id="team" heading="The team" subtitle="A wider net than usual">
+    <x-skill icon="presentation">Workshop facilitation</x-skill>
+    <x-skill icon="users">Usability testing</x-skill>
+    <x-context>Teller spanned several designers, product, SMEs, BAs and an offshore team working on Deposits. Shared patterns, like the Hub's cards and error states, needed agreement across all of them, not just sign-off at the end.</x-context>
+    <p class="accordion__label">What I did</p>
+    <p>I set up chat huddles with Product, SMEs and BAs to settle requirement questions quickly, and ran weekly testing for fast validation. We iterated the Hub card through Elevate design sessions, ran team workshops on error states and had flows tested across designers. I also helped the lead researcher run an end-to-end withdrawal test in a mock branch lab.</p>
+  </x-panel>
+</x-accordion>
+
+<x-impact lead="Piloting since Aug 2026, with a staged roll-out planned through the rest of 2026."
+  stamp="Impact as of Oct 2026. Updated as roll-out continues.">
+  <x-metric label="Branches live at pilot start, 6 Aug 2026" value="3"/>
+  <x-signal heading="Quick to learn">Bankers picked it up quickly in the first branches.</x-signal>
+  <x-signal heading="The flow lands">Bankers like the overall flow.</x-signal>
+</x-impact>
+
+<x-next href="/work/budgets/" title="From spreadsheet to in-app budget" target="budgets" label="Previous case study"
+  next-href="/work/tal/summary/" next-title="A clearer 19-step quote" next-target="tal"/>
 
 </x-case-study>

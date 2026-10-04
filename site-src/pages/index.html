@@ -6,9 +6,114 @@
 </head>
 <body data-page="home">
 {{> nav}}
-<main id="main" class="container placeholder">
-  <h1 class="t-h1">Home</h1>
-  <p class="t-paragraph">Placeholder while the Home layout is designed. <a class="link" href="/work/budgets/">Go to the Budgets case study</a>.</p>
+<main id="main">
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="container">
+      <p class="t-caption home-hero__id" data-reveal style="--i:0"><strong>Senior product designer</strong><br><strong>Melbourne, Australia</strong></p>
+      <h1 class="t-h1 home-hero__title" id="home-title" data-reveal style="--i:1">Strategy and craft,<br>from the same hands.</h1>
+      <p class="home-hero__mark" aria-hidden="true" data-reveal style="--i:2">MRPATEL<span>©</span></p>
+    </div>
+  </section>
+
+  <div class="container home">
+    <div class="home-lead">
+      <p data-reveal>I’m Ash, a senior product designer in Melbourne. I spent the last few years designing banking at NAB. Most recently I helped move <mark>437 branches off a 40-year-old teller system</mark>. I also led <mark>Budgets</mark>, a way for customers to track spending against a budget, from concept testing to handover.</p>
+      <p data-reveal style="--i:1">Before NAB, I rebuilt <mark>TAL’s income protection quote journey</mark>, led design at <mark>start-ups</mark> in construction and prop-tech, and started out as an art director in London.</p>
+    </div>
+
+    <h2 class="t-h2 home__heading" data-reveal>Core skills</h2>
+    <ul class="home-skills" role="list">
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/research.svg" alt="" width="32" height="32"><span>Research &amp; Synthesis</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/problem.svg" alt="" width="32" height="32"><span>Problem framing</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/prototyping.svg" alt="" width="32" height="32"><span>Prototyping</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/interaction.svg" alt="" width="32" height="32"><span>Interaction design</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/visual.svg" alt="" width="32" height="32"><span>Visual design</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/systems.svg" alt="" width="32" height="32"><span>Systems thinking</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/design-systems.svg" alt="" width="32" height="32"><span>Design systems</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/facilitation.svg" alt="" width="32" height="32"><span>Workshop facilitation</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/stakeholder.svg" alt="" width="32" height="32"><span>Stakeholder communication</span></li>
+      <li class="home-skill" data-reveal data-reveal-cols="3"><img src="/assets/icons/home-skills/ai.svg" alt="" width="32" height="32"><span>Rapid AI prototyping</span></li>
+    </ul>
+
+    <hr class="home__rule">
+    <h2 class="t-h2 home__heading" data-reveal>Selected work</h2>
+    <article class="work-card">
+      <div class="work-card__content" data-reveal>
+        <h3 class="t-h3">From spreadsheet to in-app budget</h3>
+        <p class="t-paragraph">NAB customers, especially 18 to 35 year olds, had no way to track spending against a budget in the app, and competitors like CBA already did.</p>
+        <dl class="work-meta t-caption"><div class="work-meta__item"><dt>Company</dt><dd>NAB</dd></div><div class="work-meta__item"><dt>Industry</dt><dd>Fin-Tech</dd></div><div class="work-meta__item"><dt>Duration</dt><dd>Feb 24 to Jun 24</dd></div><div class="work-meta__item"><dt>Channel</dt><dd>React mini web app</dd></div></dl>
+        <div class="work-card__cta"><a class="btn" href="/work/budgets/" data-track="case_study_click" data-track-target="budgets">Read case study</a><a class="btn btn--secondary" href="/work/budgets/summary/" data-track="case_study_click" data-track-target="budgets_summary">Read summary</a></div>
+      </div>
+      <div class="work-card__image" data-reveal style="--i:1"><img src="/assets/img/work/budgets.png" alt="" loading="lazy"></div>
+    </article>
+    <article class="work-card">
+      <div class="work-card__content" data-reveal>
+        <h3 class="t-h3">One counter, every transaction</h3>
+        <p class="t-paragraph">For 40 years, tellers in NAB’s 437 branches used eBOBS, a legacy system that meant memorising codes and switching between systems. A three-year programme set out to move every transaction onto one system built on a modern web api enabled tech stack.</p>
+        <dl class="work-meta t-caption"><div class="work-meta__item"><dt>Company</dt><dd>NAB</dd></div><div class="work-meta__item"><dt>Industry</dt><dd>Fin-Tech</dd></div><div class="work-meta__item"><dt>Duration</dt><dd>Oct 24 to Jun 26</dd></div><div class="work-meta__item"><dt>Channel</dt><dd>React mini web app</dd></div></dl>
+        <div class="work-card__cta"><a class="btn" href="/work/teller/" data-track="case_study_click" data-track-target="teller">Read case study</a><a class="btn btn--secondary" href="/work/teller/summary/" data-track="case_study_click" data-track-target="teller_summary">Read summary</a></div>
+      </div>
+      <div class="work-card__image" data-reveal style="--i:1"><img src="/assets/img/work/teller.png" alt="" loading="lazy"></div>
+    </article>
+    <article class="work-card">
+      <div class="work-card__content" data-reveal>
+        <h3 class="t-h3">A clearer 19-step quote</h3>
+        <p class="t-paragraph">TAL had six months to launch an income protection quote journey under Suncorp’s brands, on a design system built for a different backend.</p>
+        <dl class="work-meta t-caption"><div class="work-meta__item"><dt>Company</dt><dd>TAL Life</dd></div><div class="work-meta__item"><dt>Industry</dt><dd>Insure-Tech</dd></div><div class="work-meta__item"><dt>Duration</dt><dd>Sep 19 to Mar 20</dd></div><div class="work-meta__item"><dt>Channel</dt><dd>Responsive web</dd></div></dl>
+        <div class="work-card__cta"><a class="btn btn--secondary" href="/work/tal/summary/" data-track="case_study_click" data-track-target="tal_summary">Read summary</a><p class="t-caption work-card__soon">Full case study coming soon</p></div>
+      </div>
+      <div class="work-card__image placeholder-mark" data-reveal style="--i:1"><img src="/assets/img/work/tal.png" alt="" loading="lazy"></div>
+    </article>
+    <article class="work-card">
+      <div class="work-card__content" data-reveal>
+        <h3 class="t-h3">From sprawl to a clear structure</h3>
+        <p class="t-paragraph">Navigation took 12.7% of all clicks in Buildxact. I led the UX team to an experience vision for a simpler product, then pitched it to leadership.</p>
+        <dl class="work-meta t-caption"><div class="work-meta__item"><dt>Company</dt><dd>Buildxact</dd></div><div class="work-meta__item"><dt>Industry</dt><dd>Construction-Tech</dd></div><div class="work-meta__item"><dt>Duration</dt><dd>Nov 22 to Apr 23</dd></div><div class="work-meta__item"><dt>Channel</dt><dd>Web app</dd></div></dl>
+        <div class="work-card__cta"><a class="btn btn--secondary" href="/work/buildxact/summary/" data-track="case_study_click" data-track-target="buildxact_summary">Read summary</a><p class="t-caption work-card__soon">Full case study coming soon</p></div>
+      </div>
+      <div class="work-card__image placeholder-mark" data-reveal style="--i:1"><img src="/assets/img/work/buildxact.png" alt="" loading="lazy"></div>
+    </article>
+    <p class="home__all"><a class="btn btn--outlined" href="/work/" data-track="nav_click" data-track-target="all_work">All work →</a></p>
+
+    <hr class="home__rule">
+    <div class="home-exp">
+      <h2 class="t-h2">Experience</h2>
+      <ol class="home-exp__list">
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">NAB</h3><p class="t-caption home-exp__role">Senior Product Designer, Personal Everyday Banking</p><p class="t-caption home-exp__dates">Dec 2023 - Jul 2026</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">Buildxact</h3><p class="t-caption home-exp__role">Senior UX Designer</p><p class="t-caption home-exp__dates">Jan 2021 - Jun 2023</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">TAL Australia</h3><p class="t-caption home-exp__role">Senior Product Designer, contract</p><p class="t-caption home-exp__dates">Sep 2019 - Aug 2020</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">Showpony Advertising</h3><p class="t-caption home-exp__role">UX Designer, contract</p><p class="t-caption home-exp__dates">May - Jun 2019</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">Kingfisher plc</h3><p class="t-caption home-exp__role">UX Designer</p><p class="t-caption home-exp__dates">May 2017 - Dec 2018</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">Honest Homes</h3><p class="t-caption home-exp__role">Product Designer, freelance</p><p class="t-caption home-exp__dates">Nov 2016 - May 2017</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">Engaged Tracking</h3><p class="t-caption home-exp__role">UX Designer, freelance</p><p class="t-caption home-exp__dates">Sep - Oct 2016</p></li>
+      <li class="home-exp__row" data-reveal><h3 class="t-h3">General Assembly</h3><p class="t-caption home-exp__role">UX Design Immersive</p><p class="t-caption home-exp__dates">Feb - May 2016</p></li>
+      </ol>
+    </div>
+
+    <hr class="home__rule home__rule--muted">
+    <h2 class="t-h2 home__heading home__heading--muted" data-reveal>What people say</h2>
+    <div class="home-quotes">
+      <figure class="home-quote" data-reveal><blockquote class="home-quote__text">“Ash is one of the best product designers I’ve had the fortune of working with in my career.”</blockquote><figcaption class="t-paragraph-bold">Adam Tickner, Product Owner, NAB</figcaption></figure>
+      <figure class="home-quote" data-reveal><blockquote class="home-quote__text">“Ash was also one of our early AI adopters, shifting left with AI-first prototyping using Cursor for the Teller Transformation team.”</blockquote><figcaption class="t-paragraph-bold">Elly Hizon, AI Product Manager, NAB</figcaption></figure>
+      <figure class="home-quote" data-reveal><blockquote class="home-quote__text">“He consistently brings fresh perspectives and innovative ideas that simplify complex problems while keeping the customer experience at the heart of every decision.”</blockquote><figcaption class="t-paragraph-bold">Heaven Miller, Senior Consultant, Retail Transformation</figcaption></figure>
+      <figure class="home-quote" data-reveal><blockquote class="home-quote__text">“I would have no hesitation in welcoming Ash back to TAL or recommending him to anyone looking for a self-directed, intelligent and hugely capable designer.”</blockquote><figcaption class="t-paragraph-bold">Adam Tedeschi, Head of Experience Design, TAL</figcaption></figure>
+    </div>
+    <p class="home__all"><a class="btn btn--outlined" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="linkedin_recommendations">Read all 14 recommendations on LinkedIn ↗<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+
+    <section class="home-slow" aria-labelledby="slow-title">
+      <img class="home-slow__logo" data-reveal src="/assets/img/home/slow-grain-logo.svg" alt="" width="280" height="280">
+      <div class="home-slow__copy" data-reveal style="--i:1">
+        <h2 class="t-h2" id="slow-title">Real product design @slow__grain</h2>
+        <p class="t-h3">Off screen, I make things you can hold. The users are my family and friends, the feedback is immediate, and a bad spoon still gets used.</p>
+        <p><a class="link" href="https://www.instagram.com/slow__grain/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="instagram">Follow on Instagram ↗<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </div>
+      <ul class="home-slow__imgs" role="list">
+        <li class="placeholder-mark" data-reveal data-reveal-cols="3"><img src="/assets/img/home/slow-grain-spatula.png" alt="A hand-carved wooden spatula" width="296" height="400" loading="lazy"></li>
+        <li class="placeholder-mark" data-reveal data-reveal-cols="3"><img src="/assets/img/home/slow-grain-bowl.png" alt="A red cedar bowl" width="296" height="400" loading="lazy"></li>
+        <li class="placeholder-mark" data-reveal data-reveal-cols="3"><img src="/assets/img/home/slow-grain-spoon.png" alt="A carved tasting spoon" width="296" height="400" loading="lazy"></li>
+      </ul>
+    </section>
+  </div>
 </main>
 {{> footer}}
 </body>

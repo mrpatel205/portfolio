@@ -71,7 +71,8 @@ so every case study shares one structure and a fix in one place fixes all four.
     <x-screen src width height alt/>                … its screens stacked on small screens
   </x-final-visuals>
 
-  <x-impact [heading] lead> <p>…</p> <x-metric label value/> </x-impact>
+  <x-impact [heading] lead [stamp]> <p>…</p> <x-metric label value/>
+    <x-signal heading>Text</x-signal> </x-impact>      signals = qualitative notes; stamp = "as of" line
 
   <x-next href title target [label]/>               link to the next case study
 
@@ -205,9 +206,9 @@ def hero(n):
 
 def hero_image(n):
     if n.attrs.get("placeholder"):
-        return ('<figure class="cs-hero__image"><div class="cs-visual__frame '
+        return ('<figure class="cs-hero__image" data-reveal><div class="cs-visual__frame '
                 'cs-visual__frame--placeholder cs-hero__placeholder t-caption">[Image to come]</div></figure>')
-    return f"""<figure class="cs-hero__image">
+    return f"""<figure class="cs-hero__image" data-reveal>
     <img src="{n.req('image')}" width="{n.req('width')}" height="{n.req('height')}"
          alt="{n.req('alt')}">
   </figure>"""
@@ -231,7 +232,12 @@ def scene_visual(n):
 
 def heading_block(n):
     """h2 (+ optional subheading) for Situation / Task / Approach."""
-    id_, h = n.req("id"), n.req("heading")
+    id_ = n.req("id")
+    if "heading" not in n.attrs:  # continuation scene: subheading only, or none
+        if "subheading" not in n.attrs:
+            return ""
+        return f'<h3 class="t-h3 cs-heading" id="{id_}">{n.req("subheading")}</h3>'
+    h = n.req("heading")
     if n.attrs.get("subheading"):
         return (f'<div class="cs-heading">\n  <h2 class="t-h2" id="{id_}">{h}</h2>\n'
                 f'  <p class="t-h3">{n.attrs["subheading"]}</p>\n</div>')
@@ -241,7 +247,8 @@ def heading_block(n):
 def scene(n):
     """Copy pins first, then its image rises to meet it (Situation, Task)."""
     id_ = n.req("id")
-    return f"""<section class="scene" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}">
+    label = f' aria-labelledby="{id_}"' if "heading" in n.attrs or "subheading" in n.attrs else ""
+    return f"""<section class="scene"{label} data-section="{n.attrs.get('section', id_)}">
   <div class="scene__copy">
 {indent(heading_block(n), 4)}
 {indent(prose(n), 4)}
@@ -412,6 +419,7 @@ def accordion(n):
     thumb = read_more and bool(n.attrs.get("thumbnail"))
     item = read_more_item if read_more else numbered_item
     items = [item(p, i, thumb) for i, p in enumerate(n.kids("panel"), 1)]
+    expand_all = "" if read_more else '    <button type="button" class="btn btn--outlined accordion__all" hidden data-track="accordion_expand_all">Expand all</button>\n'
     cls = "cs-section accordion" + (" accordion--read-more" if read_more else "") + (" accordion--thumbnail" if thumb else "")
     return f"""<section class="{cls}" aria-labelledby="{id_}" data-section="{id_}" data-accordion>
   <div class="accordion__intro">
@@ -419,8 +427,7 @@ def accordion(n):
     <div class="prose t-paragraph">
 {indent(n.text(), 6)}
     </div>
-    <button type="button" class="btn btn--outlined accordion__all" hidden data-track="accordion_expand_all">Expand all</button>
-  </div>
+{expand_all}  </div>
   <ol class="accordion__list">
 {indent(chr(10).join(items), 4)}
   </ol>
@@ -432,7 +439,7 @@ def numbered_item(p, i, _thumb):
     visuals = p.kids("visual")
     visuals_html = (f'\n        <div class="accordion__visuals">\n{indent(accordion_visuals(visuals), 10)}\n        </div>'
                     if visuals else "")
-    return f"""<li class="accordion__item" data-section="challenge-{pid}">
+    return f"""<li class="accordion__item" data-reveal data-section="challenge-{pid}">
   <h3 class="accordion__heading">
     <button type="button" class="accordion__trigger" id="{pid}-trigger" aria-expanded="true" aria-controls="{pid}-panel"
             data-track="accordion_toggle" data-track-target="{pid}">
@@ -476,7 +483,7 @@ def read_more_item(p, i, thumb):
     subtitle = (f'\n  <p class="accordion__subtitle t-body-lg">{p.attrs["subtitle"]}</p>'
                 if p.attrs.get("subtitle") else "")
     context = p.kid("context")
-    context_html = f'\n  <p class="accordion__context t-paragraph">{context.text()}</p>' if context else ""
+    context_html = f'\n  <p class="accordion__context t-paragraph-bold">{context.text()}</p>' if context else ""
 
     row = f"""<div class="accordion__row">
   <span class="accordion__number t-h3" aria-hidden="true">{i:02d}</span>
@@ -494,7 +501,7 @@ def read_more_item(p, i, thumb):
     if not thumb:
         visuals_html = (f'\n<div class="accordion__visuals">\n{indent(accordion_visuals(visuals), 2)}\n</div>'
                         if visuals else "")
-        return f"""<li class="accordion__item" data-section="challenge-{pid}">
+        return f"""<li class="accordion__item" data-reveal data-section="challenge-{pid}">
 {indent(row, 2)}
   <div class="accordion__panel" id="{pid}-panel" role="region" aria-labelledby="{pid}-title">
     <div class="accordion__clip">
@@ -518,7 +525,7 @@ def read_more_item(p, i, thumb):
         </div>
       </div>
     </div>""" if rest else ""
-    return f"""<li class="accordion__item" data-section="challenge-{pid}">
+    return f"""<li class="accordion__item" data-reveal data-section="challenge-{pid}">
   <div class="accordion__body">
     <div class="accordion__lead">
 {indent(row, 6)}
@@ -553,7 +560,7 @@ def final_visuals(n):
   </ol>"""
     return f"""<section class="cs-section final-visuals" aria-labelledby="{id_}" data-section="{id_}">
   <h2 class="visually-hidden" id="{id_}">{n.attrs.get('heading', 'Final designs')}</h2>
-  <img class="final-visuals__full" src="{n.req('src')}" width="{n.req('width')}" height="{n.req('height')}" loading="lazy"
+  <img class="final-visuals__full" data-reveal src="{n.req('src')}" width="{n.req('width')}" height="{n.req('height')}" loading="lazy"
        alt="{n.req('alt')}">{steps}
 </section>"""
 
@@ -566,11 +573,16 @@ def impact(n):
         f'<dd class="t-metric-xl" data-count-to="{m.req("value").replace(",", "")}" '
         f'aria-label="{m.req("value")}">{m.req("value")}</dd></div>'
         for m in n.kids("metric"))
+    signals = "\n".join(
+        f'<li class="impact__signal"><p class="t-paragraph-bold">{g.req("heading")}</p>'
+        f'<p class="t-paragraph">{g.text()}</p></li>' for g in n.kids("signal"))
+    signals_html = f'\n    <ul class="impact__signals">\n{indent(signals, 6)}\n    </ul>' if signals else ""
+    stamp_html = f'\n    <p class="impact__stamp t-caption">{n.attrs["stamp"]}</p>' if n.attrs.get("stamp") else ""
     return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}" data-progress-end>
   <div class="impact__copy">
     <h2 class="t-h2" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
     <p class="t-paragraph-bold impact__lead">{n.req('lead')}</p>
-{indent(n.text().replace('<p>', '<p class="t-paragraph">'), 4)}
+{indent(n.text().replace('<p>', '<p class="t-paragraph">'), 4)}{signals_html}{stamp_html}
   </div>
   <dl class="impact__metrics">
 {indent(metrics, 4)}
@@ -579,14 +591,29 @@ def impact(n):
 
 
 def next_link(n):
-    return f"""<nav class="cs-section cs-section--tight seq-nav" aria-label="More case studies" data-section="next-prev">
-  <a class="seq seq--next" href="{n.req('href')}" data-track="next_case_study" data-track-target="{n.req('target')}">
+    """One link (Next by default). With next-href/next-title/next-target, a second link
+    on the right: the main one then reads as Previous (set label="Previous case study")."""
+    second = ""
+    if n.attrs.get("next-href"):
+        second = f"""
+  <a class="seq seq--next" href="{n.attrs['next-href']}" data-track="next_case_study" data-track-target="{n.req('next-target')}">
     <span class="seq__text">
+      <span class="seq__label">Next case study</span>
+      <span class="t-body-lg">{n.req('next-title')}</span>
+    </span>
+    {{{{icon:arrow-right}}}}
+  </a>"""
+    first_cls = "seq--prev" if second else "seq--next"
+    arrow_l = "{{icon:arrow-left}}" if second else ""
+    arrow_r = "" if second else "{{icon:arrow-right}}"
+    return f"""<nav class="cs-section cs-section--tight seq-nav" aria-label="More case studies" data-section="next-prev">
+  <a class="seq {first_cls}" href="{n.req('href')}" data-track="{'prev' if second else 'next'}_case_study" data-track-target="{n.req('target')}">
+    {arrow_l}<span class="seq__text">
       <span class="seq__label">{n.attrs.get('label', 'Next case study')}</span>
       <span class="t-body-lg">{n.req('title')}</span>
     </span>
-    {{{{icon:arrow-right}}}}
-  </a>
+    {arrow_r}
+  </a>{second}
 </nav>"""
 
 

@@ -200,6 +200,8 @@
       item.classList.toggle('is-open', open);
       item.querySelector('.accordion__trigger').setAttribute('aria-expanded', open ? 'true' : 'false');
       item.querySelector('.accordion__panel').inert = !open;
+      var label = item.querySelector('.accordion__more-label');
+      if (label) label.textContent = open ? 'Read less' : 'Read more';
     }
     function syncAll() {
       if (all) all.textContent = items.every(function (i) { return i.classList.contains('is-open'); }) ? 'Collapse all' : 'Expand all';
@@ -241,13 +243,13 @@
       function step(now) {
         if (start === null) start = now;
         var t = Math.min(1, (now - start) / DURATION);
-        el.textContent = format(target * expoOut(t), decimals);
+        el.textContent = format(target * expoOut(t), decimals) + (el.dataset.countSuffix || '');
         if (t < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
     counters.forEach(function (el) {
-      el.textContent = format(0, (el.dataset.countTo.split('.')[1] || '').length);
+      el.textContent = format(0, (el.dataset.countTo.split('.')[1] || '').length) + (el.dataset.countSuffix || '');
     });
     var countObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -257,6 +259,38 @@
       });
     }, { threshold: 0.6 });
     counters.forEach(function (el) { countObs.observe(el); });
+  }
+
+  /* ---------- Home hero: orange gradient fades to the white page as soon as the user scrolls ---------- */
+  var homeHero = document.querySelector('.home-hero');
+  if (homeHero) {
+    var fadeHero = function () { homeHero.classList.toggle('is-faded', window.scrollY > 40); };
+    window.addEventListener('scroll', fadeHero, { passive: true });
+    fadeHero();
+  }
+
+  /* ---------- Reveal: [data-reveal] fades in and rises once, when it scrolls into view ----------
+     Elements with data-reveal-cols="N" stagger by their column in an N-column grid (150ms each),
+     so a long grid never builds a long delay. Reduced motion shows everything at once. */
+  var revealEls = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  if (revealEls.length) {
+    revealEls.forEach(function (el) {
+      var cols = parseInt(el.dataset.revealCols, 10);
+      if (cols) el.style.setProperty('--i', [].indexOf.call(el.parentNode.children, el) % cols);
+    });
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      revealEls.forEach(function (el) { el.classList.add('is-in'); });
+    } else {
+      var revealObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          // Scrolled past before it ever intersected (fast scroll, restored position): show it, never leave a hole
+          if (!e.isIntersecting && e.boundingClientRect.top > 0) return;
+          e.target.classList.add('is-in');
+          revealObs.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+      revealEls.forEach(function (el) { revealObs.observe(el); });
+    }
   }
 
   /* ---------- Story: copy + illustration that build up in stages ----------

@@ -201,6 +201,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 /* Dark panels (Skills used, Impact) get the same breathing room above them:
    about one screen of white space, matching the gap the Skills hold creates. */
 .cs-section--dark-gap { margin-top: calc(100vh - var(--nav-height)); }
+.cs-section--dark-gap.impact { margin-top: var(--spacer-large); } /* Impact follows Figma: 192px above */
 .t-metric-xl[data-count-to] { font-variant-numeric: tabular-nums; }
 
 .cs-title + .cs-subtitle { margin-top: 0; }
@@ -254,6 +255,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   height: var(--hp);
 }
 .scene--text { height: calc(100vh - var(--nav-height) + 2 * var(--phase)); }
+/* Situation / Task scenes (outside Key challenges): the image is already in its final place beside the
+   copy, so both pin together and the image never rises up to meet it. Pinned layout only (the stacked
+   layout below 700px / short landscape is untouched). */
+@media (min-width: 700px) and (min-height: 521px), (min-width: 700px) and (orientation: portrait) {
+  .scene:not(.cs-challenges .scene) { height: calc(var(--hp) + var(--phase) + 100vh - var(--nav-height)); }
+  .scene:not(.cs-challenges .scene) > .scene__visual { margin-top: calc(var(--yc) - var(--nav-height)); }
+}
 
 /* Key challenges: the title pins for the whole section. Each block holds a little longer
    (--exit); as its hold ends it fades out in place (site.js adds .is-leaving), so it never
@@ -395,6 +403,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   border-radius: var(--radius-xl);
   padding: var(--spacer-large) var(--page-margin);
 }
+.panel.impact { padding-block: var(--spacer-medium); } /* Impact panel: 96px top and bottom per Figma */
 
 .skills__list {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) 0;
@@ -476,6 +485,29 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .accordion.is-ready .accordion__item:not(.is-open) .accordion__panel { grid-template-rows: 0fr; opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .accordion.is-animated .accordion__panel { transition: none; } }
 
+/* Read-more variant (Figma Accordion/Read more): number | title, subtitle, skills, context and a
+   "Read more" link. The open panel is copy only, in the same 628px measure as other sections. */
+.accordion--read-more .accordion__row {
+  display: grid; grid-template-columns: 4rem 1fr; column-gap: var(--space-5);
+  padding: var(--space-6) 0;
+}
+.accordion--read-more .accordion__title { margin: 0; }
+.accordion__subtitle { margin: var(--space-2) 0 0; }
+.accordion__skills { display: flex; gap: var(--space-2); align-items: flex-start; padding-top: var(--space-1); margin-top: var(--space-2); color: var(--muted-text); }
+.accordion__skills-label { flex: none; width: 5rem; margin: 0; line-height: 2rem; }
+.accordion__skill-list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
+.accordion__skill { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; }
+.accordion__skill .icon { width: 1rem; height: 1rem; }
+.accordion__context { max-width: 47.5rem; margin: var(--space-2) 0 0; padding-top: var(--space-2); }
+.accordion--read-more .accordion__more {
+  display: inline; width: auto; margin-top: var(--space-3); padding: 0;
+  font: inherit; color: inherit; text-align: left; white-space: nowrap;
+  text-decoration: underline; background: none; border: 0; cursor: pointer;
+}
+.accordion__label { font-weight: 700; }
+.accordion__copy .accordion__label + p { margin-top: var(--space-3); }
+.accordion--read-more .accordion__body { display: block; padding: 0 0 var(--spacer-tiny) calc(4rem + var(--space-5)); }
+
 /* ---------- Final visuals ---------- */
 .final-visuals__full { width: 100%; border-radius: var(--radius-xl); }
 .final-visuals__steps { display: none; }
@@ -490,8 +522,9 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .seq__label { font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; text-decoration: underline; }
 
 /* ---------- Global footer ---------- */
-/* Triple the large spacer (576px at the 16px root) so the footer takes a deliberate scroll to reach */
-.site-footer { margin-top: calc(var(--spacer-large) * 3); overflow: clip; } /* clip the empty line space under the wordmark's baseline */
+/* One footer gap rule (Ash, 2026-10-04): 192px above the footer on every page except cover sheets */
+.site-footer { margin-top: var(--spacer-large); overflow: clip; } /* clip the empty line space under the wordmark's baseline */
+main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has only the 96px content padding before the footer */
 /* Site credits: sits 24px above the © row (Figma Footer component) */
 .site-footer__colophon { max-width: 39.25rem; margin-bottom: var(--space-5); color: var(--muted-text); }
 .site-footer__row {
@@ -618,9 +651,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   /* Accordion: narrower number column; the panel stacks copy over its image, full width */
   .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
   .accordion__body { grid-template-columns: 1fr; row-gap: var(--space-5); padding-left: 0; }
+  .accordion--read-more .accordion__row { grid-template-columns: 2.5rem 1fr; column-gap: var(--space-3); padding: var(--space-5) 0; }
+  .accordion--read-more .accordion__body { padding-left: calc(2.5rem + var(--space-3)); }
+  .accordion__skills { flex-direction: column; gap: 0; }
+  .accordion__skills-label { line-height: 1.5rem; }
 
   /* Footer */
-  .site-footer { margin-top: calc(var(--spacer-large) * 2); }
+  .site-footer { margin-top: var(--spacer-large); }
   .site-footer__row { display: flex; flex-wrap: wrap; column-gap: var(--space-5); row-gap: var(--space-2); }
   .site-footer__row .link { min-height: 2.75rem; display: inline-flex; align-items: center; }
   .site-footer__row p { flex-basis: 100%; }
@@ -774,13 +811,21 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* ---------- Home (Figma Home/13 Combined v13) ---------- */
 .home-hero {
-  background: linear-gradient(180deg, #f07a2e, #e8431f);
-  min-height: 56.25rem; /* 900 */
-  display: flex; align-items: flex-end; overflow: clip;
+  position: relative; isolation: isolate;
+  min-height: max(40rem, 100vh); min-height: max(40rem, 100svh); /* wordmark sits on the bottom edge of the window */
+  display: flex; align-items: flex-end; overflow-x: clip; /* y stays visible so the gradient can run on below the hero */
   margin-top: calc(var(--nav-height) * -1); padding-top: var(--nav-height);
-  border-bottom: 4px solid #e8431f;
 }
-.home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 56.25rem; }
+.home-hero::before { /* gradient lives on its own layer so it can fade to the white page once the user scrolls */
+  content: ""; position: absolute; inset: 0 0 -30vh 0; z-index: -1;
+  background: linear-gradient(180deg, #f07a2e, #e8431f calc(100% - 30vh), #e8431f);
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 30vh), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - 30vh), transparent); /* runs on past the hero and softens into the page */
+  transition: opacity 0.7s ease-in-out;
+}
+.home-hero.is-faded::before { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .home-hero::before { transition: none; } }
+.home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(max(40rem, 100vh) - var(--nav-height)); min-height: calc(max(40rem, 100svh) - var(--nav-height)); }
 .home-hero__id { position: absolute; top: 3.25rem; left: var(--page-margin); }
 .home-hero__title { letter-spacing: -0.01em; }
 .home-hero__mark {
@@ -850,3 +895,71 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   .home-exp__dates { grid-column: 1; grid-row: 3; text-align: left; padding-top: 0; }
   .home-slow__imgs { grid-template-columns: 1fr; }
 }
+
+/* ---------- Cover sheets (Figma Site final: Budgets 2461:45006, Teller 2461:44958, TAL 2461:44865, Buildxact 2461:44912) ---------- */
+.t-metric-l { font-size: 4.5rem; line-height: 5rem; font-weight: var(--weight-bold); letter-spacing: var(--tracking-metric); }
+.cover { display: flex; flex-direction: column; gap: var(--spacer-medium); padding-block: var(--spacer-medium); }
+.cover__head { display: flex; flex-direction: column; gap: var(--space-5); }
+.cover__head .work-meta { gap: var(--space-5); }
+.cover__head .work-meta__item { width: 9.125rem; }
+.cover__hero { height: 41rem; border-radius: var(--radius-xl); background: var(--surface-image); overflow: hidden; }
+.cover__hero img { width: 100%; height: 100%; object-fit: cover; }
+.cover__summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); }
+.cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--spacer-tiny); }
+.cover__impact { display: flex; flex-direction: column; gap: var(--space-4); }
+.cover-stats { display: flex; gap: 6rem; margin: var(--space-4) 0 0; }
+.cover-stat { display: flex; flex-direction: column; gap: var(--space-2); }
+.cover-stat dd { margin: 0; order: -1; }
+.cover-stat dt { color: var(--muted-text); }
+.cover__right { display: flex; flex-direction: column; gap: var(--space-6); }
+.cover-card { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); min-height: 13.75rem; padding: var(--space-6); background: var(--muted); border-radius: var(--radius-lg); }
+.cover__skills { display: flex; flex-direction: column; gap: var(--space-4); margin-top: calc(var(--spacer-tiny) * -1); }
+.cover-skills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.cover-skill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-3); background: var(--muted); border-radius: 999px; }
+.cover-skill img { width: 1rem; height: 1rem; flex: none; }
+.cover-seq { padding-block: var(--spacer-tiny); border-block: 1px solid var(--muted); gap: var(--space-5); }
+.cover-seq .seq--prev .seq__text { align-items: flex-start; }
+@media (max-width: 999px) {
+  .cover__hero { height: auto; aspect-ratio: 2 / 1; }
+  .cover__summary { grid-template-columns: 1fr; row-gap: var(--space-6); }
+  .cover-card { min-height: 0; }
+}
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .cover { gap: var(--spacer-tiny); padding-block: var(--spacer-tiny); }
+  .cover__skills { margin-top: 0; }
+  .t-metric-l { font-size: 3rem; line-height: 3.5rem; }
+  .cover-stats { gap: var(--space-6); }
+  .cover-seq { flex-direction: column; }
+  .cover-seq .seq--next { margin-left: 0; }
+  .cover-seq .seq--next .seq__text { align-items: flex-start; text-align: left; }
+  .cover__head .work-meta__item { width: calc(50% - var(--space-3)); }
+}
+
+/* Impact signals + stamp */
+.impact__signals { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.impact__stamp { margin-top: var(--space-5); opacity: .8; }
+
+/* ---------- Reveal (2026-10-04) ----------
+   Content fades in and rises 12px, same vocabulary as the metrics story: expo.out, 0.5s,
+   150ms stagger (--i). Plays once. site.js adds .is-in; without JS (.js is set in <head>) nothing is hidden. */
+.js [data-reveal] { opacity: 0; transform: translateY(12px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); transition-delay: calc(var(--i, 0) * 150ms); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Arrow nudge on the big next/read-more links. Hover devices only. */
+@media (hover: hover) and (pointer: fine) {
+  .seq .icon { transition: transform 0.18s var(--ease); }
+  .seq--prev:hover .icon { transform: translateX(-4px); }
+  .seq--next:hover .icon { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seq .icon { transition: none; }
+  .seq:hover .icon { transform: none; }
+}
+
+/* Home lead: the orange proof phrases turn orange as their paragraph reveals */
+.js .home-lead mark { color: inherit; transition: color 0.5s var(--ease) 0.3s; }
+.js .home-lead p.is-in mark { color: #ea4e22; }
+@media (prefers-reduced-motion: reduce) { .js .home-lead mark { color: #ea4e22; transition: none; } }
