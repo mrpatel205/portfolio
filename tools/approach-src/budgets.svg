@@ -1,0 +1,55 @@
+<svg width="2400" height="1096" viewBox="0 0 2400 1096" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="TMP export &#226;&#128;&#148; budgets">
+<rect width="2400" height="1096" rx="16" fill="white"/>
+<text id="01  FRAMED" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="125.281" y="203.227">01  PROBLEM, FRAMED</tspan></text>
+<text id="02  TWO ROUNDS" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="813.07" y="203.227">02  TWO ROUNDS</tspan></text>
+<text id="03  DETAILED" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1546.02" y="203.227">03  DETAILED</tspan></text>
+<text id="04  HANDOFF" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2105.14" y="203.227">04  HANDOFF</tspan></text>
+<circle id="scope &#226;&#128;&#148; problem space" cx="260" cy="540" r="148.5" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; problem, framed" cx="260" cy="540" r="18" fill="#737373"/>
+<path id="arrow" d="M480 540H600M584 551L600 540L584 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrow_2" d="M899 540H936.5M925 549.5L936.5 540L925 530.5" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrow_3" d="M1237 540H1357M1341 551L1357 540L1341 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrow_4" d="M1862 540H1982M1966 551L1982 540L1966 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect id="hub &#226;&#128;&#148; Round 1" x="671.5" y="431.5" width="217" height="217" rx="31.5" stroke="#737373" stroke-width="3"/>
+<rect id="hub &#226;&#128;&#148; Round 2" x="947.5" y="431.5" width="217" height="217" rx="31.5" stroke="#737373" stroke-width="3"/>
+<rect id="band &#226;&#128;&#148; settled slice" x="1024" y="442" width="64" height="196" fill="#EBEBEB"/>
+<text id="Define" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="746.28" y="701.5">Define</tspan></text>
+<text id="Refine" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1023.21" y="701.5">Refine</tspan></text>
+<text id="BA" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1461.41" y="709.5">BA</tspan></text>
+<text id="Accessibility" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1710.99" y="709.5">Accessibility</tspan></text>
+<circle id="halo" cx="2186" cy="540" r="100" fill="#EBEBEB"/>
+<circle id="focus &#226;&#128;&#148; handoff to engineering" cx="2186" cy="540" r="40" fill="black"/>
+<circle id="open dot &#226;&#128;&#148; option" cx="725" cy="485" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_2" cx="725" cy="540" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_3" cx="725" cy="595" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_4" cx="780" cy="485" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_5" cx="780" cy="540" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_6" cx="780" cy="595" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_7" cx="835" cy="485" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_8" cx="835" cy="540" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_9" cx="835" cy="595" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_10" cx="1001" cy="485" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_11" cx="1001" cy="540" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_12" cx="1001" cy="595" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; settled" cx="1056" cy="485" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; settled_2" cx="1056" cy="540" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; settled_3" cx="1056" cy="595" r="15" fill="#737373"/>
+<circle id="open dot &#226;&#128;&#148; option_13" cx="1111" cy="485" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_14" cx="1111" cy="540" r="13.5" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; option_15" cx="1111" cy="595" r="13.5" stroke="#737373" stroke-width="3"/>
+<text id="Design" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1590.2" y="366.5">Design</tspan></text>
+<g id="collab &#226;&#128;&#148; BA &#226;&#134;&#146; Design (one-way)">
+<path id="line" d="M1476 660L1626 400" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrowhead" d="M1531.88 535.13L1551 530L1556.13 549.123" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="collab loop &#226;&#128;&#148; Design &#226;&#135;&#132; Accessibility">
+<rect id="pill" x="1674.51" y="372.016" width="300.167" height="56" rx="28" transform="rotate(60.0184 1674.51 372.016)" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8"/>
+<path id="arrowhead &#226;&#128;&#148; out (A &#226;&#134;&#146; B)" d="M1754.64 482.893L1749.51 502.016L1730.38 496.885" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrowhead &#226;&#128;&#148; back (B &#226;&#134;&#146; A)" d="M1695.87 549.123L1701 530L1720.12 535.131" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<circle id="dot &#226;&#128;&#148; BA" cx="1476" cy="660" r="18" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Accessibility" cx="1776" cy="660" r="18" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Ash" cx="1626" cy="400" r="18" fill="#737373"/>
+</g>
+</svg>

@@ -1,0 +1,852 @@
+/* mrpatel.com — built from the Portfolio Design System (MBTJ).
+   Sizes are rem on a 16px base: Figma frames are drawn at the 16px root (1200–1599px). */
+
+:root {
+  /* Colour */
+  --black: #000000;
+  --white: #ffffff;
+  --muted: #ebebeb;
+  --muted-text: #6b7280;
+  --surface-dark: #2a2a2a;
+  --surface-image: #d9d9d9;
+  --tile-dark: rgba(255, 255, 255, 0.1);
+  --link-hover-dark: rgba(255, 255, 255, 0.6);
+
+  /* Type */
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+  /* Type roles: size / line height (rem) per Figma text style. The small-screen block overrides these. */
+  --text-h1-size: 4rem;         --text-h1-lh: 4.5rem;
+  --text-h2-size: 3rem;         --text-h2-lh: 3.5rem;
+  --text-h3-size: 2rem;         --text-h3-lh: 2.5rem;
+  --text-metric-xl-size: 6rem;  --text-metric-xl-lh: 6.5rem;
+  --text-body-lg-size: 1.125rem; --text-body-lg-lh: 1.75rem;
+  --text-paragraph-size: 1rem;  --text-paragraph-lh: 1.5rem;
+  --text-caption-size: 0.875rem; --text-caption-lh: 1.25rem;
+  --text-eyebrow-sm-size: 0.75rem; --text-eyebrow-sm-lh: 1.25rem; --text-eyebrow-sm-tracking: 0.07em;
+  --text-eyebrow-lg-size: 1.25rem; --text-eyebrow-lg-lh: 1.75rem;  --text-eyebrow-lg-tracking: 0.04em;
+  --tracking-heading: -0.01em;
+  --tracking-metric: -0.02em;
+
+  /* Spacing: component scale */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  /* Spacing: content scale (Figma content spacers) */
+  --spacer-tiny: 3rem;     /* 48 */
+  --spacer-medium: 6rem;   /* 96 */
+  --spacer-large: 12rem;   /* 192 */
+  --spacer-xl: 24rem;      /* 384 */
+
+  /* Layout grid */
+  --page-margin: 4rem;     /* 64 */
+  --content-max: 82rem;    /* 1312 */
+  --gutter: var(--space-6);
+
+  /* Radius */
+  --radius-sm: 2px;
+  --radius-md: 0.75rem;  /* 12 */
+  --radius-lg: 1rem;     /* 16 */
+  --radius-xl: 1.5rem;   /* 24 */
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-hover: 0.4s;
+  --duration-colour: 0.5s;
+
+  /* Focus */
+  --focus-width: 2px;
+  --focus-offset: 3px;
+
+  --nav-height: 2.3125rem; /* 8 + 20 + 8 + 1px rule */
+}
+
+/* Root size steps: the whole interface scales with it */
+html { font-size: 16px; }
+@media (min-width: 1600px) { html { font-size: 18px; } }
+@media (min-width: 2000px) { html { font-size: 20px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, figure, dl, dd { margin: 0; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; left: var(--page-margin); top: -100px; z-index: 100;
+  background: var(--black); color: var(--white); padding: var(--space-2) var(--space-4);
+  font-size: 0.875rem; line-height: 1.25rem;
+}
+.skip-link:focus { top: var(--space-2); }
+
+:focus-visible { outline: var(--focus-width) solid currentColor; outline-offset: var(--focus-offset); }
+
+/* ---------- Type styles (Figma text styles) ---------- */
+.t-h1 { font-size: var(--text-h1-size); line-height: var(--text-h1-lh); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-heading); }
+.t-h2 { font-size: var(--text-h2-size); line-height: var(--text-h2-lh); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-heading); }
+.t-h3 { font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--weight-medium); letter-spacing: var(--tracking-heading); }
+.t-metric-xl { font-size: var(--text-metric-xl-size); line-height: var(--text-metric-xl-lh); font-weight: var(--weight-bold); letter-spacing: var(--tracking-metric); }
+.t-body-lg { font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); font-weight: var(--weight-regular); }
+.t-paragraph { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-regular); }
+.t-paragraph-bold { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-bold); }
+.t-caption { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-regular); }
+/* Eyebrows (Figma Typography/Eyebrow/Small and /Large) */
+.t-eyebrow-sm { font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase; }
+.t-eyebrow-lg { font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-lg-tracking); text-transform: uppercase; }
+
+.prose p + p { margin-top: var(--space-5); }
+.prose strong { font-weight: 700; }
+
+/* ---------- Links ---------- */
+.link {
+  color: inherit;
+  text-decoration: underline;
+  transition: opacity var(--duration-hover) var(--ease), color var(--duration-hover) var(--ease);
+}
+.link:hover { opacity: 0.6; }
+.link--small, .link--muted { font-size: 0.875rem; line-height: 1.25rem; }
+.link--muted { color: var(--muted-text); }
+.link--muted:hover { opacity: 1; color: var(--black); }
+.link--external { display: inline-flex; align-items: center; gap: var(--space-1); }
+
+.icon { width: 1.25rem; height: 1.25rem; flex: none; }
+
+/* ---------- Page frame ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--page-margin));
+  margin: 0 auto;
+  padding: 0 var(--page-margin);
+}
+
+/* ---------- Global nav (sticky, always white) ---------- */
+.site-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--muted);
+}
+.site-nav__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: calc(var(--nav-height) - 1px); /* fixed so sticky offsets below the nav line up exactly */
+}
+.site-nav__links li { line-height: 1.25rem; }
+.wordmark {
+  display: inline-flex; align-items: flex-start;
+  color: var(--black); text-decoration: none;
+  font-size: 0.75rem; line-height: 1rem; font-weight: 900; text-transform: uppercase;
+}
+.wordmark sup { font-size: 0.375rem; line-height: 1; vertical-align: top; font-weight: 900; margin-left: 1px; }
+.site-nav__links { display: flex; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+/* Current page is ink; its siblings are muted (MBTJ Link pattern) */
+.site-nav__links:has([aria-current="page"]) a:not([aria-current="page"]) { color: var(--muted-text); }
+.site-nav__links:has([aria-current="page"]) a:not([aria-current="page"]):hover { opacity: 1; color: var(--black); }
+
+/* Reading progress (case studies): a 4px bar under the nav rule, full browser width,
+   filled by scaleX so it tracks scroll 1:1 without layout work. No track behind it. */
+.reading-progress {
+  position: absolute; left: 0; right: 0; top: 100%;
+  height: 4px; pointer-events: none;
+}
+.reading-progress__bar {
+  display: block; height: 100%;
+  background: var(--black);
+  transform: scaleX(0); transform-origin: left center;
+  will-change: transform;
+}
+
+/* ---------- Case study hero ---------- */
+.cs-hero { padding-top: var(--spacer-large); }
+.cs-hero__title { max-width: 40rem; }
+.cs-meta {
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter);
+  margin-top: var(--space-5);
+}
+.cs-meta__group { display: flex; gap: var(--spacer-tiny); align-items: flex-start; }
+.cs-meta__group--right { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacer-tiny); }
+.cs-meta__item { display: flex; flex-direction: column; gap: var(--space-1); }
+.cs-meta dt { color: var(--muted-text); }
+.cs-hero__image { margin-top: var(--spacer-large); }
+.cs-hero__image img { width: 100%; border-radius: var(--radius-xl); }
+
+/* ---------- Sections ---------- */
+.cs-section { margin-top: var(--spacer-large); }
+.cs-section--tight { margin-top: var(--spacer-tiny); }
+/* Dark panels (Skills used, Impact) get the same breathing room above them:
+   about one screen of white space, matching the gap the Skills hold creates. */
+.cs-section--dark-gap { margin-top: calc(100vh - var(--nav-height)); }
+.t-metric-xl[data-count-to] { font-variant-numeric: tabular-nums; }
+
+.cs-title + .cs-subtitle { margin-top: 0; }
+.cs-heading { display: flex; flex-direction: column; margin-bottom: var(--space-3); }
+
+/* Two-column content block: copy left, visual right */
+.cs-block {
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter);
+  align-items: end;
+}
+.cs-block__copy { max-width: 39.25rem; } /* 628 */
+.cs-block--text-only { grid-template-columns: 1fr 1fr; }
+
+.cs-visual__frame {
+  background: var(--surface-image);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cs-visual__frame img { width: 100%; }
+.cs-visual__frame--placeholder { aspect-ratio: 640 / 496; display: grid; place-items: center; color: var(--muted-text); }
+.cs-visual__frame--centred { display: flex; justify-content: center; padding-top: var(--space-6); aspect-ratio: 640 / 631; }
+.cs-visual__frame--centred img { width: 39.84%; height: auto; align-self: flex-start; }
+.cs-visual figcaption { margin-top: var(--space-3); color: var(--muted-text); text-align: center; }
+
+/* ---------- Scenes: copy pins first, its image rises to meet it, both hold, then leave together ----------
+   Pure CSS sticky. Measured from the moment the copy pins:
+     phase 1 (--phase)  copy alone
+     image rises into place beside it, top-aligned with the copy
+     phase 2 (--phase)  copy and image pinned together
+     then both scroll out and the next scene's copy rises from below.
+   --y0: pinned top edge, chosen so the tallest image + caption (42rem) is centred in the viewport. */
+.scene, .cs-challenges {
+  --y0: calc(var(--nav-height) + max(var(--space-6), (100vh - var(--nav-height) - 42rem) / 2));
+  --hp: calc(100vh - var(--y0));                        /* pinned box: from --y0 to the viewport bottom */
+  --phase: calc((100vh - var(--nav-height)) * 0.5);     /* half a screen per phase */
+}
+.scene {
+  --yc: var(--y0);                                      /* where the copy pins */
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter);
+  height: calc(var(--hp) + 2 * var(--phase) + 100vh - var(--nav-height));
+}
+.scene__copy {
+  position: sticky; top: var(--yc); align-self: start;
+  margin-top: calc(var(--yc) - var(--nav-height));
+  height: calc(100vh - var(--yc));
+  max-width: 39.25rem;
+}
+.scene__visual {
+  position: sticky; top: var(--y0); align-self: start;
+  margin-top: calc(var(--y0) - var(--nav-height) + var(--hp) + var(--phase));
+  height: var(--hp);
+}
+.scene--text { height: calc(100vh - var(--nav-height) + 2 * var(--phase)); }
+
+/* Key challenges: the title pins for the whole section. Each block holds a little longer
+   (--exit); as its hold ends it fades out in place (site.js adds .is-leaving), so it never
+   scrolls under the title, and the next block scrolls in from below. */
+.cs-challenges { position: relative; margin-top: var(--spacer-large); }
+/* Each topic pins its subtitle beneath the title for the whole topic */
+.cs-challenges .topic { position: relative; --sub-h: 2.5rem; }  /* one line of h3; two-line subtitles set 5rem */
+.topic__subtitle-track {
+  position: absolute; top: 0; left: 0; z-index: 1;
+  /* Unpin with the topic's last block (bottom of the subtitle band = where paragraphs pin) */
+  bottom: calc(100vh - var(--y0) - 4.25rem - var(--sub-h) - var(--space-3));
+  width: calc(50% - var(--gutter) / 2);
+  pointer-events: none;
+}
+.topic__subtitle {
+  position: sticky; top: calc(var(--y0) + 4.25rem);
+  margin-top: calc(var(--y0) + 4.25rem - var(--nav-height));
+  padding-bottom: var(--space-3);
+  background: var(--white);
+  transition: opacity var(--duration-hover) var(--ease);
+}
+.topic.is-leaving .topic__subtitle { opacity: 0; }
+/* Paragraphs pin below title (3.5rem + space-3) and subtitle (--sub-h + space-3) */
+.cs-challenges .scene { --yc: calc(var(--y0) + 4.25rem + var(--sub-h) + var(--space-3)); }
+/* Later stages overlap the previous stage by one screen, so they pin exactly as it leaves:
+   the next paragraph fades in on the same spot instead of rising from below */
+.cs-challenges .scene:not(.scene--first) { margin-top: calc(-1 * (100vh - var(--nav-height))); }
+.cs-challenges .scene:not(.scene--first):not(.is-in) > .scene__copy { opacity: 0; }
+.cs-challenges { --exit: calc((100vh - var(--nav-height)) * 0.25); }
+.cs-challenges .scene { height: calc(var(--hp) + 2 * var(--phase) + var(--exit) + 100vh - var(--nav-height)); }
+.cs-challenges .scene--text { height: calc(100vh - var(--nav-height) + 2 * var(--phase) + var(--exit)); }
+.cs-challenges .scene > .scene__copy,
+.cs-challenges .scene > .scene__visual { transition: opacity var(--duration-hover) var(--ease); }
+.cs-challenges .scene.is-leaving > .scene__copy,
+.cs-challenges .scene.is-leaving > .scene__visual { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .cs-challenges .scene > .scene__copy, .cs-challenges .scene > .scene__visual { transition: none; }
+}
+.cs-challenges__title-track {
+  position: absolute; top: 0; bottom: 0; left: 0; z-index: 2;
+  width: calc(50% - var(--gutter) / 2);
+  pointer-events: none;
+  /* End the title's pin as the last block starts scrolling out, so they leave together */
+  bottom: calc(var(--hp) - 4.25rem);
+}
+.cs-challenges__title {
+  position: sticky; top: var(--nav-height);
+  padding: calc(var(--y0) - var(--nav-height)) 0 var(--space-3);
+  background: var(--white);
+}
+
+/* ---------- Hold: pin a whole block in the middle of the viewport ----------
+   The block rises into view, pins centred below the nav, and holds for --hold of scroll
+   before scrolling out (used for the Skills used panel). */
+.cs-hold { --hold: calc((100vh - var(--nav-height)) * 1.5); height: calc(100vh - var(--nav-height) + var(--hold)); }
+.cs-hold__frame {
+  position: sticky; top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* ---------- Reading pause: text-only blocks ----------
+   The block rises into view, pins in the middle of the viewport with white space
+   all round, and holds while the visitor scrolls --pause-distance further. Its own
+   centring supplies the breathing room, so neighbours drop their top margin. */
+.cs-pause { --pause-distance: 100vh; height: calc(100vh - var(--nav-height) + var(--pause-distance)); }
+.cs-pause__inner {
+  position: sticky; top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  align-items: center;
+}
+.cs-pause + .cs-section, .cs-pause + .cs-challenges { margin-top: 0; }
+
+/* ---------- Story: copy + illustration that build up in stages (Teller Approach) ----------
+   The block pins below the nav and holds for --story-step of scroll per stage. site.js adds
+   .is-s1 … .is-sN as each stage is reached (triggered, not scrubbed: each stage's parts play
+   their short animation, and reverse on the way back up) and sets data-current, which
+   underlines that stage's phrases in the copy. Illustration parts carry data-stage and a
+   stagger index --i. Without JS, or with reduced motion, everything shows at once. */
+.story {
+  --story-step: 70vh;
+  margin-top: var(--spacer-large);
+  height: calc(100vh - var(--nav-height) + var(--story-step) * var(--stages));
+}
+.story__pin {
+  position: sticky; top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  display: flex; flex-direction: column; justify-content: center;
+  gap: var(--spacer-tiny);
+  padding-block: var(--space-6);
+}
+.story__copy { max-width: 40rem; }
+.story__figure {
+  margin: 0; flex: 0 1 auto;
+  /* As wide as the column, unless the viewport is too short for the copy + figure */
+  width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567)));
+  background: var(--white);
+}
+.story__svg { display: block; width: 100%; height: auto; }
+
+.story-mark {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 2px no-repeat;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  transition: background-size 0.6s var(--ease);
+}
+.story[data-current="1"] .story-mark[data-stage="1"],
+.story[data-current="2"] .story-mark[data-stage="2"],
+.story[data-current="3"] .story-mark[data-stage="3"],
+.story[data-current="4"] .story-mark[data-stage="4"] { background-size: 100% 2px; transition-delay: 0.2s; }
+
+.js .story [data-from] { opacity: 0; transition: opacity var(--duration-hover) var(--ease); }
+.js .story .story__fade { opacity: 0; transition: opacity 0.5s var(--ease); }
+.js .story .story__grow {
+  transform: scaleY(0); transform-box: fill-box; transform-origin: center;
+  transition: transform 0.6s var(--ease);
+}
+.js .story.is-s1 [data-from="1"], .js .story.is-s2 [data-from="2"],
+.js .story.is-s3 [data-from="3"], .js .story.is-s4 [data-from="4"] { opacity: 1; }
+/* Fade parts and grow parts step through their stage in --i order (set by tools/approach_svgs.py) */
+.js .story.is-s1 .story__fade[data-stage="1"], .js .story.is-s2 .story__fade[data-stage="2"],
+.js .story.is-s3 .story__fade[data-stage="3"], .js .story.is-s4 .story__fade[data-stage="4"] { opacity: 1; transition-delay: calc(var(--i) * 140ms); }
+.js .story.is-s1 .story__grow[data-stage="1"], .js .story.is-s2 .story__grow[data-stage="2"],
+.js .story.is-s3 .story__grow[data-stage="3"] { transform: none; transition-delay: calc(var(--i) * 200ms); }
+/* Later stages hold more lines, so they follow on faster */
+.js .story.is-s4 .story__grow[data-stage="4"] { transform: none; transition-delay: calc(var(--i) * 90ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .story { height: auto; }
+  .story__pin { position: static; height: auto; }
+  .js .story [data-from], .js .story .story__fade { opacity: 1; transition: none; }
+  .js .story .story__grow { transform: none; transition: none; }
+}
+.scene + .cs-section { margin-top: var(--spacer-medium); }
+
+/* ---------- Dark panels ---------- */
+.panel {
+  background: var(--surface-dark);
+  color: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacer-large) var(--page-margin);
+}
+
+.skills__list {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) 0;
+  margin: var(--space-3) 0 0; padding: 0; list-style: none;
+}
+.skill { display: flex; align-items: center; gap: var(--space-4); min-height: 4rem; }
+.skill__tile {
+  width: 2.5rem; height: 2.5rem; flex: none;
+  display: grid; place-items: center;
+  background: var(--tile-dark); border-radius: var(--radius-md);
+}
+
+.impact { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: center; }
+.impact__copy { max-width: 39.25rem; }
+.impact__lead { margin-top: var(--space-5); }
+.impact__lead + p { margin-top: var(--space-2); }
+.impact__metrics { display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacer-tiny); margin: 0; }
+.impact__metric { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-3); }
+.impact__metric dd { order: -1; }
+
+/* ---------- Button (Figma Button-new) ----------
+   44px tall, 12×24 padding, 2px radius. Hover inverts over 0.5s on expo.out. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: 2.75rem; padding: var(--space-3) var(--space-5);
+  font: inherit; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600;
+  color: var(--white); background: var(--black);
+  border: 1px solid var(--black); border-radius: var(--radius-sm);
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: color var(--duration-colour) var(--ease), background-color var(--duration-colour) var(--ease);
+}
+.btn:hover { color: var(--black); background: var(--white); }
+.btn--outlined { color: var(--black); background: transparent; }
+.btn--outlined:hover { color: var(--white); background: var(--black); }
+.btn[hidden] { display: none; }
+
+/* ---------- Accordion (Figma Accordion/Challenge, Style=Numbered) ----------
+   Numbered rows between 1px muted rules. Each header is one button: number, H3 title and a
+   40px outlined tile with plus (closed) or minus (open). Panels open with a height + fade
+   transition; site.js adds .is-ready (panels closed by default) so without JS all stay open. */
+.accordion__intro .prose { max-width: 39.25rem; margin-top: var(--space-3); }
+.accordion__all { margin-top: var(--space-5); }
+.accordion__list {
+  margin: var(--spacer-tiny) 0 0; padding: 0; list-style: none;
+  border-bottom: 1px solid var(--muted);
+}
+.accordion__item { border-top: 1px solid var(--muted); }
+.accordion__heading { margin: 0; font: inherit; }
+.accordion__trigger {
+  display: grid; grid-template-columns: 4rem 1fr auto; column-gap: var(--space-5); align-items: center;
+  width: 100%; padding: var(--space-6) 0;
+  font: inherit; color: inherit; text-align: left;
+  background: none; border: 0; cursor: pointer;
+}
+.accordion__trigger:focus-visible { outline-offset: calc(-1 * var(--focus-width)); }
+.accordion__number { color: var(--muted-text); }
+.accordion__icon {
+  display: grid; place-items: center;
+  width: 2.5rem; height: 2.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.5); border-radius: var(--radius-md);
+  transition: color var(--duration-colour) var(--ease), background-color var(--duration-colour) var(--ease), border-color var(--duration-colour) var(--ease);
+}
+.accordion__icon .icon { grid-area: 1 / 1; }
+.accordion__trigger:hover .accordion__icon { color: var(--white); background: var(--black); border-color: var(--black); }
+.accordion__trigger[aria-expanded="true"] .icon:first-child,
+.accordion__trigger[aria-expanded="false"] .icon:last-child { display: none; }
+
+.accordion__panel { display: grid; grid-template-rows: 1fr; }
+/* Animate only after the first close, so the page doesn't visibly collapse on load */
+.accordion.is-animated .accordion__panel {
+  transition: grid-template-rows var(--duration-colour) var(--ease), opacity var(--duration-colour) var(--ease);
+}
+.accordion__clip { min-height: 0; overflow: hidden; }
+.accordion__body {
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: start;
+  padding: 0 0 var(--spacer-tiny) calc(4rem + var(--space-5)); /* copy lines up with the title */
+}
+.accordion__copy { max-width: 39.25rem; }
+.accordion.is-ready .accordion__item:not(.is-open) .accordion__panel { grid-template-rows: 0fr; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .accordion.is-animated .accordion__panel { transition: none; } }
+
+/* ---------- Final visuals ---------- */
+.final-visuals__full { width: 100%; border-radius: var(--radius-xl); }
+.final-visuals__steps { display: none; }
+
+/* ---------- Next / previous ---------- */
+.seq-nav { display: flex; justify-content: space-between; }
+.seq { display: inline-flex; gap: var(--space-2); align-items: flex-start; color: inherit; text-decoration: none; transition: opacity var(--duration-hover) var(--ease); }
+.seq:hover { opacity: 0.6; }
+.seq__text { display: flex; flex-direction: column; gap: var(--space-1); }
+.seq--next { margin-left: auto; }
+.seq--next .seq__text { align-items: flex-end; text-align: right; }
+.seq__label { font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; text-decoration: underline; }
+
+/* ---------- Global footer ---------- */
+/* Triple the large spacer (576px at the 16px root) so the footer takes a deliberate scroll to reach */
+.site-footer { margin-top: calc(var(--spacer-large) * 3); overflow: clip; } /* clip the empty line space under the wordmark's baseline */
+/* Site credits: sits 24px above the © row (Figma Footer component) */
+.site-footer__colophon { max-width: 39.25rem; margin-bottom: var(--space-5); color: var(--muted-text); }
+.site-footer__row {
+  display: grid; grid-template-columns: 14rem 14rem auto; align-items: baseline;
+}
+.site-footer__mark {
+  container-type: inline-size;
+  margin-top: var(--space-4);
+}
+.site-footer__mark p {
+  display: flex; align-items: flex-start;
+  font-weight: 900; line-height: 1; text-transform: uppercase;
+  /* Inter's baseline sits 0.1365em above the bottom of a 1em line box; pull it up so the
+     letters sit flush on the bottom edge of the page */
+  margin-bottom: -0.1365em;
+  font-size: calc(100cqw * 0.194); /* fits "MRPATEL©" to the content width (measured in Inter Black) */
+  white-space: nowrap;
+}
+.site-footer__mark sup { font-size: 0.433em; font-weight: 400; line-height: 1; vertical-align: top; }
+
+/* ---------- Placeholder pages (Home, Work) ---------- */
+.placeholder { padding: var(--spacer-large) 0; }
+.placeholder p { margin-top: var(--space-4); max-width: 39.25rem; }
+
+/* ---------- Medium widths: let the hero metadata wrap instead of overflowing ---------- */
+@media (max-width: 1099px) {
+  .cs-meta__group { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5) var(--gutter); }
+  .cs-meta__group--right { grid-template-columns: 1fr; row-gap: var(--space-5); }
+}
+
+/* ---------- Small screens (phones, and short landscape viewports) ----------
+   One column. Every sticky pin, hold and pause is dropped: blocks stack in reading order
+   (copy, then its image) and scroll normally. Spacers and type step down.
+   Keep this query in sync with SMALL_SCREEN in site.js. */
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --page-margin: 1.25rem;  /* 17.5 at the 14px root */
+    --spacer-tiny: 2rem;
+    --spacer-medium: 3rem;
+    --spacer-large: 5rem;
+    --spacer-xl: 10rem;
+    /* Type: Small mode */
+    --text-h1-size: 2.5rem;  --text-h1-lh: 2.875rem;
+    --text-h2-size: 2rem;    --text-h2-lh: 2.5rem;
+    --text-h3-size: 1.5rem;  --text-h3-lh: 2rem;
+    --text-metric-xl-size: 4rem; --text-metric-xl-lh: 4.5rem;
+  }
+
+  .cs-hero__title br, .topic__subtitle br { display: none; }
+
+  /* Nav: 44px touch targets without changing the bar's height */
+  .site-nav__links { gap: var(--space-5); }
+  .site-nav__links a { position: relative; }
+  .site-nav__links a::after { content: ""; position: absolute; inset: -0.75rem -0.5rem; }
+  .wordmark { position: relative; }
+  .wordmark::after { content: ""; position: absolute; inset: -0.75rem -0.5rem; }
+
+  /* Hero */
+  .cs-meta { grid-template-columns: 1fr; row-gap: var(--space-5); }
+  .cs-meta__group { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5) var(--gutter); }
+  .cs-meta__group--right { grid-template-columns: 1fr; }
+  .cs-hero__image { margin-top: var(--spacer-tiny); }
+  .cs-hero__image img, .final-visuals__full { border-radius: var(--radius-lg); }
+
+  /* Scenes: copy stacks above its image, nothing pins */
+  .scene,
+  .cs-challenges .scene,
+  .scene--text,
+  .cs-challenges .scene--text {
+    display: block; height: auto;
+    margin-top: var(--spacer-large);
+  }
+  .cs-challenges .scene:not(.scene--first) { margin-top: var(--spacer-medium); }
+  .scene__copy, .scene__visual {
+    position: static; height: auto; margin-top: 0; max-width: none;
+  }
+  .scene__visual { margin-top: var(--space-5); }
+  .cs-challenges .scene > .scene__copy,
+  .cs-challenges .scene > .scene__visual,
+  .cs-challenges .scene:not(.scene--first):not(.is-in) > .scene__copy,
+  .topic__subtitle { opacity: 1; pointer-events: auto; transition: none; }
+  .cs-visual__frame--centred { padding-top: var(--space-5); }
+
+  /* Key challenges: title, then each topic's subtitle, then its stages */
+  .cs-challenges__title-track, .topic__subtitle-track { position: static; width: auto; }
+  .cs-challenges__title { position: static; padding: 0; }
+  .cs-challenges .topic { margin-top: var(--spacer-large); }
+  .cs-challenges .topic:first-of-type { margin-top: var(--spacer-tiny); }
+  .topic__subtitle { position: static; margin-top: 0; padding-bottom: 0; }
+  .topic .scene--first { margin-top: var(--space-3); }
+
+  /* Holds and pauses: plain blocks */
+  .cs-hold, .cs-pause { height: auto; }
+  .cs-hold__frame, .cs-pause__inner { position: static; height: auto; display: block; }
+  .cs-hold, .cs-pause, .cs-pause + .cs-section, .cs-pause + .cs-challenges { margin-top: var(--spacer-large); }
+  .cs-block { grid-template-columns: 1fr; }
+  .cs-section--dark-gap { margin-top: var(--spacer-large); }
+
+  /* Story: no pin; all copy shows, the illustration plays once when it scrolls into view */
+  .story { height: auto; }
+  .story__pin { position: static; height: auto; display: block; padding: 0; }
+  .story__figure { width: 100%; margin-top: var(--space-5); }
+  .js .story [data-from], .js .story .story__fade { opacity: 1; transition: none; }
+  .js .story .story__grow { transform: none; transition: none; }
+
+  /* Dark panels */
+  .panel { border-radius: var(--radius-lg); padding: var(--spacer-medium) var(--space-5); }
+  .skills__list { grid-template-columns: 1fr; gap: var(--space-2) 0; margin-top: var(--space-5); }
+  .skill { min-height: 3rem; }
+  .impact { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
+  .impact__metrics { flex-direction: row; flex-wrap: wrap; align-items: flex-start; column-gap: var(--spacer-tiny); row-gap: var(--space-5); }
+  .impact__metric { align-items: flex-start; gap: var(--space-1); }
+
+  /* Final visuals: the six screens stacked in a grey panel */
+  .final-visuals__full { display: none; }
+  .final-visuals__steps {
+    display: grid; grid-template-columns: minmax(0, 18rem); justify-content: center; gap: var(--space-6);
+    margin: 0; padding: var(--spacer-tiny) var(--space-5);
+    list-style: none;
+    background: var(--surface-image); border-radius: var(--radius-lg);
+  }
+  .final-visuals__steps img { width: 100%; border-radius: var(--radius-md); }
+
+  /* Accordion: narrower number column; the panel stacks copy over its image, full width */
+  .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
+  .accordion__body { grid-template-columns: 1fr; row-gap: var(--space-5); padding-left: 0; }
+
+  /* Footer */
+  .site-footer { margin-top: calc(var(--spacer-large) * 2); }
+  .site-footer__row { display: flex; flex-wrap: wrap; column-gap: var(--space-5); row-gap: var(--space-2); }
+  .site-footer__row .link { min-height: 2.75rem; display: inline-flex; align-items: center; }
+  .site-footer__row p { flex-basis: 100%; }
+}
+
+/* Landscape phones and small tablets in the stacked layout: two screens per row */
+@media (min-width: 500px) and (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .final-visuals__steps { grid-template-columns: repeat(2, minmax(0, 16rem)); }
+}
+
+/* ---------- Research metrics: type-only story on a dark panel (Teller Research) ----------
+   Figma: Metrics work › V3.1.2 (storyboard 2153:80). Pins like .story and steps through 4
+   stages: 1 header · 2 headline number · 3 first group · 4 second group + headline note.
+   Movements are fade, rise (12px) and count-up only (site.js counts [data-count-stage]).
+   Kept at the end of the file so it wins over the shared story and small-screen rules. */
+.metrics {
+  --metrics-grey: #a3a3a3;
+  --metrics-rule: rgba(255, 255, 255, 0.1);
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--page-margin);
+  padding: var(--spacer-tiny) var(--page-margin);
+  /* Figma block is 1314 × 728; never taller than the space under the nav */
+  min-height: min(45.5rem, calc(100vh - var(--nav-height) - 2 * var(--space-5)));
+}
+.metrics p, .metrics h2, .metrics h3, .metrics ul { margin: 0; }
+.metrics__left { display: flex; flex-direction: column; justify-content: space-between; gap: 2.5rem; }
+.metrics__header { display: flex; flex-direction: column; gap: var(--space-2); }
+.metrics__eyebrow {
+  display: inline-flex; align-items: center; gap: var(--space-2); padding-bottom: var(--space-1);
+  font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+}
+.metrics__eyebrow::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
+.metrics__subheading, .metrics__lead, .metrics__note, .metrics__sub { color: var(--metrics-grey); }
+.metrics__lead { max-width: 32.5rem; }
+.metrics__big {
+  font-size: min(15rem, 27vh); line-height: 0.92; font-weight: 700; letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.metrics__big-label, .metrics__group-head {
+  font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-eyebrow-lg-tracking); text-transform: uppercase;
+}
+.metrics__big-label { margin-top: var(--space-3); }
+.metrics__note { margin-top: var(--space-3); font-size: 1rem; line-height: 1.5rem; }
+.metrics__right { display: flex; flex-direction: column; justify-content: flex-end; gap: 1.75rem; }
+.metrics__group-head { padding-bottom: 0.625rem; }
+.metrics__list { padding: 0; list-style: none; }
+.metrics__stat {
+  display: grid; grid-template-columns: 7rem 1fr; column-gap: var(--space-5); align-items: center;
+  padding: 0.875rem 0; border-top: 1px solid var(--metrics-rule);
+}
+.metrics__stat--callout { padding: 1.125rem 0; border-top-color: #5c5c5c; }
+.metrics__value { font-size: 2.5rem; line-height: 3rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.metrics__stat--callout .metrics__value { font-size: 4.5rem; line-height: 4.5rem; font-weight: 700; }
+.metrics__label {
+  display: block; font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-medium);
+  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+}
+.metrics__stat--callout .metrics__label { font-weight: var(--weight-bold); }
+.metrics__sub { display: block; margin-top: 0.125rem; font-size: 0.875rem; line-height: 1.25rem; }
+
+.story--metrics .story__pin { padding-block: var(--space-5); }
+
+/* Motion: each part fades and rises 12px when its stage is reached; siblings stagger 150ms */
+.js .story--metrics [data-from] {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  transition-delay: calc(var(--i, 0) * 150ms);
+}
+.js .story--metrics.is-s1 [data-from="1"], .js .story--metrics.is-s2 [data-from="2"],
+.js .story--metrics.is-s3 [data-from="3"], .js .story--metrics.is-s4 [data-from="4"] { opacity: 1; transform: none; }
+
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .metrics { grid-template-columns: 1fr; padding: var(--spacer-tiny) var(--space-5); min-height: 0; }
+  .metrics__left { justify-content: flex-start; }
+  .metrics__big { font-size: 8rem; }
+  .metrics__big-label, .metrics__group-head { font-size: 1rem; line-height: 1.5rem; }
+  .metrics__right { margin-top: var(--spacer-tiny); }
+  .metrics__stat { grid-template-columns: 4.5rem 1fr; column-gap: var(--space-4); }
+  .metrics__stat--callout .metrics__value { font-size: 3.5rem; line-height: 3.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .story--metrics [data-from] { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- Work page (Figma Work/Ideas G 2447:40961) ---------- */
+.btn--secondary { color: var(--black); background: var(--muted); border-color: var(--muted); }
+.btn--secondary:hover { color: var(--white); background: var(--black); border-color: var(--black); }
+
+.work { padding-top: var(--spacer-large); }
+.work--other { padding-top: var(--spacer-tiny); }
+.work__title { letter-spacing: -0.01em; }
+.work__heading { margin-top: var(--spacer-medium); margin-bottom: var(--spacer-tiny); }
+.work__divider { margin: calc(var(--spacer-large) * 0.6) 0 0; border: 0; border-top: 1px solid var(--black); }
+.work__intro { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--spacer-tiny); }
+.work__intro p { max-width: 47.5rem; }
+
+.work-card {
+  display: grid; grid-template-columns: minmax(0, 589fr) minmax(0, 638fr); column-gap: 5.3125rem;
+  min-height: 22.5rem;
+}
+.work-card + .work-card { margin-top: 7.5rem; }
+.work-card__content { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+.work-card__image {
+  margin-top: var(--space-4); aspect-ratio: 638 / 344; align-self: start;
+  background: var(--surface-image); border-radius: var(--radius-lg); overflow: hidden;
+}
+.work-card__image img { width: 100%; height: 100%; object-fit: cover; }
+.work-card__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.work-card__soon { color: var(--muted-text); }
+
+.work-meta { display: flex; flex-wrap: wrap; gap: var(--space-3); width: 100%; margin: 0; }
+.work-meta__item { display: flex; flex-direction: column; gap: var(--space-1); width: 7.5rem; }
+.work-meta__item:nth-child(4) { width: 11.1875rem; }
+.work-meta dt { color: var(--muted-text); }
+.work-meta dd { margin: 0; }
+.work-meta--item { gap: 1.125rem; }
+.work-meta--item .work-meta__item { width: 9.125rem; }
+
+.work-list { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--muted); }
+.work-item {
+  display: grid; grid-template-columns: 4rem 1fr; column-gap: var(--space-5);
+  padding: var(--space-6) 0; border-top: 1px solid var(--muted);
+}
+.work-item__number { color: var(--muted-text); }
+.work-item__body { display: flex; flex-direction: column; align-items: flex-start; gap: 1.3125rem; min-width: 0; }
+.work-item__summary { display: flex; flex-direction: column; gap: var(--space-1); max-width: 65rem; }
+.work-item__summary .t-caption { color: var(--muted-text); }
+.work-impact {
+  display: flex; gap: var(--space-2); padding: var(--space-2); border-radius: 4px;
+  background: var(--black); color: var(--white);
+  font-size: 1.0625rem; line-height: 1.25rem; font-weight: 700;
+}
+.work-impact__label { min-width: 5rem; }
+.work-skills { display: flex; gap: var(--space-2); width: 100%; padding-top: var(--space-3); }
+.work-skills__label { flex: none; width: 5rem; line-height: 2rem; color: var(--muted-text); }
+.work-skills__list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
+.work-skill { display: flex; align-items: center; gap: var(--space-2); padding: 0.375rem 0; color: var(--muted-text); }
+.work-skill img { width: 1rem; height: 1rem; flex: none; }
+
+@media (max-width: 699px) {
+  .work-card { grid-template-columns: 1fr; row-gap: var(--space-5); min-height: 0; }
+  .work-card + .work-card { margin-top: var(--spacer-medium); }
+  .work-card__image { margin-top: 0; }
+  .work-meta__item, .work-meta__item:nth-child(4), .work-meta--item .work-meta__item { width: calc(50% - var(--space-3)); }
+  .work-item { grid-template-columns: 2.5rem 1fr; column-gap: var(--space-3); padding: var(--space-5) 0; }
+  .work-impact { flex-wrap: wrap; }
+  .work-skills { flex-direction: column; gap: 0; }
+}
+
+/* ---------- Home (Figma Home/13 Combined v13) ---------- */
+.home-hero {
+  background: linear-gradient(180deg, #f07a2e, #e8431f);
+  min-height: 56.25rem; /* 900 */
+  display: flex; align-items: flex-end; overflow: clip;
+  margin-top: calc(var(--nav-height) * -1); padding-top: var(--nav-height);
+  border-bottom: 4px solid #e8431f;
+}
+.home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 56.25rem; }
+.home-hero__id { position: absolute; top: 3.25rem; left: var(--page-margin); }
+.home-hero__title { letter-spacing: -0.01em; }
+.home-hero__mark {
+  display: flex; align-items: flex-start; margin: 0 0 -0.1365em; padding-top: var(--space-4);
+  font-size: min(16.875rem, 18.8vw); line-height: 1; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap;
+}
+.home-hero__mark span { font-size: 0.27em; font-weight: 400; letter-spacing: 0; line-height: 1; margin-left: 0.1em; margin-top: 0.1em; }
+.home-hero + .container { padding-top: 12.5rem; }
+
+.home-lead { max-width: 81.75rem; padding-inline: 0.75rem; }
+.home-lead p { font-size: 2.125rem; line-height: 3rem; font-weight: 500; letter-spacing: -0.03em; }
+.home-lead p + p { margin-top: 3rem; }
+.home-lead mark { background: none; color: #ea4e22; }
+
+.home__heading { margin-bottom: var(--spacer-tiny); }
+.home__heading--muted { color: var(--muted-text); }
+.home__rule { margin: var(--spacer-large) 0 var(--space-5); border: 0; border-top: 1px solid var(--black); }
+.home__rule--muted { border-top-color: var(--muted); }
+.home-lead + .home__heading { margin-top: var(--spacer-medium); }
+.home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--space-5); margin: 0 0 0; padding: 0 0.75rem; list-style: none; }
+.home-skill { display: flex; align-items: center; gap: var(--space-4); font-size: 1.5rem; line-height: 2rem; font-weight: 500; }
+.home-skill img { width: 2rem; height: 2rem; flex: none; }
+.home__all { margin-top: var(--spacer-medium); }
+.home .work-card:first-of-type { margin-top: 0; }
+
+.home-exp { display: grid; grid-template-columns: minmax(0, 496fr) minmax(0, 816fr); column-gap: var(--space-6); padding-top: var(--space-5); }
+.home-exp__list { margin: 0; padding: 0; list-style: none; }
+.home-exp__row { display: grid; grid-template-columns: 1fr auto; column-gap: var(--space-5); padding: var(--space-5) 0 var(--space-3); border-bottom: 1px solid var(--muted-text); }
+.home-exp__row:first-child { padding-top: 0; }
+.home-exp__row h3 { grid-column: 1; }
+.home-exp__role { grid-column: 1; grid-row: 2; color: var(--muted-text); }
+.home-exp__dates { grid-column: 2; grid-row: 1; color: var(--muted-text); text-align: right; align-self: start; padding-top: 0.625rem; }
+
+.home-quote { margin: 0; padding: var(--spacer-medium) 0 var(--space-6); border-bottom: 1px solid var(--muted); max-width: 68.75rem; }
+.home-quote:last-child { border-bottom: 0; }
+.home-quote__text { margin: 0 0 var(--space-5); font-size: 3rem; line-height: 3.625rem; font-weight: 500; letter-spacing: -0.02em; }
+
+.home-slow { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: var(--space-4) 7.5rem; margin-top: var(--spacer-large); align-items: start; }
+.home-slow__logo { width: 17.5rem; height: 17.5rem; }
+.home-slow__copy { display: flex; flex-direction: column; gap: var(--space-5); max-width: 56.25rem; }
+.home-slow__imgs { grid-column: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.home-slow__imgs img { width: 100%; aspect-ratio: 296 / 400; object-fit: cover; }
+/* PLACEHOLDER watermark, removed before launch */
+.placeholder-mark { position: relative; overflow: clip; }
+.placeholder-mark::after {
+  content: "PLACEHOLDER"; position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 2.2rem; font-weight: 700; color: rgba(255,255,255,.9); text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  transform: rotate(20deg); pointer-events: none;
+}
+
+@media (max-width: 999px) {
+  .home-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-exp { grid-template-columns: 1fr; row-gap: var(--space-5); }
+  .home-slow { grid-template-columns: 1fr; }
+  .home-slow__imgs { grid-column: 1; }
+}
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .home-hero, .home-hero .container { min-height: 36rem; }
+  .home-hero__id { top: 3rem; }
+  .home-hero + .container { padding-top: var(--spacer-large); }
+  .home-lead { padding-inline: 0; }
+  .home-lead p { font-size: 1.5rem; line-height: 2rem; }
+  .home-skills { grid-template-columns: 1fr; padding-inline: 0; }
+  .home-skill { font-size: 1.25rem; }
+  .home-quote__text { font-size: 1.75rem; line-height: 2.25rem; }
+  .home-exp__row { grid-template-columns: 1fr; }
+  .home-exp__dates { grid-column: 1; grid-row: 3; text-align: left; padding-top: 0; }
+  .home-slow__imgs { grid-template-columns: 1fr; }
+}

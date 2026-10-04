@@ -1,0 +1,106 @@
+<title>__TITLE__</title>
+<style>
+/* Layout: copy column left, art stage right, stage notes and transport underneath, mirroring a Figma storyboard frame. */
+:root{
+  --bg:#f6f6f4; --panel:#ffffff; --fg:#1b1b1a; --muted:#6a6a66; --line:#dcdcd7;
+  --note-bg:#dff3d9; --note-fg:#1d3a17; --accent:#1b1b1a; --accent-fg:#ffffff;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--panel:#1f1f1e;--fg:#ececea;--muted:#9a9a95;--line:#34342f;--note-bg:#25391f;--note-fg:#d4eccb;--accent:#ececea;--accent-fg:#161615;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161615;--panel:#1f1f1e;--fg:#ececea;--muted:#9a9a95;--line:#34342f;--note-bg:#25391f;--note-fg:#d4eccb;--accent:#ececea;--accent-fg:#161615;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.5;padding-inline:16px;padding-block:20px}
+*{box-sizing:border-box}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+h1{font-size:15px;font-weight:600;margin:0}
+.meta{color:var(--muted);font-size:13px}
+.frame{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:clamp(16px,3vw,40px);display:flex;flex-direction:column;gap:28px}
+.copy{max-width:640px;min-width:0}
+.copy h2{font-size:clamp(30px,4.2vw,48px);line-height:1.1;font-weight:600;margin:0;letter-spacing:-.01em}
+.copy h3{font-size:clamp(20px,2.6vw,32px);line-height:1.2;font-weight:500;margin:6px 0 0;text-wrap:balance}
+.copy p{font-size:16px;line-height:1.55;margin:16px 0 0;white-space:pre-line;min-height:7.5em}
+.copy p .new{animation:fadeIn .8s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.art{background:#fff;border-radius:10px;border:1px solid #e6e6e2;position:relative;overflow:hidden;width:100%}
+.art .box{position:relative;width:100%}
+.art img{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply;visibility:hidden;clip-path:inset(0 0 0 0)}
+.art img.on{visibility:visible}
+.art img.reveal{animation:wipe var(--dur,1.6s) cubic-bezier(.4,0,.2,1) both}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0);opacity:.2}to{clip-path:inset(0 0 0 0);opacity:1}}
+.notes{display:grid;gap:12px}
+.note{background:var(--note-bg);color:var(--note-fg);border-radius:6px;padding:12px 16px;max-width:640px}
+.note b{display:block;font-size:12px;margin-bottom:2px}
+.note span{font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:7px 14px;border-radius:6px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+button:focus-visible,select:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+button:disabled{opacity:.4;cursor:default}
+.pills{display:flex;gap:6px}
+.pills button{padding:7px 12px;font-variant-numeric:tabular-nums}
+.pills button[aria-current="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+label{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+select{font:inherit;font-size:13px;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--fg)}
+.spacer{flex:1}
+@media(min-width:900px){.frame{display:grid;grid-template-columns:minmax(0,1fr);}}
+@media(prefers-reduced-motion:reduce){.art img.reveal,.copy p .new{animation-duration:.01s}}
+</style>
+<div class="wrap">
+  <header><h1 id="ttl"></h1><div class="meta">Storyboard preview · stages reveal cumulatively, new parts wipe in left to right</div></header>
+  <div class="frame">
+    <div class="copy"><h2>Approach</h2><h3 id="sub"></h3><p id="body"></p></div>
+    <div class="art" id="art"><div class="box" id="box"></div></div>
+  </div>
+  <div class="notes"><div class="note"><b id="nh"></b><span id="nt"></span></div></div>
+  <div class="bar">
+    <button class="primary" id="play">Play all</button>
+    <button id="prev">Back</button><button id="next">Next</button>
+    <div class="pills" id="pills" role="group" aria-label="Stage"></div>
+    <div class="spacer"></div>
+    <label for="spd">Speed <select id="spd"><option value="1.6">Normal</option><option value="3">Slow</option><option value="0.9">Fast</option></select></label>
+    <button id="replay">Replay stage</button>
+  </div>
+</div>
+<script>
+const D=__DATA__;
+const N=D.stages.length;
+const box=document.getElementById('box');
+box.style.aspectRatio=D.wh[0]+' / '+D.wh[1];
+document.getElementById('ttl').textContent=D.label+' Approach';
+const imgs=D.imgs.map((s,i)=>{const im=new Image();im.src=s;im.alt='';box.appendChild(im);return im;});
+const pills=document.getElementById('pills');
+const pb=D.stages.map((_,i)=>{const b=document.createElement('button');b.textContent=i+1;b.setAttribute('aria-label','Stage '+(i+1));b.onclick=()=>{stop();show(i,true)};pills.appendChild(b);return b;});
+let cur=0,timer=null,playing=false;
+const dur=()=>parseFloat(document.getElementById('spd').value);
+function render(i,animate,prev){
+  const s=D.stages[i];
+  document.getElementById('sub').textContent=s.sub;document.getElementById('sub').hidden=!s.sub;
+  const body=document.getElementById('body');
+  const p=prev!=null&&prev<i?D.stages[prev].copy.trim():null;
+  body.textContent='';
+  if(animate&&p&&s.copy.startsWith(p)&&s.copy.length>p.length){body.append(p);const sp=document.createElement('span');sp.className='new';sp.textContent=s.copy.slice(p.length);body.append(sp);}
+  else body.textContent=s.copy;
+  document.getElementById('nh').textContent='Stage '+(i+1)+' of '+N+' · animation notes';
+  document.getElementById('nt').textContent=s.note;
+  pb.forEach((b,k)=>b.setAttribute('aria-current',k===i?'true':'false'));
+  document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===N-1;
+  imgs.forEach((im,k)=>{
+    im.classList.remove('reveal');
+    im.classList.toggle('on',k<=i);
+    if(animate&&k===i){void im.offsetWidth;im.style.setProperty('--dur',dur()+'s');im.classList.add('reveal');}
+  });
+}
+function show(i,animate){const prev=cur;cur=i;render(i,animate,prev===i?null:prev);}
+function stop(){playing=false;clearTimeout(timer);document.getElementById('play').textContent='Play all';}
+function step(){ if(cur>=N-1){stop();return;} show(cur+1,true); timer=setTimeout(step,dur()*1000+2200); }
+document.getElementById('play').onclick=()=>{
+  if(playing){stop();return;}
+  playing=true;document.getElementById('play').textContent='Pause';
+  show(0,true);timer=setTimeout(step,dur()*1000+2200);
+};
+document.getElementById('prev').onclick=()=>{stop();show(Math.max(0,cur-1),false)};
+document.getElementById('next').onclick=()=>{stop();show(Math.min(N-1,cur+1),true)};
+document.getElementById('replay').onclick=()=>{stop();show(cur,true)};
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')document.getElementById('next').click();if(e.key==='ArrowLeft')document.getElementById('prev').click();});
+render(0,false,null);
+</script>

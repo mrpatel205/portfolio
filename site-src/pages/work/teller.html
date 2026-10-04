@@ -1,0 +1,39 @@
+<!-- current: work -->
+<x-case-study slug="teller" page="work/teller"
+  title="Teller transformation · NAB case study · MRPATEL"
+  description="Designing NAB's branch teller transactions one transaction type at a time, for a single big-bang release.">
+<!-- Built from components: see tools/components.py for what each x- tag does.
+     In progress: only the hero and Approach are built so far. The rest of the page
+     (Situation, Task, Skills, Key challenges, Impact, Learnings) follows the Figma frame. -->
+
+<x-hero placeholder>
+  <x-title>Teller transformation</x-title>
+  <x-meta>
+    <x-item label="Company">NAB</x-item>
+    <x-item label="Industry">Fin-Tech</x-item>
+    <x-item label="Duration">Oct 24 to Jun 26</x-item>
+    <x-item label="Channel">React mini web app</x-item>
+  </x-meta>
+</x-hero>
+
+<x-story id="approach" heading="Approach" subheading="Process, sized to constraints" svg="teller-approach" stages="4">
+  <p>The programme was planned as one big-bang release covering <span class="story-mark" data-stage="1">every withdrawal, payment and deposit transaction type</span>, but we designed them <span class="story-mark" data-stage="1">one at a time</span>. <span data-from="2">Each ran <span class="story-mark" data-stage="2">its own design process</span>, <span class="story-mark" data-stage="3">sized to its breadth and complexity, and to the time and capacity we actually had</span>.</span></p>
+  <p data-from="4">Some got <span class="story-mark" data-stage="4">deep discovery</span>: time in branch, moderated testing and workshops with our SMEs. Others didn't have that luxury, so <span class="story-mark" data-stage="4">the process flexed to match</span>.</p>
+</x-story>
+
+<x-metrics id="research" heading="Research" subheading="Evidence in place of live data" eyebrow="Research I owned">
+  <p>Without real-world feedback for ~18&nbsp;months, we used testing rounds and branch observation to cut experience risk before go-live.</p>
+  <x-headline value="22" label="Hours of moderated testing" note="11 on deposits · 11 on withdrawals"/>
+  <x-group heading="Deposits">
+    <x-stat value="5" label="Days observing in branch" note="82 transactions · ~10 tellers at the counter" callout/>
+    <x-stat value="16" label="Rounds of moderated testing"/>
+  </x-group>
+  <x-group heading="Withdrawals">
+    <x-stat value="14" label="Rounds of moderated testing"/>
+    <x-stat value="3" label="Quant surveys"/>
+  </x-group>
+</x-metrics>
+
+<x-next href="/work/budgets/" title="Making budgeting (that little bit) easier" target="budgets" label="Previous case study"/>
+
+</x-case-study>

@@ -1,0 +1,83 @@
+<!-- current: work -->
+<!-- STARTER: copy to site-src/pages/work/<slug>.html, fill in, run python3 tools/build.py.
+     Not built itself (only site-src/pages/ is). Components are documented in tools/components.py.
+     Images go in public/assets/img/<slug>/ exported @2x; width/height are the CSS size (half the pixels). -->
+<x-case-study slug="SLUG" page="work/SLUG"
+  title="CASE STUDY TITLE · COMPANY PROJECT case study · MRPATEL"
+  description="One sentence for search results and link previews.">
+
+<x-hero image="/assets/img/SLUG/hero.png" width="1312" height="656" alt="Describe the hero image.">
+  <x-title>Case study <br>title</x-title>
+  <x-meta>
+    <x-item label="Company">…</x-item>
+    <x-item label="Industry">…</x-item>
+    <x-item label="Duration">…</x-item>
+    <x-item label="Channel">…</x-item>
+  </x-meta>
+  <x-meta>
+    <x-item label="Team">…</x-item>
+    <x-item label="How I helped">…</x-item>
+  </x-meta>
+</x-hero>
+
+<x-scene id="situation" heading="Situation">
+  <p><strong>Lead line.</strong> …</p>
+  <x-visual placeholder/>
+</x-scene>
+
+<x-scene id="task" heading="Task" subheading="…">
+  <p>…</p>
+  <x-visual placeholder/>
+</x-scene>
+
+<x-skills>
+  <x-skill icon="search">Research &amp; Synthesis</x-skill>
+  <!-- icon = a Lucide name that exists in public/assets/icons/ -->
+</x-skills>
+
+<x-pause id="approach" heading="Approach">
+  <p><strong>Lead line.</strong></p>
+  <p>…</p>
+</x-pause>
+
+<x-challenges>
+  <x-topic id="first-challenge" heading="First challenge">
+    <x-stage>
+      <p>…</p>
+      <x-visual src="/assets/img/SLUG/….png" width="640" height="480" caption="…" alt="…"/>
+    </x-stage>
+  </x-topic>
+  <x-topic id="text-only-challenge" heading="A challenge with no image">
+    <x-stage>
+      <p>…</p>
+    </x-stage>
+  </x-topic>
+</x-challenges>
+
+<!-- OR: Key challenges as a numbered accordion (use instead of x-challenges above).
+     Panels are closed by default; numbers 01, 02… come from the order. -->
+<x-accordion>
+  <p>Intro to the challenges. End with a prompt such as "Open any challenge below."</p>
+  <x-panel id="first-challenge" heading="First challenge">
+    <p><strong>Lead line.</strong></p>
+    <p>…</p>
+    <x-visual src="/assets/img/SLUG/….png" width="640" height="496" caption="…" alt="…"/>
+  </x-panel>
+  <x-panel id="text-only-challenge" heading="A challenge with no image">
+    <p>…</p>
+  </x-panel>
+</x-accordion>
+
+<x-final-visualssrc="/assets/img/SLUG/final-visuals.png" width="1312" height="…"
+  steps-label="…" alt="…">
+  <x-screen src="/assets/img/SLUG/final-1.png" width="302" height="654" alt="…"/>
+</x-final-visuals>
+
+<x-impact lead="One-line outcome.">
+  <p>…</p>
+  <x-metric label="…" value="…"/>
+</x-impact>
+
+<x-next href="/work/NEXT-SLUG/" title="Next case study name" target="NEXT-SLUG"/>
+
+</x-case-study>

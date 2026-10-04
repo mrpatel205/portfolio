@@ -1,0 +1,84 @@
+<svg width="2400" height="1096" viewBox="0 0 2400 1096" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="TMP export &#226;&#128;&#148; tal">
+<rect width="2400" height="1096" rx="16" fill="white"/>
+<text id="01  IMMERSION" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="230.328" y="203.227">01  IMMERSION</tspan></text>
+<text id="02  GAP ANALYSIS" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="829.984" y="203.227">02  GAP ANALYSIS</tspan></text>
+<text id="03  FIVE PHASES, SHIPPED IN SPRINTS" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1613.1" y="203.227">03  FIVE PHASES, SHIPPED IN SPRINTS</tspan></text>
+<circle id="scope &#226;&#128;&#148; insurance landscape" cx="320" cy="540" r="210" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown" cx="230" cy="440" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_2" cx="340" cy="410" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_3" cx="430" cy="490" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_4" cx="250" cy="560" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_5" cx="380" cy="600" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_6" cx="300" cy="650" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="open dot &#226;&#128;&#148; unknown_7" cx="440" cy="610" r="15" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; known" cx="310" cy="510" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; known_2" cx="200" cy="500" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; known_3" cx="400" cy="540" r="15" fill="#737373"/>
+<path id="arrow" d="M570 540H690M674 551L690 540L674 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="link &#226;&#128;&#148; TAL funnel" d="M780 460H1100" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="link &#226;&#128;&#148; Suncorp funnel" d="M780 620H1100" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; compared" d="M780 480V600" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; compared_2" d="M860 480V600" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; compared_3" d="M940 480V600" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; compared_4" d="M1020 480V600" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; compared_5" d="M1100 480V600" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="dot &#226;&#128;&#148; TAL step" cx="780" cy="460" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Suncorp step" cx="780" cy="620" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; TAL step_2" cx="860" cy="460" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Suncorp step_2" cx="860" cy="620" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; TAL step_3" cx="940" cy="460" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Suncorp step_3" cx="940" cy="620" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; TAL step_4" cx="1020" cy="460" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Suncorp step_4" cx="1020" cy="620" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; TAL step_5" cx="1100" cy="460" r="15" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; Suncorp step_5" cx="1100" cy="620" r="15" fill="#737373"/>
+<text id="TAL" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="765" y="421.5">TAL</tspan></text>
+<text id="Suncorp" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="765" y="673.5">Suncorp</tspan></text>
+<path id="arrow_2" d="M1170 540H1290M1274 551L1290 540L1274 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect id="hub outline &#226;&#128;&#148; Eligibility" x="1370" y="470" width="140" height="140" rx="21" stroke="#737373" stroke-width="3"/>
+<circle id="halo" cx="1440" cy="540" r="52" fill="#EBEBEB"/>
+<circle id="focus &#226;&#128;&#148; Eligibility" cx="1440" cy="540" r="22" fill="black"/>
+<text id="Eligibility" fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="1390.61" y="661.5">Eligibility</tspan></text>
+<path id="arrow &#226;&#128;&#148; short" d="M1519.25 540H1556.75M1545.25 549.5L1556.75 540L1545.25 530.5" stroke="#737373" stroke-width="3"/>
+<rect id="hub outline &#226;&#128;&#148; Quick Quote" x="1570" y="470" width="140" height="140" rx="21" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; Quick Quote" cx="1640" cy="540" r="18" fill="#737373"/>
+<text id="Quick Quote" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1575.73" y="661.5">Quick Quote</tspan></text>
+<path id="arrow &#226;&#128;&#148; short_2" d="M1719.25 540H1756.75M1745.25 549.5L1756.75 540L1745.25 530.5" stroke="#737373" stroke-width="3"/>
+<rect id="hub outline &#226;&#128;&#148; Underwriting" x="1770" y="470" width="140" height="140" rx="21" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; Underwriting" cx="1840" cy="540" r="18" fill="#737373"/>
+<text id="Underwriting" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1772.6" y="661.5">Underwriting</tspan></text>
+<path id="arrow &#226;&#128;&#148; short_3" d="M1919.25 540H1956.75M1945.25 549.5L1956.75 540L1945.25 530.5" stroke="#737373" stroke-width="3"/>
+<rect id="hub outline &#226;&#128;&#148; Review Application" x="1970" y="470" width="140" height="140" rx="21" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; Review Application" cx="2040" cy="540" r="18" fill="#737373"/>
+<text id="Review Application" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="2002.74" y="661.5">Review </tspan><tspan x="1981.99" y="688.5">Application</tspan></text>
+<path id="arrow &#226;&#128;&#148; short_4" d="M2119.25 540H2156.75M2145.25 549.5L2156.75 540L2145.25 530.5" stroke="#737373" stroke-width="3"/>
+<rect id="hub outline &#226;&#128;&#148; Confirm &#38; Pay" x="2170" y="470" width="140" height="140" rx="21" stroke="#737373" stroke-width="3"/>
+<circle id="dot &#226;&#128;&#148; Confirm &#38; Pay" cx="2240" cy="540" r="18" fill="#737373"/>
+<text id="Confirm &#38; Pay" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="2166.46" y="661.5">Confirm &#38; Pay</tspan></text>
+<circle id="dot &#226;&#128;&#148; weekly showcase" cx="1400" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_2" cx="1440" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_3" cx="1480" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_4" cx="1520" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_5" cx="1560" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_6" cx="1600" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_7" cx="1640" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_8" cx="1680" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_9" cx="1720" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_10" cx="1760" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_11" cx="1800" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_12" cx="1840" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_13" cx="1880" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_14" cx="1920" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_15" cx="1960" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_16" cx="2000" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_17" cx="2040" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_18" cx="2080" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_19" cx="2120" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_20" cx="2160" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_21" cx="2200" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_22" cx="2240" cy="860" r="8" fill="#737373"/>
+<circle id="dot &#226;&#128;&#148; weekly showcase_23" cx="2280" cy="860" r="8" fill="#737373"/>
+<text id="weekly showcases" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1360" y="911.5">weekly showcases</tspan></text>
+</g>
+</svg>
