@@ -7,6 +7,9 @@
   --white: #ffffff;
   --muted: #ebebeb;
   --muted-text: #6b7280;
+  --button-secondary: #c7c7c7;
+  --button-tertiary-border: #8a8f99;
+  --button-tertiary-text: #333333;
   --surface-dark: #2a2a2a;
   --surface-image: #d9d9d9;
   --tile-dark: rgba(255, 255, 255, 0.1);
@@ -444,8 +447,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   transition: color var(--duration-colour) var(--ease), background-color var(--duration-colour) var(--ease);
 }
 .btn:hover { color: var(--black); background: var(--white); }
-.btn--outlined { color: var(--black); background: transparent; }
-.btn--outlined:hover { color: var(--white); background: var(--black); }
+.btn--outlined { color: var(--button-tertiary-text); background: transparent; border-color: var(--button-tertiary-border); }
+.btn--outlined:hover { color: var(--white); background: var(--black); border-color: var(--black); }
 .btn[hidden] { display: none; }
 
 /* ---------- Accordion (Figma Accordion/Challenge, Style=Numbered) ----------
@@ -755,7 +758,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 
 /* ---------- Work page (Figma Work/Ideas G 2447:40961) ---------- */
-.btn--secondary { color: var(--black); background: var(--muted); border-color: var(--muted); }
+.btn--secondary { color: var(--black); background: var(--button-secondary); border-color: var(--button-secondary); }
 .btn--secondary:hover { color: var(--white); background: var(--black); border-color: var(--black); }
 
 .work { padding-top: var(--spacer-large); }
