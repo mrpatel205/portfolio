@@ -156,7 +156,7 @@ def indent(html, spaces):
 
 
 def prose(node):
-    return f'<div class="prose t-paragraph">\n{indent(node.text(), 2)}\n</div>'
+    return f'<div class="prose t-body-lg">\n{indent(node.text(), 2)}\n</div>'
 
 
 # ---------- Components ----------
@@ -231,17 +231,18 @@ def scene_visual(n):
 
 
 def heading_block(n):
-    """h2 (+ optional subheading) for Situation / Task / Approach."""
+    """Figma V4 titles: eyebrow pill (heading) + H3 title (subheading). With no subheading the
+    pill is the heading. A scene with only a subheading (no pill) is a bare H3."""
     id_ = n.req("id")
-    if "heading" not in n.attrs:  # continuation scene: subheading only, or none
-        if "subheading" not in n.attrs:
-            return ""
-        return f'<h3 class="t-h3 cs-heading" id="{id_}">{n.req("subheading")}</h3>'
-    h = n.req("heading")
-    if n.attrs.get("subheading"):
-        return (f'<div class="cs-heading">\n  <h2 class="t-h2" id="{id_}">{h}</h2>\n'
-                f'  <p class="t-h3">{n.attrs["subheading"]}</p>\n</div>')
-    return f'<h2 class="t-h2 cs-heading" id="{id_}">{h}</h2>'
+    h, sub = n.attrs.get("heading"), n.attrs.get("subheading")
+    if h and sub:
+        return (f'<div class="cs-heading">\n  <p class="cs-pill">{h}</p>\n'
+                f'  <h2 class="t-h3" id="{id_}">{sub}</h2>\n</div>')
+    if h:
+        return f'<div class="cs-heading">\n  <h2 class="cs-pill" id="{id_}">{h}</h2>\n</div>'
+    if sub:
+        return f'<h2 class="t-h3 cs-heading" id="{id_}">{sub}</h2>'
+    return ""
 
 
 def scene(n):
@@ -265,7 +266,7 @@ def skills(n):
     return f"""<div class="cs-section cs-hold" data-section="{id_}">
   <div class="cs-hold__frame">
     <section class="panel skills" aria-labelledby="{id_}">
-      <h2 class="t-h2" id="{id_}">{n.attrs.get('heading', 'Skills used')}</h2>
+      <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Skills used')}</h2>
       <ul class="skills__list t-body-lg">
 {indent(items, 8)}
       </ul>
@@ -345,9 +346,7 @@ def metrics(n):
     <div class="panel metrics" data-play-target>
       <div class="metrics__left">
         <div class="metrics__header" data-from="1">
-          <p class="metrics__eyebrow">{n.req('eyebrow')}</p>
-          <h2 class="t-h2" id="{id_}">{n.req('heading')}</h2>
-          <p class="t-h3 metrics__subheading">{n.req('subheading')}</p>
+          <h2 class="t-h3 metrics__subheading" id="{id_}">{n.attrs.get('subheading') or n.req('heading')}</h2>
 {indent(n.text().replace('<p>', '<p class="t-body-lg metrics__lead">'), 10)}
         </div>
         <div class="metrics__headline">
@@ -371,7 +370,7 @@ def challenges(n):
     topics = "\n\n".join(topic(t) for t in n.kids("topic"))
     return f"""<section class="cs-challenges" aria-labelledby="{id_}">
   <div class="cs-challenges__title-track">
-    <h2 class="t-h2 cs-challenges__title" id="{id_}">{n.attrs.get('heading', 'Key Challenges')}</h2>
+    <div class="cs-challenges__title"><h2 class="cs-pill" id="{id_}">{n.attrs.get('heading', 'Key challenges')}</h2></div>
   </div>
 
 {indent(topics, 2)}
@@ -423,7 +422,10 @@ def accordion(n):
     cls = "cs-section accordion" + (" accordion--read-more" if read_more else "") + (" accordion--thumbnail" if thumb else "")
     return f"""<section class="{cls}" aria-labelledby="{id_}" data-section="{id_}" data-accordion>
   <div class="accordion__intro">
-    <h2 class="t-h2" id="{id_}">{n.attrs.get('heading', 'Key challenges')}</h2>
+    <div class="cs-heading">
+      <p class="cs-pill">{n.attrs.get('heading', 'Key challenges')}</p>
+      <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Key challenges')}</h2>
+    </div>
     <div class="prose t-paragraph">
 {indent(n.text(), 6)}
     </div>
@@ -574,19 +576,25 @@ def impact(n):
         f'aria-label="{m.req("value")}">{m.req("value")}</dd></div>'
         for m in n.kids("metric"))
     signals = "\n".join(
-        f'<li class="impact__signal"><p class="t-paragraph-bold">{g.req("heading")}</p>'
-        f'<p class="t-paragraph">{g.text()}</p></li>' for g in n.kids("signal"))
+        f'<li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span>'
+        f'<div><p class="t-paragraph-bold">{g.req("heading")}</p>'
+        f'<p class="t-paragraph impact__muted">{g.text()}</p></div></li>' for g in n.kids("signal"))
     signals_html = f'\n    <ul class="impact__signals">\n{indent(signals, 6)}\n    </ul>' if signals else ""
-    stamp_html = f'\n    <p class="impact__stamp t-caption">{n.attrs["stamp"]}</p>' if n.attrs.get("stamp") else ""
+    stamp_html = (f'\n    <p class="impact__stamp t-caption"><span class="impact__stamp-dot" aria-hidden="true"></span>'
+                  f'{n.attrs["stamp"]}</p>') if n.attrs.get("stamp") else ""
     return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}" data-progress-end>
   <div class="impact__copy">
-    <h2 class="t-h2" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
-    <p class="t-paragraph-bold impact__lead">{n.req('lead')}</p>
-{indent(n.text().replace('<p>', '<p class="t-paragraph">'), 4)}{signals_html}{stamp_html}
+    <div class="impact__heading">
+      <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
+      <p class="t-body-lg impact__lead impact__muted">{n.req('lead')}</p>
+{indent(n.text().replace('<p>', '<p class="t-paragraph">'), 6)}
+    </div>{stamp_html}
   </div>
-  <dl class="impact__metrics">
-{indent(metrics, 4)}
-  </dl>
+  <div class="impact__right">
+    <dl class="impact__metrics">
+{indent(metrics, 6)}
+    </dl>{signals_html}
+  </div>
 </section>"""
 
 

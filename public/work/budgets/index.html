@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791087960">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791116090">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -65,8 +65,10 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
 
     <section class="scene" aria-labelledby="situation" data-section="situation">
       <div class="scene__copy">
-        <h2 class="t-h2 cs-heading" id="situation">Situation</h2>
-        <div class="prose t-paragraph">
+        <div class="cs-heading">
+          <h2 class="cs-pill" id="situation">Situation</h2>
+        </div>
+        <div class="prose t-body-lg">
           <p><strong>Everyone budgets their finances in one way or another.</strong> NAB's September 2023 Financial Wellbeing Research ranked budgeting as a priority for FY24, particularly among customers aged 18-35 with low-to-medium financial control or resilience.</p>
             <p>That cohort and others, however, had no way to track spending against a budget in-app, research showed they used spreadsheets or self-made "bucket" accounts instead. NAB also lagged behind competing banking apps such as CBA, which offered its own budgeting tool linked to customers' spending data.</p>
         </div>
@@ -81,10 +83,10 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
     <section class="scene" aria-labelledby="task" data-section="task">
       <div class="scene__copy">
         <div class="cs-heading">
-          <h2 class="t-h2" id="task">Task</h2>
-          <p class="t-h3">Owning it end to end</p>
+          <p class="cs-pill">Task</p>
+          <h2 class="t-h3" id="task">Owning it end to end</h2>
         </div>
-        <div class="prose t-paragraph">
+        <div class="prose t-body-lg">
           <p>I was the sole designer and researcher on Budgets from MVP through development handover; the prior team's experience canvas set the initial problem framing. I owned research, design, concept testing, and interaction design end-to-end, working directly with the product owner, business analyst, and engineering stakeholders.</p>
         </div>
       </div>
@@ -93,7 +95,7 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
     <div class="cs-section cs-hold" data-section="skills">
       <div class="cs-hold__frame">
         <section class="panel skills" aria-labelledby="skills">
-          <h2 class="t-h2" id="skills">Skills used</h2>
+          <h2 class="t-h3" id="skills">Skills used</h2>
           <ul class="skills__list t-body-lg">
             <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></svg></span>Research &amp; Synthesis</li>
             <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10" cy="7" r="4" /> <path d="M10.3 15H7a4 4 0 0 0-4 4v2" /> <circle cx="17" cy="17" r="3" /> <path d="m21 21-1.9-1.9" /></svg></span>Recruitment screening</li>
@@ -116,8 +118,10 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
              data-stages="4" style="--stages: 4; --story-ratio: 3.659">
       <div class="story__pin">
         <div class="story__copy">
-          <h2 class="t-h2 cs-heading" id="approach">Approach</h2>
-          <div class="prose t-paragraph">
+          <div class="cs-heading">
+            <h2 class="cs-pill" id="approach">Approach</h2>
+          </div>
+          <div class="prose t-body-lg">
             <p><strong><span class="story-mark" data-stage="1">The problem was already framed when I joined</span>; how to solve it wasn't.</strong></p>
               <p data-from="2">I ran <span class="story-mark" data-stage="2">two rounds of research and testing to define and refine the approach</span> to the budgets feature<span data-from="3"> and worked close with <span class="story-mark" data-stage="3">my BA and the accessibility team</span> to produce the final detailed figma artefacts<span data-from="4"> to <span class="story-mark" data-stage="4">hand over to engineering</span></span></span>.</p>
           </div>
@@ -234,7 +238,7 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
 
     <section class="cs-challenges" aria-labelledby="challenges">
       <div class="cs-challenges__title-track">
-        <h2 class="t-h2 cs-challenges__title" id="challenges">Key Challenges</h2>
+        <div class="cs-challenges__title"><h2 class="cs-pill" id="challenges">Key challenges</h2></div>
       </div>
 
       <div class="topic" data-topic="accounts-vs-categories">
@@ -333,14 +337,18 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
 
     <section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="impact" data-section="impact" data-progress-end>
       <div class="impact__copy">
-        <h2 class="t-h2" id="impact">Impact</h2>
-        <p class="t-paragraph-bold impact__lead">Budgets shipped and is live in the NAB app.</p>
-        <p class="t-paragraph">Adoption has been modest so far: around 4,000 customers logged in during August 2025, averaging 1.7 sessions a month. Across the app overall, those customers average 5.88 sessions, suggesting they're moving back and forth between Budgets and the Overview screen rather than using Budgets in isolation, checking in on other parts of their finances before returning to it.</p>
+        <div class="impact__heading">
+          <h2 class="t-h3" id="impact">Impact</h2>
+          <p class="t-body-lg impact__lead impact__muted">Budgets shipped and is live in the NAB app.</p>
+          <p class="t-paragraph">Adoption has been modest so far: around 4,000 customers logged in during August 2025, averaging 1.7 sessions a month. Across the app overall, those customers average 5.88 sessions, suggesting they're moving back and forth between Budgets and the Overview screen rather than using Budgets in isolation, checking in on other parts of their finances before returning to it.</p>
+        </div>
       </div>
-      <dl class="impact__metrics">
-        <div class="impact__metric"><dt class="t-paragraph-bold">Customers</dt><dd class="t-metric-xl" data-count-to="4000" aria-label="4,000">4,000</dd></div>
-        <div class="impact__metric"><dt class="t-paragraph-bold">sessions p/m</dt><dd class="t-metric-xl" data-count-to="1.7" aria-label="1.7">1.7</dd></div>
-      </dl>
+      <div class="impact__right">
+        <dl class="impact__metrics">
+          <div class="impact__metric"><dt class="t-paragraph-bold">Customers</dt><dd class="t-metric-xl" data-count-to="4000" aria-label="4,000">4,000</dd></div>
+          <div class="impact__metric"><dt class="t-paragraph-bold">sessions p/m</dt><dd class="t-metric-xl" data-count-to="1.7" aria-label="1.7">1.7</dd></div>
+        </dl>
+      </div>
     </section>
 
     <nav class="cs-section cs-section--tight seq-nav" aria-label="More case studies" data-section="next-prev">
@@ -369,7 +377,7 @@ if (/(^|\.)mrpatel\.com$/.test(location.hostname)) {
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791087960" defer></script>
+<script src="/assets/js/site.js?v=1791116090" defer></script>
 </body>
 </html>
 

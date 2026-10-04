@@ -205,7 +205,12 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .t-metric-xl[data-count-to] { font-variant-numeric: tabular-nums; }
 
 .cs-title + .cs-subtitle { margin-top: 0; }
-.cs-heading { display: flex; flex-direction: column; margin-bottom: var(--space-3); }
+.cs-heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-4); }
+.cs-pill { /* Figma eyebrow pill */
+  display: inline-block; margin: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; background: var(--muted); color: var(--black);
+  font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+}
 
 /* Two-column content block: copy left, visual right */
 .cs-block {
@@ -266,26 +271,26 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 /* Key challenges: the title pins for the whole section. Each block holds a little longer
    (--exit); as its hold ends it fades out in place (site.js adds .is-leaving), so it never
    scrolls under the title, and the next block scrolls in from below. */
-.cs-challenges { position: relative; margin-top: var(--spacer-large); }
+.cs-challenges { position: relative; margin-top: var(--spacer-large); --ck-title: 2.75rem; }  /* pill 28px + 16 gap */
 /* Each topic pins its subtitle beneath the title for the whole topic */
 .cs-challenges .topic { position: relative; --sub-h: 2.5rem; }  /* one line of h3; two-line subtitles set 5rem */
 .topic__subtitle-track {
   position: absolute; top: 0; left: 0; z-index: 1;
   /* Unpin with the topic's last block (bottom of the subtitle band = where paragraphs pin) */
-  bottom: calc(100vh - var(--y0) - 4.25rem - var(--sub-h) - var(--space-3));
+  bottom: calc(100vh - var(--y0) - var(--ck-title) - var(--sub-h) - var(--space-4));
   width: calc(50% - var(--gutter) / 2);
   pointer-events: none;
 }
 .topic__subtitle {
-  position: sticky; top: calc(var(--y0) + 4.25rem);
-  margin-top: calc(var(--y0) + 4.25rem - var(--nav-height));
-  padding-bottom: var(--space-3);
+  position: sticky; top: calc(var(--y0) + var(--ck-title));
+  margin-top: calc(var(--y0) + var(--ck-title) - var(--nav-height));
+  padding-bottom: var(--space-4);
   background: var(--white);
   transition: opacity var(--duration-hover) var(--ease);
 }
 .topic.is-leaving .topic__subtitle { opacity: 0; }
 /* Paragraphs pin below title (3.5rem + space-3) and subtitle (--sub-h + space-3) */
-.cs-challenges .scene { --yc: calc(var(--y0) + 4.25rem + var(--sub-h) + var(--space-3)); }
+.cs-challenges .scene { --yc: calc(var(--y0) + var(--ck-title) + var(--sub-h) + var(--space-4)); }
 /* Later stages overlap the previous stage by one screen, so they pin exactly as it leaves:
    the next paragraph fades in on the same spot instead of rising from below */
 .cs-challenges .scene:not(.scene--first) { margin-top: calc(-1 * (100vh - var(--nav-height))); }
@@ -305,13 +310,14 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   width: calc(50% - var(--gutter) / 2);
   pointer-events: none;
   /* End the title's pin as the last block starts scrolling out, so they leave together */
-  bottom: calc(var(--hp) - 4.25rem);
+  bottom: calc(var(--hp) - var(--ck-title));
 }
 .cs-challenges__title {
   position: sticky; top: var(--nav-height);
-  padding: calc(var(--y0) - var(--nav-height)) 0 var(--space-3);
+  padding: calc(var(--y0) - var(--nav-height)) 0 var(--space-4);
   background: var(--white);
 }
+.cs-challenges__title .cs-pill { display: block; width: max-content; }
 
 /* ---------- Hold: pin a whole block in the middle of the viewport ----------
    The block rises into view, pins centred below the nav, and holds for --hold of scroll
@@ -403,7 +409,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   border-radius: var(--radius-xl);
   padding: var(--spacer-large) var(--page-margin);
 }
-.panel.impact { padding-block: var(--spacer-medium); } /* Impact panel: 96px top and bottom per Figma */
+.panel.impact { padding: var(--spacer-medium); } /* Impact panel: 96px all round per Figma */
 
 .skills__list {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) 0;
@@ -416,12 +422,14 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   background: var(--tile-dark); border-radius: var(--radius-md);
 }
 
-.impact { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: center; }
-.impact__copy { max-width: 39.25rem; }
-.impact__lead { margin-top: var(--space-5); }
+.impact { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--spacer-medium); align-items: stretch; }
+.impact__copy { display: flex; flex-direction: column; justify-content: space-between; gap: var(--spacer-tiny); }
+.impact__heading h2 { margin-bottom: var(--space-2); }
+.impact__lead { margin: 0; }
 .impact__lead + p { margin-top: var(--space-2); }
-.impact__metrics { display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacer-tiny); margin: 0; }
-.impact__metric { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-3); }
+.impact__right { display: flex; flex-direction: column; gap: var(--space-6); min-height: 32.5rem; } /* Figma: columns are 520px tall, stamp pinned to the bottom */
+.impact__metrics { display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacer-tiny); margin: 0; }
+.impact__metric { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
 .impact__metric dd { order: -1; }
 
 /* ---------- Button (Figma Button-new) ----------
@@ -635,8 +643,10 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .skills__list { grid-template-columns: 1fr; gap: var(--space-2) 0; margin-top: var(--space-5); }
   .skill { min-height: 3rem; }
   .impact { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
-  .impact__metrics { flex-direction: row; flex-wrap: wrap; align-items: flex-start; column-gap: var(--spacer-tiny); row-gap: var(--space-5); }
-  .impact__metric { align-items: flex-start; gap: var(--space-1); }
+  .panel.impact { padding: var(--spacer-medium) var(--space-5); }
+  .impact__right { min-height: 0; }
+  .impact__metrics { flex-direction: row; flex-wrap: wrap; column-gap: var(--spacer-tiny); row-gap: var(--space-5); }
+  .impact__metric { gap: var(--space-1); }
 
   /* Final visuals: the six screens stacked in a grey panel */
   .final-visuals__full { display: none; }
@@ -825,19 +835,19 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 .home-hero.is-faded::before { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .home-hero::before { transition: none; } }
-.home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(max(40rem, 100vh) - var(--nav-height)); min-height: calc(max(40rem, 100svh) - var(--nav-height)); }
+.home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(max(40rem, 100vh) - var(--nav-height)); min-height: calc(max(40rem, 100svh) - var(--nav-height)); }
 .home-hero__id { position: absolute; top: 3.25rem; left: var(--page-margin); }
-.home-hero__title { letter-spacing: -0.01em; }
+.home-hero__title { letter-spacing: -0.01em; padding-bottom: var(--space-6); } /* 32px under the tagline, matching the cover */
 .home-hero__mark {
-  display: flex; align-items: flex-start; margin: 0 0 -0.1365em; padding-top: var(--space-4);
+  display: flex; align-items: flex-start; margin: 0; padding-top: 4.25rem; /* wordmark top sits 106px from the page top */
   font-size: min(16.875rem, 18.8vw); line-height: 1; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap;
 }
 .home-hero__mark span { font-size: 0.27em; font-weight: 400; letter-spacing: 0; line-height: 1; margin-left: 0.1em; margin-top: 0.1em; }
-.home-hero + .container { padding-top: 12.5rem; }
+.home-hero + .container { padding-top: var(--spacer-small); }
 
-.home-lead { max-width: 81.75rem; padding-inline: 0.75rem; }
+.home-lead { max-width: 51.5rem; }
 .home-lead p { font-size: 2.125rem; line-height: 3rem; font-weight: 500; letter-spacing: -0.03em; }
-.home-lead p + p { margin-top: 3rem; }
+.home-lead p + p { margin-top: var(--spacer-tiny); }
 .home-lead mark { background: none; color: #ea4e22; }
 
 .home__heading { margin-bottom: var(--spacer-tiny); }
@@ -845,7 +855,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home__rule { margin: var(--spacer-large) 0 var(--space-5); border: 0; border-top: 1px solid var(--black); }
 .home__rule--muted { border-top-color: var(--muted); }
 .home-lead + .home__heading { margin-top: var(--spacer-medium); }
-.home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--space-5); margin: 0 0 0; padding: 0 0.75rem; list-style: none; }
+.home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--space-5); margin: 0; padding: 0; list-style: none; }
+.home-skills + .home__rule { margin-top: var(--spacer-medium); }
 .home-skill { display: flex; align-items: center; gap: var(--space-4); font-size: 1.5rem; line-height: 2rem; font-weight: 500; }
 .home-skill img { width: 2rem; height: 2rem; flex: none; }
 .home__all { margin-top: var(--spacer-medium); }
@@ -885,10 +896,10 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .home-hero, .home-hero .container { min-height: 36rem; }
   .home-hero__id { top: 3rem; }
+  .home-hero__mark { padding-top: 6.5rem; } /* clear the two-line caption */
   .home-hero + .container { padding-top: var(--spacer-large); }
-  .home-lead { padding-inline: 0; }
   .home-lead p { font-size: 1.5rem; line-height: 2rem; }
-  .home-skills { grid-template-columns: 1fr; padding-inline: 0; }
+  .home-skills { grid-template-columns: 1fr; }
   .home-skill { font-size: 1.25rem; }
   .home-quote__text { font-size: 1.75rem; line-height: 2.25rem; }
   .home-exp__row { grid-template-columns: 1fr; }
@@ -914,6 +925,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover__right { display: flex; flex-direction: column; gap: var(--space-6); }
 .cover-card { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); min-height: 13.75rem; padding: var(--space-6); background: var(--muted); border-radius: var(--radius-lg); }
 .cover__skills { display: flex; flex-direction: column; gap: var(--space-4); margin-top: calc(var(--spacer-tiny) * -1); }
+.cover-panel { margin-top: calc(var(--spacer-tiny) * -1); } /* 96 gap minus 48 = 48 below Skills */
 .cover-skills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 .cover-skill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-3); background: var(--muted); border-radius: 999px; }
 .cover-skill img { width: 1rem; height: 1rem; flex: none; }
@@ -926,7 +938,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cover { gap: var(--spacer-tiny); padding-block: var(--spacer-tiny); }
-  .cover__skills { margin-top: 0; }
+  .cover__skills, .cover-panel { margin-top: 0; }
   .t-metric-l { font-size: 3rem; line-height: 3.5rem; }
   .cover-stats { gap: var(--space-6); }
   .cover-seq { flex-direction: column; }
@@ -935,9 +947,14 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .cover__head .work-meta__item { width: calc(50% - var(--space-3)); }
 }
 
-/* Impact signals + stamp */
-.impact__signals { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.impact__stamp { margin-top: var(--space-5); opacity: .8; }
+/* Impact signals + stamp (Figma Teller Impact 2461:42558) */
+.impact__signals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-6); }
+.impact__signal { display: flex; gap: var(--space-5); align-items: flex-start; border-top: 1px solid var(--tile-dark); padding-top: var(--space-6); }
+.impact__signal > div { display: flex; flex-direction: column; gap: var(--space-2); }
+.impact__muted { color: var(--link-hover-dark); }
+.impact__dot { flex: none; width: 1rem; height: 1rem; margin-top: .25rem; border-radius: 50%; background: var(--white); }
+.impact__stamp { display: flex; align-items: center; gap: var(--space-3); margin: 0; color: var(--link-hover-dark); }
+.impact__stamp-dot { flex: none; width: .625rem; height: .625rem; border-radius: 50%; background: var(--white); }
 
 /* ---------- Reveal (2026-10-04) ----------
    Content fades in and rises 12px, same vocabulary as the metrics story: expo.out, 0.5s,
