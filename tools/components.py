@@ -204,8 +204,8 @@ def hero(n):
         groups.append(f'<div class="{cls}">\n{indent(items, 2)}\n</div>')
     back = back_link(n.attrs["back-href"], n.attrs.get("back-label", "Back")) + "\n  " if n.attrs.get("back-href") else ""
     notice = n.kid("notice")
-    notice_html = f'\n  <p class="cs-notice t-caption">{notice.text()}</p>' if notice else ""
-    return f"""<header class="cs-hero" data-section="hero">\n  {back}{notice_html.lstrip()}
+    notice_html = f'<p class="cs-notice t-caption">{notice.text()}</p>\n' if notice else ""
+    return f"""{notice_html}<header class="cs-hero" data-section="hero">\n  {back}
   <h1 class="t-h1 cs-hero__title">{n.kid('title').text()}</h1>
   <dl class="cs-meta t-caption">
 {indent(chr(10).join(groups), 4)}
