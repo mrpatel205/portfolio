@@ -1,17 +1,17 @@
 <!-- current: work -->
 <x-case-study slug="teller" page="work/teller"
-  title="One counter, every transaction · NAB case study · MRPATEL"
-  description="Designing NAB's branch teller transactions one transaction type at a time, for a single big-bang release.">
+  title="One counter, every transaction · Major bank case study · MRPATEL"
+  description="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
 <!-- Built from components: see tools/components.py for what each x- tag does.
      Titles follow Figma Work/Teller V4: eyebrow pill (heading) + H3 (subheading) + Large Body.
      Open: challenge 06 second skill (Usability testing) is my pick for the Figma "[Skill]" placeholder; Final designs 1+3 are not built (placeholders in Figma). -->
 
 <x-hero back-href="/work/teller/summary/" back-label="Back to summary" image="/assets/img/teller/hero.png" width="1312" height="656"
-  alt="A teller's monitor in a NAB branch showing the nabONE Deposit screen: Count cash and deposit amount, with counted notes, coins and a total.">
+  alt="A teller's monitor in a bank branch showing the Deposit screen: Count cash and deposit amount, with counted notes, coins and a total.">
   <x-notice>Some information in this case study has been removed or recreated.</x-notice>
   <x-title>One counter, <br>every transaction</x-title>
   <x-meta>
-    <x-item label="Company">NAB</x-item>
+    <x-item label="Company">Major bank</x-item>
     <x-item label="Industry">Fin-Tech</x-item>
     <x-item label="Duration">Oct 24 to Jun 26</x-item>
     <x-item label="Channel">React mini web app</x-item>
@@ -19,7 +19,7 @@
 </x-hero>
 
 <x-scene id="situation" heading="Situation" subheading="Building for every branch, every banker">
-  <p>At National Australia Bank, eBOBS had powered branch teller transactions — withdrawals, deposits, payments — for nearly 40 years across all 437 of NAB's branches in Australia, run daily by an estimated 1,000+ frontline bankers.</p>
+  <p>At a major bank, a legacy system had powered branch teller transactions — withdrawals, deposits, payments — for nearly 40 years across all 400+ of its branches in Australia, run daily by an estimated 1,000+ frontline bankers.</p>
   <x-visual src="/assets/img/teller/situation-ebobs.png" width="640" height="496" caption="eBOBS (representation)"
     alt="A representation of the eBOBS teller screen: a dense, text-based layout of fields and numeric codes."/>
 </x-scene>
@@ -32,11 +32,11 @@
 </x-scene>
 
 <x-scene id="situation-response" heading="Situation" subheading="The response">
-  <p>Over three years, the programme brought together a cross-functional team of 6 designers and 3 agile squads, working closely with the SME partner Future of Retail, toward a shared vision: removing all switching of systems by migrating withdrawal, deposit, and payment transactions into nabONE — the colleague banking channel built on a modern, API-enabled web stack and NAB's new design system.</p>
+  <p>Over three years, the programme brought together a cross-functional team of 6 designers and 3 agile squads, working closely with the SME partner Future of Retail, toward a shared vision: removing all switching of systems by migrating withdrawal, deposit, and payment transactions into the new colleague banking channel, built on a modern, API-enabled web stack and the bank's new design system.</p>
 </x-scene>
 
 <x-scene id="task" heading="Task" subheading="Withdrawals &amp; Deposits">
-  <p>I picked the Withdrawals epic half way through the programme, after the previous design team had nailed down the core interaction model along with initial designs in Nab's old design system. My job was to own the key complexity in the base experience, uplift everything to the new design system, and take it all the way through to a complete, responsive handover for engineering.</p>
+  <p>I picked the Withdrawals epic half way through the programme, after the previous design team had nailed down the core interaction model along with initial designs in the bank's old design system. My job was to own the key complexity in the base experience, uplift everything to the new design system, and take it all the way through to a complete, responsive handover for engineering.</p>
   <p>Deposits had no head start — I owned it from the design brief through to shipped, responsive design, across every sub-transaction type it spawned.</p>
 </x-scene>
 
@@ -93,7 +93,7 @@
   <x-panel id="old-habits" heading="Removing old teller habits" subtitle="Designing trust into a cash count">
     <x-skill icon="users">Usability testing</x-skill>
     <x-skill icon="eye">Contextual enquiry</x-skill>
-    <x-context>Tellers read nabONE through an eBOBS lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</x-context>
+    <x-context>Tellers read the new system through a legacy lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</x-context>
     <p class="accordion__label">What I did</p>
     <p>I split the TCR into standard accounting inputs and TCR-specific patterns, and tested the TCR-specific ones hardest, since they carried the most risk of old habits misleading tellers. Withdrawal got an Automatic/Custom toggle that hides break-up fields until needed. Deposit's two-screen count became one live screen with Roll back to recount. “Amounts match” and “Counted: $X” tested well as reassurance.</p>
   </x-panel>
@@ -107,9 +107,9 @@
   <x-panel id="design-system" heading="Unfamiliar platform, unready design system" subtitle="From consumer to contributor">
     <x-skill icon="component">Design systems contribution</x-skill>
     <x-skill icon="pen-tool">Visual design</x-skill>
-    <x-context>nabONE's design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and NAB's atomic design conventions, learning the tool and the system's logic at the same time.</x-context>
+    <x-context>The new system's design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and the bank's atomic design conventions, learning the tool and the system's logic at the same time.</x-context>
     <p class="accordion__label">What I did</p>
-    <p>I built fluency fast, then started giving back. I contributed components to the shared library for colleague use cases, including a horizontal radio group and a progress tracker built with the Business Lending team, plus patterns other teams adopted. Through the nabONE Design Guild, I helped extend the system from customer journeys into colleague ones.</p>
+    <p>I built fluency fast, then started giving back. I contributed components to the shared library for colleague use cases, including a horizontal radio group and a progress tracker built with the Business Lending team, plus patterns other teams adopted. Through the Design Guild, I helped extend the system from customer journeys into colleague ones.</p>
   </x-panel>
   <x-panel id="branch-observation" heading="Branch observation" subtitle="Uncovering what the requirements missed">
     <x-skill icon="eye">Contextual enquiry</x-skill>

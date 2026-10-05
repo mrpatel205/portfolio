@@ -10,7 +10,7 @@ so every case study shares one structure and a fix in one place fixes all four.
   <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
     <x-notice>Confidentiality line, shown above the title</x-notice>   optional
     <x-title>Heading, may contain <br></x-title>
-    <x-meta><x-item label="Company">NAB</x-item> …</x-meta>   first group (left)
+    <x-meta><x-item label="Company">Major bank</x-item> …</x-meta>   first group (left)
     <x-meta> … </x-meta>                                       second group (right)
   </x-hero>
 
@@ -80,6 +80,7 @@ so every case study shares one structure and a fix in one place fixes all four.
 Attribute values are used as written (write &amp; and &quot; yourself); they may contain
 inline HTML such as <br> or <strong>.
 """
+import html
 import re
 from pathlib import Path
 
@@ -453,7 +454,7 @@ def numbered_item(p, i, _thumb):
     return f"""<li class="accordion__item" data-reveal data-section="challenge-{pid}">
   <h3 class="accordion__heading">
     <button type="button" class="accordion__trigger" id="{pid}-trigger" aria-expanded="true" aria-controls="{pid}-panel"
-            data-track="accordion_toggle" data-track-target="{pid}">
+            data-track="accordion_toggle" data-track-target="{pid}" data-track-title="{html.escape(p.req('heading'), quote=True)}">
       <span class="accordion__number t-h3" aria-hidden="true">{i:02d}</span>
       <span class="accordion__title t-h3">{p.req('heading')}</span>
       <span class="accordion__icon">{{{{icon:plus}}}}{{{{icon:minus}}}}</span>
@@ -501,7 +502,7 @@ def read_more_item(p, i, thumb):
   <div class="accordion__summary">
     <h3 class="accordion__title t-h3" id="{pid}-title">{title}</h3>{indent(subtitle + skills_html + context_html, 2)}
     <button type="button" class="accordion__trigger accordion__more link" id="{pid}-trigger" aria-expanded="true"
-            aria-controls="{panels}" data-track="accordion_toggle" data-track-target="{pid}"><span
+            aria-controls="{panels}" data-track="accordion_toggle" data-track-target="{pid}" data-track-title="{html.escape(plain_title, quote=True)}"><span
             class="accordion__more-label">Read less</span><span class="visually-hidden">: {plain_title}</span></button>
   </div>
 </div>"""
