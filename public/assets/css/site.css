@@ -120,6 +120,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .t-paragraph { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-regular); }
 .t-paragraph-bold { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-bold); }
 .t-caption { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-regular); }
+.t-caption-bold { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-bold); }
 /* Eyebrows (Figma Typography/Eyebrow/Small and /Large) */
 .t-eyebrow-sm { font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase; }
 .t-eyebrow-lg { font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-lg-tracking); text-transform: uppercase; }
@@ -932,7 +933,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover__right { display: flex; flex-direction: column; gap: var(--space-6); }
 .cover-card { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); min-height: 13.75rem; padding: var(--space-6); background: var(--muted); border-radius: var(--radius-lg); }
 .cover__skills { display: flex; flex-direction: column; gap: var(--space-4); margin-top: calc(var(--spacer-tiny) * -1); }
-.cover-panel { margin-top: calc(var(--spacer-tiny) * -1); } /* 96 gap minus 48 = 48 below Skills */
+.cover__soon { margin: 2.5rem 0 0; }
 .cover-skills { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 .cover-skill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-3); background: var(--muted); border-radius: 999px; }
 .cover-skill img { width: 1rem; height: 1rem; flex: none; }
@@ -946,7 +947,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cover { gap: var(--spacer-tiny); padding-block: var(--spacer-tiny); }
   .cover__head + .cover__hero { margin-top: calc(var(--spacer-medium) - var(--spacer-tiny)); } /* attribution → hero stays spacer-medium */
-  .cover__skills, .cover-panel { margin-top: 0; }
+  .cover__skills { margin-top: 0; }
   .t-metric-l { font-size: 3rem; line-height: 3.5rem; }
   .cover-stats { gap: var(--space-6); }
   .cover-seq { flex-direction: column; }
