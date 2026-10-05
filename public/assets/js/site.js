@@ -26,9 +26,12 @@
      see partials/head.html); always queued on window.dataLayer, logged locally. */
   window.dataLayer = window.dataLayer || [];
   var page = document.body.dataset.page || location.pathname;
+  var summaryOf = document.body.dataset.summaryOf;
 
   function track(event, props) {
-    var payload = Object.assign({ page: page }, props || {});
+    var base = { page: page };
+    if (summaryOf) { base.case_study = summaryOf; base.view = 'summary'; } // summaries share the case_study value of their full study
+    var payload = Object.assign(base, props || {});
     window.dataLayer.push({ event: event, props: payload, ts: Date.now() });
     // PostHog records its own $pageview, so page_view stays local to avoid double counting.
     if (event !== 'page_view' && window.posthog && typeof window.posthog.capture === 'function') {
@@ -44,6 +47,7 @@
 
   var caseStudy = document.body.dataset.caseStudy;
   if (caseStudy) track('case_study_open', { case_study: caseStudy });
+  if (summaryOf) track('case_study_summary_open', { case_study: summaryOf });
 
   // Section views: fire once per section when half of it (or half the viewport) is seen.
   var seen = {};
@@ -52,6 +56,7 @@
       entries.forEach(function (e) {
         var id = e.target.dataset.section;
         if (!e.isIntersecting || seen[id]) return;
+        if (!caseStudy) return; // footer-only pages: no section views
         var visible = e.intersectionRect.height;
         if (visible / e.boundingClientRect.height >= 0.5 || visible / window.innerHeight >= 0.5) {
           seen[id] = true;
@@ -85,7 +90,7 @@
   }, 1000);
   function sendEngaged() {
     if (engagedMs < 1000) return;
-    track('engaged_time', { seconds: Math.round(engagedMs / 1000), case_study: caseStudy || null });
+    track('engaged_time', { seconds: Math.round(engagedMs / 1000), case_study: caseStudy || summaryOf || null });
     engagedMs = 0;
   }
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') sendEngaged(); });
@@ -210,6 +215,7 @@
       set(item, false);
       item.querySelector('.accordion__trigger').addEventListener('click', function () {
         set(item, !item.classList.contains('is-open'));
+        this.dataset.trackAction = item.classList.contains('is-open') ? 'open' : 'close'; // read by the click tracker after this runs
         syncAll();
       });
     });

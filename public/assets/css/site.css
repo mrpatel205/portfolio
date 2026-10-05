@@ -185,7 +185,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 }
 
 /* ---------- Case study hero ---------- */
-.cs-hero { padding-top: var(--spacer-large); }
+.cs-hero { padding-top: var(--spacer-medium); }
 .back-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-5); }
 .cover__head .back-link { align-self: flex-start; margin-bottom: 0; }
 .back-link svg { width: 1.25rem; height: 1.25rem; flex: none; }
