@@ -27,10 +27,14 @@
   window.dataLayer = window.dataLayer || [];
   var page = document.body.dataset.page || location.pathname;
   var summaryOf = document.body.dataset.summaryOf;
+  var caseStudy = document.body.dataset.caseStudy;
 
   function track(event, props) {
     var base = { page: page };
-    if (summaryOf) { base.case_study = summaryOf; base.view = 'summary'; } // summaries share the case_study value of their full study
+    // Every event on a case study page carries which study (and which version) it happened on.
+    // Summaries share the case_study value of their full study.
+    if (summaryOf) { base.case_study = summaryOf; base.view = 'summary'; }
+    else if (caseStudy) { base.case_study = caseStudy; base.view = 'full'; }
     var payload = Object.assign(base, props || {});
     window.dataLayer.push({ event: event, props: payload, ts: Date.now() });
     // PostHog records its own $pageview, so page_view stays local to avoid double counting.
@@ -45,7 +49,6 @@
 
   track('page_view', { title: document.title, referrer: document.referrer || null });
 
-  var caseStudy = document.body.dataset.caseStudy;
   if (caseStudy) track('case_study_open', { case_study: caseStudy });
   if (summaryOf) track('case_study_summary_open', { case_study: summaryOf });
 
@@ -104,6 +107,23 @@
     Object.keys(el.dataset).forEach(function (k) {
       if (k.indexOf('track') === 0 && k !== 'track') props[k.slice(5).toLowerCase()] = el.dataset[k];
     });
+    // Case study links: say which study the click is from and which it goes to.
+    // case_study = destination; from_case_study / from_page = where the click happened.
+    // Work-card buttons are named <location>_<card>_<case_study|summary>_click, e.g. home_budgets_summary_click.
+    var STUDY_EVENTS = ['read_full_case_study', 'prev_case_study', 'next_case_study'];
+    var cardClick = /^(home|work)_[a-z0-9]+_(case_study|summary)_click$/.exec(el.dataset.track);
+    if (cardClick) props.location = cardClick[1];
+    if ((cardClick || STUDY_EVENTS.indexOf(el.dataset.track) !== -1) && el.dataset.trackTarget) {
+      var t = el.dataset.trackTarget;
+      props.case_study = t.replace(/_summary$/, '');
+      props.view = /_summary$/.test(t) ? 'summary' : 'full';
+      props.from_case_study = caseStudy || summaryOf || null;
+      props.from_view = summaryOf ? 'summary' : (caseStudy ? 'full' : null);
+      props.from_page = page;
+    } else if (el.dataset.track === 'back') {
+      props.from_case_study = caseStudy || summaryOf || null;
+      props.from_page = page;
+    }
     track(el.dataset.track, props);
   });
 
