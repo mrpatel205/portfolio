@@ -2,3 +2,8 @@
 *.log
 node_modules/
 .env
+archive/
+.claude/
+CLAUDE.md
+tools/kanban/
+mockups/

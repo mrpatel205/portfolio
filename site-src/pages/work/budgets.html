@@ -1,0 +1,114 @@
+<!-- current: work -->
+<x-case-study slug="budgets" page="work/budgets"
+  title="Helping customers budget · Major bank Budgets case study · MRPATEL"
+  description="How I led discovery and design for a major bank's in-app Budgets feature, from concept testing to development handover.">
+<!-- Built from components: see tools/components.py for what each x- tag does. -->
+
+<x-hero back-href="/work/budgets/summary/" back-label="Back to summary" image="/assets/img/budgets/hero.png" width="1312" height="656"
+  alt="A hand holding a phone showing the Budgets screen: 10 days to go on a monthly budget, with Groceries at $1,164.47 left of $1,200 and Restaurants &amp; takeaway at $550 left.">
+  <x-notice>Some information in this case study has been removed or recreated.</x-notice>
+  <x-title>Helping customers budget</x-title>
+  <x-meta>
+    <x-item label="Company">Major bank</x-item>
+    <x-item label="Industry">Fin-Tech</x-item>
+    <x-item label="Duration">Feb 24 to Jun 24</x-item>
+    <x-item label="Channel">React mini web app</x-item>
+  </x-meta>
+</x-hero>
+
+<x-scene id="situation" heading="Situation">
+  <p><strong>Everyone budgets their finances in one way or another.</strong> The bank's September 2023 Financial Wellbeing Research ranked budgeting as a priority for FY24, particularly among customers aged 18-35 with low-to-medium financial control or resilience.</p>
+  <p>That cohort and others, however, had no way to track spending against a budget in-app, research showed they used spreadsheets or self-made "bucket" accounts instead. The bank also lagged behind competing banking apps such as CBA, which offered its own budgeting tool linked to customers' spending data.</p>
+  <x-visual src="/assets/img/budgets/situation.png" width="640" height="496"
+    alt="A laptop showing a Home Budget spreadsheet with monthly budget and actual columns for income, home expenses, and savings and investments."/>
+</x-scene>
+
+<x-scene id="task" heading="Task" subheading="Owning it end to end">
+  <p>I was the sole designer and researcher on Budgets from MVP through development handover; the prior team's experience canvas set the initial problem framing. I owned research, design, concept testing, and interaction design end-to-end, working directly with the product owner, business analyst, and engineering stakeholders.</p>
+</x-scene>
+
+<x-skills>
+  <x-skill icon="search">Research &amp; Synthesis</x-skill>
+  <x-skill icon="user-search">Recruitment screening</x-skill>
+  <x-skill icon="screen-share">Prototyping</x-skill>
+  <x-skill icon="users">Moderated user testing</x-skill>
+  <x-skill icon="accessibility">Accessibility</x-skill>
+  <x-skill icon="presentation">Workshop facilitation</x-skill>
+  <x-skill icon="pen-tool">Visual design</x-skill>
+  <x-skill icon="file-pen">Content writing</x-skill>
+  <x-skill icon="network">Information architecture</x-skill>
+  <x-skill icon="chart-gantt">Roadmap shaping</x-skill>
+  <x-skill icon="mouse-pointer-click">Interaction design</x-skill>
+  <x-skill icon="message-circle-question">Design critique</x-skill>
+</x-skills>
+
+<x-story id="approach" heading="Approach" svg="budgets-approach" stages="4">
+  <p><strong><span class="story-mark" data-stage="1">The problem was already framed when I joined</span>; how to solve it wasn't.</strong></p>
+  <p data-from="2">I ran <span class="story-mark" data-stage="2">two rounds of research and testing to define and refine the approach</span> to the budgets feature<span data-from="3"> and worked close with <span class="story-mark" data-stage="3">my BA and the accessibility team</span> to produce the final detailed figma artefacts<span data-from="4"> to <span class="story-mark" data-stage="4">hand over to engineering</span></span></span>.</p>
+</x-story>
+
+<x-challenges>
+  <x-topic id="accounts-vs-categories" heading="Budget on Accounts vs categories">
+    <x-stage>
+      <p>Budgets was scoped against Accounts, backed by one PM; the other PM, the BA, the principal designer and I disagreed, convinced customers reasoned in categories. Ten more concepts from ideation sat unranked, with FY26 roadmap priorities resting on them. One test had to settle the split and order the roadmap, using a sample too thin to trust.</p>
+      <x-visual src="/assets/img/budgets/ch-accounts-1.png" width="640" height="480"
+        caption="Some of other concepts tested and ranked"
+        alt="Three of the other concepts tested: a push notification reading 'You've spent $410 of your $565 limit on groceries', a Budget Planner card, and a Budgeting tips and tools card."/>
+    </x-stage>
+    <x-stage>
+      <p>With the concept test too thin to call outright, the deciding factor turned technical: categories carried no dependency on a separate uplift workstream, unlike accounts, cutting delivery risk. That combination, inconclusive desirability data plus lower risk, was enough to align both PMs behind the pivot to categories.</p>
+      <x-visual src="/assets/img/budgets/ch-accounts-2.png" width="640" height="480"
+        caption="Concept testing: Account Budgets vs Category Budgets"
+        alt="The two concepts tested side by side: Account Budgets, a single bar of $2,460 spent of a $3,000 limit across selected accounts, and Category budgets, separate progress bars for Child allowance, Groceries and Subscriptions."/>
+    </x-stage>
+  </x-topic>
+
+  <x-topic id="least-room-to-spare" heading="Designing for customers with the <br>least room to spare">
+    <x-stage>
+      <p>Budgeting matters most to customers with the least room to spare, people tracking every dollar week to week. I engaged financial hardship counsellors directly to understand their needs, which shaped the feature's content writing and built-in educational guidance, rather than treating inclusivity as a late-stage accessibility pass.</p>
+    </x-stage>
+  </x-topic>
+
+  <x-topic id="category-colour" heading="Category colour vs. budget status">
+    <x-stage>
+      <p>Budgets shared a mini-app with Spending because of a platform split between the existing iOS app and the new React Native build, which meant it inherited Spending's fixed per-category colours rather than getting its own. Ten of twelve customers testing category budgets couldn't tell at a glance which ones were over their limit.</p>
+      <x-visual src="/assets/img/budgets/ch-colour-1.png" width="640" height="616"
+        caption="The ‘Spending mini app’"
+        alt="Two screens of the Spending mini app, where each spending category keeps its own fixed colour."/>
+    </x-stage>
+    <x-stage>
+      <p>Testing validated the full status-colour scheme, green for met, red for over. But the Spending mini app ran on a design system that had been frozen for further investment as the business moved other mini-apps to its replacement, and category colours themselves were already scoped for a separate, wider redefinition owned by another team.</p>
+      <p><strong>Recolouring every category wasn't mine to ship.</strong></p>
+      <x-visual src="/assets/img/budgets/ch-colour-2.png" width="640" height="616"
+        caption="Traffic light status testing"
+        alt="The Budgets tab in testing with traffic-light status bars: green for Groceries, Pets and Fuel under budget, red for Utilities and Restaurants over budget."/>
+    </x-stage>
+    <x-stage>
+      <p>Colour alone still asked customers to scan every row to find the one that mattered. So I extended the same logic to order: categories now auto-sort by how far over budget they are, worst first, so the one needing attention sits at the top without being searched for.</p>
+      <x-visual src="/assets/img/budgets/ch-colour-3-screen.png" width="255" height="553" centred
+        caption="Budgets auto sorted"
+        alt="The shipped Budgets list, sorted worst first: Utilities $23 over, Restaurants $15 over, then categories with money left."/>
+    </x-stage>
+  </x-topic>
+</x-challenges>
+
+<x-final-visuals src="/assets/img/budgets/final-visuals.png" width="1312" height="1866"
+  steps-label="The shipped flow for creating a budget"
+  alt="The shipped flow for creating a budget, across six screens: the Budgets tab with Create first budget, choosing accounts, setting frequency and start date, choosing a category, entering the amount, and the success screen showing the new Fuel budget.">
+  <x-screen src="/assets/img/budgets/final-1.png" width="302" height="654" alt="The Budgets tab, empty, with a Create first budget button."/>
+  <x-screen src="/assets/img/budgets/final-2.png" width="302" height="654" alt="Step 1 of 5: select one or more accounts to track."/>
+  <x-screen src="/assets/img/budgets/final-3.png" width="302" height="654" alt="Step 2 of 5: set the budget frequency, monthly, and a start date."/>
+  <x-screen src="/assets/img/budgets/final-4.png" width="302" height="654" alt="Step 3 of 5: search or select a category to budget for."/>
+  <x-screen src="/assets/img/budgets/final-5.png" width="302" height="656" alt="Step 4 of 5: enter a monthly budget amount of $100 for Fuel."/>
+  <x-screen src="/assets/img/budgets/final-6.png" width="302" height="658" alt="Success: the Fuel budget is created, starting in 3 days, with $100 left."/>
+</x-final-visuals>
+
+<x-impact lead="Budgets shipped and is live in the bank's app.">
+  <p>Adoption has been modest so far: around 4,000 customers logged in during August 2025, averaging 1.7 sessions a month. Across the app overall, those customers average 5.88 sessions, suggesting they're moving back and forth between Budgets and the Overview screen rather than using Budgets in isolation, checking in on other parts of their finances before returning to it.</p>
+  <x-metric label="Customers" value="4,000"/>
+  <x-metric label="sessions p/m" value="1.7"/>
+</x-impact>
+
+<x-next href="/work/teller/" title="A simpler system for tellers" target="teller"/>
+
+</x-case-study>

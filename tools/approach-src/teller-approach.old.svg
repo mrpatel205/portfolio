@@ -1,0 +1,64 @@
+<svg class="story__svg" viewBox="0 0 1312 511" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="teller-approach-title teller-approach-desc">
+  <title id="teller-approach-title">Three design processes run one after another, ending in one release</title>
+  <desc id="teller-approach-desc">Three large circles in a row, Withdrawal, Deposit and Payment, joined by arrows that lead to a single release point. Dotted vertical lines inside each circle are individual transaction types. The gap between a circle's edge and its first line is labelled rigour.</desc>
+  <!-- Traced from Figma: Approach exploration > Frame 4 (2111:3585). Stage groups are revealed by site.js. -->
+  <g font-family="Inter, sans-serif">
+    <!-- Stage 1: circles, arrows and release fade in left to right -->
+    <g class="story__fade" data-stage="1" style="--i:0">
+      <circle cx="158" cy="291" r="142.5" fill="none" stroke="#000" stroke-width="3"/>
+      <text x="110" y="476.9" font-size="12" font-weight="700">WITHDRAWAL</text>
+    </g>
+    <path class="story__fade" data-stage="1" style="--i:1" d="M388.414 292.414C389.195 291.633 389.195 290.367 388.414 289.586L375.686 276.858C374.905 276.077 373.639 276.077 372.858 276.858C372.077 277.639 372.077 278.905 372.858 279.686L384.172 291L372.858 302.314C372.077 303.095 372.077 304.361 372.858 305.142C373.639 305.923 374.905 305.923 375.686 305.142L388.414 292.414ZM315 291V293H387V291V289H315V291Z"/>
+    <g class="story__fade" data-stage="1" style="--i:2">
+      <circle cx="543" cy="291" r="142.5" fill="none" stroke="#000" stroke-width="3"/>
+      <text x="523" y="476.9" font-size="12" font-weight="700">DEPOSIT</text>
+    </g>
+    <path class="story__fade" data-stage="1" style="--i:3" d="M773.414 292.414C774.195 291.633 774.195 290.367 773.414 289.586L760.686 276.858C759.905 276.077 758.639 276.077 757.858 276.858C757.077 277.639 757.077 278.905 757.858 279.686L769.172 291L757.858 302.314C757.077 303.095 757.077 304.361 757.858 305.142C758.639 305.923 759.905 305.923 760.686 305.142L773.414 292.414ZM700 291V293H772V291V289H700V291Z"/>
+    <g class="story__fade" data-stage="1" style="--i:4">
+      <circle cx="928" cy="291" r="142.5" fill="none" stroke="#000" stroke-width="3"/>
+      <text x="896" y="476.9" font-size="12" font-weight="700">PAYMENT</text>
+    </g>
+    <g class="story__fade" data-stage="1" style="--i:5">
+      <path d="M1182.41 292.414C1183.2 291.633 1183.2 290.367 1182.41 289.586L1169.69 276.858C1168.91 276.077 1167.64 276.077 1166.86 276.858C1166.08 277.639 1166.08 278.905 1166.86 279.686L1178.17 291L1166.86 302.314C1166.08 303.095 1166.08 304.361 1166.86 305.142C1167.64 305.923 1168.91 305.923 1169.69 305.142L1182.41 292.414ZM1085 291V293H1181V291V289H1085V291Z"/>
+      <text x="1101" y="275.9" font-size="12" font-weight="700">RELEASE</text>
+    </g>
+    <g class="story__fade" data-stage="1" style="--i:6">
+      <circle cx="1239" cy="291" r="42.3" fill="none" stroke="#0a0a0a" stroke-opacity="0.45" stroke-width="1.4"/>
+      <circle cx="1240" cy="291" r="28.5" fill="#000" stroke="#000" stroke-width="3"/>
+    </g>
+
+    <!-- Stage 2: the first two transaction types grow from the middle out -->
+    <g stroke="#000" stroke-dasharray="2 2">
+      <line class="story__grow" data-stage="2" style="--i:0" x1="83.5" y1="173.971" x2="83.5" y2="408.031"/>
+      <line class="story__grow" data-stage="2" style="--i:1" x1="124.5" y1="156.223" x2="124.5" y2="425.778"/>
+    </g>
+
+    <!-- Stage 3: labels -->
+    <g class="story__fade" data-stage="3" style="--i:0" fill="#737878">
+      <path d="M85.6667 291.246C85.6667 289.773 84.4728 288.579 83 288.579C81.5272 288.579 80.3333 289.773 80.3333 291.246C80.3333 292.719 81.5272 293.913 83 293.913C84.4728 293.913 85.6667 292.719 85.6667 291.246ZM19.6667 291.246C19.6667 289.773 18.4728 288.579 17 288.579C15.5272 288.579 14.3333 289.773 14.3333 291.246C14.3333 292.719 15.5272 293.913 17 293.913C18.4728 293.913 19.6667 292.719 19.6667 291.246ZM83 291.246V290.746H17V291.246V291.746H83V291.246Z" fill="#969696"/>
+      <text x="28" y="311.6" font-size="10" font-weight="500" letter-spacing="0.07em">RIGOUR</text>
+    </g>
+    <g class="story__fade" data-stage="3" style="--i:1" fill="#737878">
+      <path d="M153 193.333C151.527 193.333 150.333 194.527 150.333 196C150.333 197.473 151.527 198.667 153 198.667C154.473 198.667 155.667 197.473 155.667 196C155.667 194.527 154.473 193.333 153 193.333ZM153 100L152.5 100L152.5 196L153 196L153.5 196L153.5 100L153 100Z" fill="#969696"/>
+      <text x="88" y="77.6" font-size="10" font-weight="500" letter-spacing="0.07em">TRANSACTION TYPES</text>
+    </g>
+
+    <!-- Stage 4: every other transaction type, left to right -->
+    <g stroke="#000" stroke-dasharray="2 2">
+      <line class="story__grow" data-stage="4" style="--i:0" x1="175.5" y1="153.043" x2="175.5" y2="428.956"/>
+      <line class="story__grow" data-stage="4" style="--i:1" x1="207.5" y1="160.924" x2="207.5" y2="421.078"/>
+      <line class="story__grow" data-stage="4" style="--i:2" x1="259.5" y1="195.502" x2="259.5" y2="386.499"/>
+      <line class="story__grow" data-stage="4" style="--i:3" x1="431.5" y1="208.678" x2="431.5" y2="373.323"/>
+      <line class="story__grow" data-stage="4" style="--i:4" x1="455.5" y1="183.404" x2="455.5" y2="398.597"/>
+      <line class="story__grow" data-stage="4" style="--i:5" x1="504.5" y1="157.584" x2="504.5" y2="424.417"/>
+      <line class="story__grow" data-stage="4" style="--i:6" x1="555.5" y1="152.52" x2="555.5" y2="429.482"/>
+      <line class="story__grow" data-stage="4" style="--i:7" x1="587.5" y1="159.148" x2="587.5" y2="422.853"/>
+      <line class="story__grow" data-stage="4" style="--i:8" x1="662.5" y1="219.166" x2="662.5" y2="362.832"/>
+      <line class="story__grow" data-stage="4" style="--i:9" x1="825.5" y1="197.662" x2="825.5" y2="384.338"/>
+      <line class="story__grow" data-stage="4" style="--i:10" x1="896.5" y1="155.734" x2="896.5" y2="426.267"/>
+      <line class="story__grow" data-stage="4" style="--i:11" x1="919.5" y1="152.291" x2="919.5" y2="429.708"/>
+      <line class="story__grow" data-stage="4" style="--i:12" x1="995.5" y1="169.213" x2="995.5" y2="412.786"/>
+      <line class="story__grow" data-stage="4" style="--i:13" x1="1040.5" y1="208.678" x2="1040.5" y2="373.323"/>
+    </g>
+  </g>
+</svg>

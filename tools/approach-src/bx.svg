@@ -1,0 +1,65 @@
+<svg width="2400" height="1096" viewBox="0 0 2400 1096" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="TMP export &#226;&#128;&#148; bx">
+<rect width="2400" height="1096" rx="16" fill="white"/>
+<text id="01  EVIDENCE" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="203.352" y="203.227">01  EVIDENCE</tspan></text>
+<text id="02  FIVE PLANES" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="845.812" y="203.227">02  PLANES</tspan></text>
+<text id="03  FOUR PRINCIPLES" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1752.45" y="203.227">03  FOUR PRINCIPLES</tspan></text>
+<g id="pile in circle &#226;&#128;&#148; evidence">
+<path id="floor" d="M403.439 663C372.308 693.613 329.61 712.5 282.5 712.5C235.389 712.5 192.691 693.613 161.56 663H403.439Z" fill="#EBEBEB"/>
+<circle id="circle &#226;&#128;&#148; scope" cx="282.5" cy="540" r="171" stroke="#737373" stroke-width="3"/>
+<circle id="ellipse" cx="185" cy="642" r="11.25" fill="#737373"/>
+<circle id="ellipse_2" cx="200" cy="615" r="11.25" fill="#737373"/>
+<circle id="ellipse_3" cx="185" cy="588" r="11.25" fill="#737373"/>
+<circle id="ellipse_4" cx="200" cy="561" r="11.25" fill="#737373"/>
+<circle id="ellipse_5" cx="275" cy="642" r="11.25" fill="#737373"/>
+<circle id="ellipse_6" cx="290" cy="615" r="11.25" fill="#737373"/>
+<circle id="ellipse_7" cx="275" cy="588" r="11.25" fill="#737373"/>
+<circle id="ellipse_8" cx="290" cy="561" r="11.25" fill="#737373"/>
+<circle id="ellipse_9" cx="275" cy="534" r="11.25" fill="#737373"/>
+<circle id="ellipse_10" cx="290" cy="507" r="11.25" fill="#737373"/>
+<circle id="ellipse_11" cx="275" cy="480" r="11.25" fill="#737373"/>
+<circle id="ellipse_12" cx="290" cy="453" r="11.25" fill="#737373"/>
+<circle id="ellipse_13" cx="275" cy="426" r="11.25" fill="#737373"/>
+<circle id="ellipse_14" cx="365" cy="642" r="11.25" fill="#737373"/>
+<circle id="ellipse_15" cx="380" cy="615" r="11.25" fill="#737373"/>
+<circle id="ellipse_16" cx="365" cy="588" r="11.25" fill="#737373"/>
+<circle id="ellipse_17" cx="380" cy="561" r="11.25" fill="#737373"/>
+<circle id="ellipse_18" cx="365" cy="534" r="11.25" fill="#737373"/>
+<circle id="ellipse_19" cx="380" cy="507" r="11.25" fill="#737373"/>
+</g>
+<text id="Top tasks &#194;&#183; audit" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="196.535" y="741.5">Top tasks &#xb7; audit</tspan></text>
+<path id="arrow" d="M525 540H645M629 551L645 540L629 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrow_2" d="M1340 540H1460M1444 551L1460 540L1444 529" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; Simplified" d="M1694.5 373L1820.54 486.483" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; Personalised" d="M2065.5 373L1939.46 486.483" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; Supported" d="M1694.5 707L1820.54 593.517" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="spoke &#226;&#128;&#148; Connected" d="M2065.5 707L1939.46 593.517" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="dot &#226;&#128;&#148; Simplified" cx="1680" cy="360" r="18" stroke="#737373" stroke-width="3"/>
+<text id="Simplified" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1629.08" y="315.5">Simplified</tspan></text>
+<circle id="dot &#226;&#128;&#148; Personalised" cx="2080" cy="360" r="18" stroke="#737373" stroke-width="3"/>
+<text id="Personalised" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="2013.44" y="315.5">Personalised</tspan></text>
+<circle id="dot &#226;&#128;&#148; Supported" cx="1680" cy="720" r="18" stroke="#737373" stroke-width="3"/>
+<text id="Supported" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1624.99" y="775.5">Supported</tspan></text>
+<circle id="dot &#226;&#128;&#148; Connected" cx="2080" cy="720" r="18" stroke="#737373" stroke-width="3"/>
+<text id="Connected" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="2022.85" y="775.5">Connected</tspan></text>
+<circle id="halo" cx="1880" cy="540" r="80" fill="#EBEBEB"/>
+<circle id="focus &#226;&#128;&#148; vision" cx="1880" cy="540" r="36" fill="black"/>
+<text id="Vision" fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="1846.01" y="655.5">Vision</tspan></text>
+<path id="plane &#226;&#128;&#148; Strategy" d="M915 598L1075 690L915 782L755 690L915 598Z" fill="white" stroke="#ADADAD" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="18 14"/>
+<path id="plane &#226;&#128;&#148; Scope" d="M915 498L1075 590L915 682L755 590L915 498Z" fill="white" stroke="#737373" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="18 14"/>
+<path id="plane &#226;&#128;&#148; Structure" d="M915 398L1075 490L915 582L755 490L915 398Z" fill="white" stroke="#737373" stroke-width="1.5" stroke-linejoin="round"/>
+<path id="plane &#226;&#128;&#148; Skeleton" d="M915 298L1075 390L915 482L755 390L915 298Z" fill="#EBEBEB" stroke="#737373" stroke-width="2.5" stroke-linejoin="round"/>
+<path id="leader &#226;&#128;&#148; Strategy" d="M1085.33 690C1085.33 691.473 1086.53 692.667 1088 692.667C1089.47 692.667 1090.67 691.473 1090.67 690C1090.67 688.527 1089.47 687.333 1088 687.333C1086.53 687.333 1085.33 688.527 1085.33 690ZM1088 690L1088 690.5L1188 690.5L1188 690L1188 689.5L1088 689.5L1088 690Z" fill="#737373"/>
+<path id="leader &#226;&#128;&#148; Strategy_2" d="M1085.33 590C1085.33 591.473 1086.53 592.667 1088 592.667C1089.47 592.667 1090.67 591.473 1090.67 590C1090.67 588.527 1089.47 587.333 1088 587.333C1086.53 587.333 1085.33 588.527 1085.33 590ZM1088 590L1088 590.5L1188 590.5L1188 590L1188 589.5L1088 589.5L1088 590Z" fill="#737373"/>
+<path id="leader &#226;&#128;&#148; Strategy_3" d="M1085.33 491C1085.33 492.473 1086.53 493.667 1088 493.667C1089.47 493.667 1090.67 492.473 1090.67 491C1090.67 489.527 1089.47 488.333 1088 488.333C1086.53 488.333 1085.33 489.527 1085.33 491ZM1088 491L1088 491.5L1188 491.5L1188 491L1188 490.5L1088 490.5L1088 491Z" fill="#737373"/>
+<path id="leader &#226;&#128;&#148; Strategy_4" d="M1085.33 390C1085.33 391.473 1086.53 392.667 1088 392.667C1089.47 392.667 1090.67 391.473 1090.67 390C1090.67 388.527 1089.47 387.333 1088 387.333C1086.53 387.333 1085.33 388.527 1085.33 390ZM1088 390L1088 390.5L1188 390.5L1188 390L1188 389.5L1088 389.5L1088 390Z" fill="#737373"/>
+<text id="Strategy" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1208" y="697.5">Strategy</tspan></text>
+<text id="Scope" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1208" y="597.5">Scope</tspan></text>
+<text id="Structure" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1208" y="497.5">Structure</tspan></text>
+<text id="Skeleton" fill="#737373" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="1208" y="397.5">Skeleton</tspan></text>
+<path id="arrowhead &#226;&#128;&#148; Simplified" d="M1751.31 443.013L1750.27 423.241L1770.04 422.201" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrowhead &#226;&#128;&#148; Personalised" d="M1989.96 422.201L2009.73 423.241L2008.69 443.013" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrowhead &#226;&#128;&#148; Supported" d="M1770.04 657.799L1750.27 656.758L1751.31 636.987" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="arrowhead &#226;&#128;&#148; Connected" d="M2008.69 636.987L2009.73 656.758L1989.96 657.799" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
