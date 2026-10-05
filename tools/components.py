@@ -7,7 +7,8 @@ so every case study shares one structure and a fix in one place fixes all four.
   <x-case-study slug page title description> … </x-case-study>
       The whole page: head, nav, <main><article>, footer.
 
-  <x-hero image width height alt>
+  <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
+    <x-notice>Confidentiality line, shown above the title</x-notice>   optional
     <x-title>Heading, may contain <br></x-title>
     <x-meta><x-item label="Company">NAB</x-item> …</x-meta>   first group (left)
     <x-meta> … </x-meta>                                       second group (right)
@@ -187,6 +188,11 @@ def case_study(n):
 """
 
 
+def back_link(href, label):
+    return (f'<a class="back-link link link--small" href="{href}" data-track="back" data-track-target="{href}">'
+            f'{{{{icon:arrow-left}}}}{label}</a>')
+
+
 def hero(n):
     groups = []
     for i, meta in enumerate(n.kids("meta")):
@@ -195,7 +201,10 @@ def hero(n):
             for it in meta.kids("item"))
         cls = "cs-meta__group" + (" cs-meta__group--right" if i else "")
         groups.append(f'<div class="{cls}">\n{indent(items, 2)}\n</div>')
-    return f"""<header class="cs-hero" data-section="hero">
+    back = back_link(n.attrs["back-href"], n.attrs.get("back-label", "Back")) + "\n  " if n.attrs.get("back-href") else ""
+    notice = n.kid("notice")
+    notice_html = f'\n  <p class="cs-notice t-caption">{notice.text()}</p>' if notice else ""
+    return f"""<header class="cs-hero" data-section="hero">\n  {back}{notice_html.lstrip()}
   <h1 class="t-h1 cs-hero__title">{n.kid('title').text()}</h1>
   <dl class="cs-meta t-caption">
 {indent(chr(10).join(groups), 4)}

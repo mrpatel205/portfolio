@@ -186,6 +186,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* ---------- Case study hero ---------- */
 .cs-hero { padding-top: var(--spacer-large); }
+.back-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-5); }
+.cover__head .back-link { align-self: flex-start; margin-bottom: 0; }
+.back-link svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.cs-notice {
+  background: var(--muted); border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5); margin-bottom: var(--space-6);
+}
 .cs-hero__title { max-width: 40rem; }
 .cs-meta {
   display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter);
@@ -801,11 +808,11 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .work-item__summary { display: flex; flex-direction: column; gap: var(--space-1); max-width: 65rem; }
 .work-item__summary .t-caption { color: var(--muted-text); }
 .work-impact {
-  display: flex; gap: var(--space-2); padding: var(--space-2); border-radius: 4px;
-  background: var(--black); color: var(--white);
-  font-size: 1.0625rem; line-height: 1.25rem; font-weight: 700;
+  display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding-left: var(--space-3);
+  border-left: 3px solid #fd6619; /* Figma Impact callout: 3px orange rule, grey label over bold metric */
+  color: var(--black); font-size: 1.0625rem; line-height: 1.25rem; font-weight: 700;
 }
-.work-impact__label { min-width: 5rem; }
+.work-impact__label { font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; color: var(--muted-text); }
 .work-skills { display: flex; gap: var(--space-2); width: 100%; padding-top: var(--space-3); }
 .work-skills__label { flex: none; width: 5rem; line-height: 2rem; color: var(--muted-text); }
 .work-skills__list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
@@ -818,7 +825,6 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .work-card__image { margin-top: 0; }
   .work-meta__item, .work-meta__item:nth-child(4), .work-meta--item .work-meta__item { width: calc(50% - var(--space-3)); }
   .work-item { grid-template-columns: 2.5rem 1fr; column-gap: var(--space-3); padding: var(--space-5) 0; }
-  .work-impact { flex-wrap: wrap; }
   .work-skills { flex-direction: column; gap: 0; }
 }
 
@@ -839,7 +845,6 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-hero.is-faded::before { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .home-hero::before { transition: none; } }
 .home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(max(40rem, 100vh) - var(--nav-height)); min-height: calc(max(40rem, 100svh) - var(--nav-height)); }
-.home-hero__id { position: absolute; top: 3.25rem; left: var(--page-margin); }
 .home-hero__title { letter-spacing: -0.01em; padding-bottom: var(--space-6); } /* 32px under the tagline, matching the cover */
 .home-hero__mark {
   display: flex; align-items: flex-start; margin: 0 0 0 -0.047em; padding-top: 4.25rem; /* -0.047em cancels the M's left side bearing so the ink lines up with the caption and nav logo */ /* wordmark top sits 106px from the page top */
@@ -857,7 +862,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home__heading--muted { color: var(--muted-text); }
 .home__rule { margin: var(--spacer-large) 0 var(--space-5); border: 0; border-top: 1px solid var(--black); }
 .home__rule--muted { border-top-color: var(--muted); }
-.home-lead + .home__heading { margin-top: var(--spacer-medium); }
+.home-lead + .home__heading { margin-top: var(--spacer-large); }
 .home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--space-5); margin: 0; padding: 0; list-style: none; }
 .home-skills + .home__rule { margin-top: var(--spacer-medium); }
 .home-skill { display: flex; align-items: center; gap: var(--space-4); font-size: 1.5rem; line-height: 2rem; font-weight: 500; }
@@ -898,7 +903,6 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .home-hero, .home-hero .container { min-height: 36rem; }
-  .home-hero__id { top: 3rem; }
   .home-hero__mark { padding-top: 6.5rem; } /* clear the two-line caption */
   .home-hero + .container { padding-top: var(--spacer-large); }
   .home-lead p { font-size: 1.5rem; line-height: 2rem; }
@@ -988,7 +992,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
    Strategy → and craft, → from the same hands. + wordmark. Slow ease-in fade, each starts as the previous is ~2/3 done. */
 .js .hero-in { display: inline-block; opacity: 0; animation: hero-in 1.2s ease-in forwards; animation-delay: calc(0.2s + var(--n, 0) * 0.7s); }
 .js .hero-rush .hero-in { animation-duration: 0.4s; animation-delay: calc(var(--n, 0) * 0.1s); } /* scrolled before it finished: same order, compressed */
-.js .home-hero__id.hero-in, .js .home-hero__mark.hero-in { display: block; }
+.js .home-hero__mark.hero-in { display: block; }
 .js .home-hero__mark.hero-in { display: flex; }
 @keyframes hero-in { to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .js .hero-in { opacity: 1; animation: none; } }
