@@ -20,8 +20,8 @@
 
 <x-scene id="situation" heading="Situation" subheading="Building for every branch, every banker">
   <p>At a major bank, a legacy system had powered branch teller transactions — withdrawals, deposits, payments — for nearly 40 years across all 400+ of its branches in Australia, run daily by an estimated 1,000+ frontline bankers.</p>
-  <x-visual src="/assets/img/teller/situation-ebobs.png" width="640" height="496" caption="eBOBS (representation)"
-    alt="A representation of the eBOBS teller screen: a dense, text-based layout of fields and numeric codes."/>
+  <x-visual src="/assets/img/teller/situation-ebobs.png" width="640" height="496" caption="Legacy system (representation)"
+    alt="A representation of the legacy teller screen: a dense, text-based layout of fields and numeric codes."/>
 </x-scene>
 
 <x-scene id="situation-switching" heading="Situation" subheading="A system you had to memorise">
@@ -100,7 +100,7 @@
   <x-panel id="system-switching" heading="Removing system switching" subtitle="One task list instead of eight systems">
     <x-skill icon="workflow">Systems thinking</x-skill>
     <x-skill icon="route">User and wireflows</x-skill>
-    <x-context>A significant cash withdrawal could mean switching between up to 8 systems. Tellers held the order and the policy rules in their heads. That worked for veterans, but not for new tellers without eBOBS muscle memory.</x-context>
+    <x-context>A significant cash withdrawal could mean switching between up to 8 systems. Tellers held the order and the policy rules in their heads. That worked for veterans, but not for new tellers without legacy-system muscle memory.</x-context>
     <p class="accordion__label">What I did</p>
     <p>I drove the early call between a full page and a side sheet, then shaped the Hub: a dynamic task list for withdrawals and payments that consolidates steps and shows only what a transaction needs, with conditional logic across flows. The system now carries policy tellers used to memorise. Deposits skipped the Hub on purpose: 80% of deposit tasks were already quick.</p>
   </x-panel>
@@ -121,7 +121,7 @@
   <x-panel id="devices" heading="The devices" subtitle="No one saw the full picture">
     <x-skill icon="workflow">Systems thinking</x-skill>
     <x-skill icon="eye">Contextual enquiry</x-skill>
-    <x-context>eBOBS read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24&quot; monitors, often across several resized windows the brief never mentioned.</x-context>
+    <x-context>The legacy system read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24&quot; monitors, often across several resized windows the brief never mentioned.</x-context>
     <p class="accordion__label">What I did</p>
     <p>I designed every Deposits flow end to end, including simple, mixed, third-party and cheque acceptance, and the device states around them: TCR in use, inventory API down, no notes in the TCR, transaction already in progress. For narrow windows, I rebuilt the TCR panel's order rather than scaling it down. That layout is still untested at narrow widths.</p>
   </x-panel>
