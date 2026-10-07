@@ -402,6 +402,10 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .js .story.is-s3 .story__fade[data-stage="3"], .js .story.is-s4 .story__fade[data-stage="4"] { opacity: 1; transition-delay: calc(var(--i) * 140ms); }
 .js .story.is-s1 .story__grow[data-stage="1"], .js .story.is-s2 .story__grow[data-stage="2"],
 .js .story.is-s3 .story__grow[data-stage="3"] { transform: none; transition-delay: calc(var(--i) * 200ms); }
+/* Teller: all columns stack together very fast, then the annotations follow */
+.js .story:has(#teller-approach-title).is-s2 .story__grow[data-stage="2"] { transition-duration: 0.3s; transition-delay: calc(var(--i) * 25ms); }
+.js .story:has(#teller-approach-title).is-s2 .story__fade[data-stage="2"] { transition-delay: calc(var(--i) * 25ms); }
+.js .story:has(#teller-approach-title).is-s2 .story__fade[data-stage="2"][style*="--d"] { transition-duration: 0.15s; transition-delay: calc(var(--d) * 1ms); }
 /* Later stages hold more lines, so they follow on faster */
 .js .story.is-s4 .story__grow[data-stage="4"] { transform: none; transition-delay: calc(var(--i) * 90ms); }
 
@@ -421,9 +425,10 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   padding: var(--spacer-large) var(--page-margin);
 }
 .panel.impact { padding: var(--spacer-medium); } /* Impact panel: 96px all round per Figma */
+.panel.skills { padding: 4rem; } /* Skills panel hugs content, 64px all round (Figma spacer/small + page-margin) */
 
 .skills__list {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3) var(--space-6); /* 374 + 32 gutter, as Figma */
   margin: var(--space-3) 0 0; padding: 0; list-style: none;
 }
 .skill { display: flex; align-items: center; gap: var(--space-4); min-height: 4rem; }
@@ -651,6 +656,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 
   /* Dark panels */
   .panel { border-radius: var(--radius-lg); padding: var(--spacer-medium) var(--space-5); }
+  .panel.skills { padding: var(--spacer-medium) var(--space-5); }
   .skills__list { grid-template-columns: 1fr; gap: var(--space-2) 0; margin-top: var(--space-5); }
   .skill { min-height: 3rem; }
   .impact { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
@@ -711,7 +717,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
 }
 .metrics__eyebrow::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
-.metrics__subheading, .metrics__lead, .metrics__note, .metrics__sub { color: var(--metrics-grey); }
+.metrics__lead, .metrics__note, .metrics__sub { color: var(--metrics-grey); }
+.metrics__subheading { color: var(--white); }
 .metrics__lead { max-width: 32.5rem; }
 .metrics__big {
   font-size: min(15rem, 27vh); line-height: 0.92; font-weight: 700; letter-spacing: -0.04em;
@@ -1003,3 +1010,35 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-nav { transition: background-color 0.7s ease-in-out, border-color 0.7s ease-in-out; }
 body[data-page="home"]:not(:has(.home-hero.is-faded)) .site-nav { background: transparent; border-bottom-color: transparent; }
 @media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
+
+/* ---------- Single column (body.cs-single; Figma Work/Teller – single column v2 2700:1847) ----------
+   Copy sits in a centred 640 column; images, the Approach figure and the dark panels run wider.
+   Nothing pins: 96 between blocks, 48 inside them. Stories play once as they scroll into view
+   (site.js treats this layout like the small-screen one). */
+.cs-single { --col: 40rem; }
+body.cs-single .scene.scene { display: block; height: auto; max-width: var(--col); margin: var(--spacer-medium) auto 0; }
+body.cs-single .scene.scene > .scene__copy, body.cs-single .scene.scene > .scene__visual { position: static; height: auto; margin-top: 0; max-width: none; }
+body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
+.cs-single .story, .cs-single .cs-hold,
+.cs-single .cs-section:not(.cs-section--tight), .cs-single .cs-section--dark-gap.impact { margin-top: var(--spacer-medium); }
+/* Approach stays pinned: copy at the top, stages step in with scroll, then normal scroll resumes */
+.cs-single .story__pin { justify-content: flex-start; align-items: center; }
+.cs-single .story__copy { max-width: var(--col); width: 100%; }
+.cs-single .story__figure { width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567))); }
+.cs-single .story--metrics { height: auto; }
+.cs-single .story--metrics .story__pin { position: static; height: auto; display: block; padding: 0; }
+.cs-single .story--metrics .story__copy { margin-inline: auto; }
+.cs-single .story--metrics .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .cs-single .story { height: auto; }
+  .cs-single .story__pin { position: static; height: auto; display: block; padding: 0; }
+  .cs-single .story__copy { margin-inline: auto; }
+  .cs-single .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
+}
+.cs-single .cs-hold { height: auto; }
+.cs-single .cs-hold__frame { position: static; height: auto; display: block; }
+.cs-single .accordion { max-width: var(--col); margin-inline: auto; }
+
+/* Budgets single column (Figma Work/Budgets – single column v3 2723:1460): copy-to-image gap is spacer/medium (96) */
+.cs-single--roomy.cs-single--roomy .scene.scene > .scene__visual { margin-top: var(--spacer-medium); }
+.cs-single--roomy .cs-challenges-flat + .final-visuals { margin-top: var(--spacer-medium); }

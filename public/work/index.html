@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791198443">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791346544">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -29,7 +29,19 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     capture_pageview: true,           // $pageview / $pageleave feed Web Analytics + time on page
     capture_pageleave: true,
     autocapture: false,               // only the named events from track()
-    disable_session_recording: true
+    disable_session_recording: true,
+    loaded: function (ph) {
+      // Cookieless mode forgets everything between pages, so keep the visit's UTM tags in sessionStorage
+      // and attach them to every event (clicks, later pageviews), not just the landing page.
+      try {
+        var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        var q = new URLSearchParams(location.search), found = {}, any = false;
+        keys.forEach(function (k) { if (q.get(k)) { found[k] = q.get(k); any = true; } });
+        if (any) sessionStorage.setItem('utm', JSON.stringify(found));
+        var saved = JSON.parse(sessionStorage.getItem('utm') || 'null');
+        if (saved) ph.register(saved);
+      } catch (e) {}
+    }
   });
 }
 </script>
@@ -175,6 +187,6 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791198443" defer></script>
+<script src="/assets/js/site.js?v=1791346544" defer></script>
 </body>
 </html>

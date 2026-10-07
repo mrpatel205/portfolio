@@ -4,8 +4,9 @@ A case study page is written as a short outline of components, with the prose ke
 plain HTML inside them. Each tag below becomes the markup the CSS and site.js expect,
 so every case study shares one structure and a fix in one place fixes all four.
 
-  <x-case-study slug page title description> … </x-case-study>
-      The whole page: head, nav, <main><article>, footer.
+  <x-case-study slug page title description [layout="single"]> … </x-case-study>
+      The whole page: head, nav, <main><article>, footer. layout="single" = centred 640 column,
+      nothing pins (body.cs-single); stories play once when they scroll into view.
 
   <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
     <x-notice>Confidentiality line, shown above the title</x-notice>   optional
@@ -163,8 +164,17 @@ def prose(node):
 
 # ---------- Components ----------
 
+_SINGLE = False  # set by case_study: lets child components pick their single-column form
+
+
 def case_study(n):
+    global _SINGLE
+    _SINGLE = n.attrs.get("layout") == "single"
     body = "\n\n".join(render(c).strip("\n") for c in n.children if isinstance(c, Node))
+    cls = ["cs-single"] if _SINGLE else []
+    if _SINGLE and n.attrs.get("visual-gap") == "medium":
+        cls.append("cs-single--roomy")
+    body_cls = f' class="{" ".join(cls)}"' if cls else ""
     return f"""<!doctype html>
 <html lang="en-AU">
 <head>
@@ -172,7 +182,7 @@ def case_study(n):
 <title>{n.req('title')}</title>
 <meta name="description" content="{n.req('description')}">
 </head>
-<body data-page="{n.req('page')}" data-case-study="{n.req('slug')}">
+<body{body_cls} data-page="{n.req('page')}" data-case-study="{n.req('slug')}">
 {{{{> nav}}}}
 
 <main id="main">
@@ -377,6 +387,8 @@ def challenges(n):
     topic. Stages within a topic swap in place (paragraph + image fade out, next paragraph
     fades in on the same spot, its image rises to meet it); a new topic scrolls in from below."""
     id_ = n.attrs.get("id", "challenges")
+    if _SINGLE:
+        return challenges_flat(n, id_)
     topics = "\n\n".join(topic(t) for t in n.kids("topic"))
     return f"""<section class="cs-challenges" aria-labelledby="{id_}">
   <div class="cs-challenges__title-track">
@@ -384,6 +396,31 @@ def challenges(n):
   </div>
 
 {indent(topics, 2)}
+</section>"""
+
+
+def challenges_flat(n, id_):
+    """Single column: nothing pins. Each topic is a run of ordinary scenes; its first scene
+    opens with the eyebrow pill + H3 (Figma Work/Budgets single column). The pill is
+    decoration for the hidden section h2, so screen readers hear one 'Key challenges'."""
+    pill = n.attrs.get("heading", "Key challenges")
+    out = []
+    for t in n.kids("topic"):
+        tid = t.req("id")
+        for i, st in enumerate(t.kids("stage"), 1):
+            head = ""
+            if i == 1:
+                head = (f'<div class="cs-heading">\n  <p class="cs-pill" aria-hidden="true">{pill}</p>\n'
+                        f'  <h3 class="t-h3" id="{tid}">{t.req("heading")}</h3>\n</div>\n')
+            section = f"challenge-{tid}" + (f"-{i}" if len(t.kids("stage")) > 1 else "")
+            out.append(f"""<div class="scene" data-section="{section}">
+  <div class="scene__copy prose t-paragraph">
+{indent(head + st.text(), 4)}
+  </div>{scene_visual(st)}
+</div>""")
+    return f"""<section class="cs-challenges-flat" aria-labelledby="{id_}">
+  <h2 class="visually-hidden" id="{id_}">{pill}</h2>
+{indent(chr(10).join(out), 2)}
 </section>"""
 
 

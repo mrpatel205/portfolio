@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791198443">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791346544">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -29,7 +29,19 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     capture_pageview: true,           // $pageview / $pageleave feed Web Analytics + time on page
     capture_pageleave: true,
     autocapture: false,               // only the named events from track()
-    disable_session_recording: true
+    disable_session_recording: true,
+    loaded: function (ph) {
+      // Cookieless mode forgets everything between pages, so keep the visit's UTM tags in sessionStorage
+      // and attach them to every event (clicks, later pageviews), not just the landing page.
+      try {
+        var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        var q = new URLSearchParams(location.search), found = {}, any = false;
+        keys.forEach(function (k) { if (q.get(k)) { found[k] = q.get(k); any = true; } });
+        if (any) sessionStorage.setItem('utm', JSON.stringify(found));
+        var saved = JSON.parse(sessionStorage.getItem('utm') || 'null');
+        if (saved) ph.register(saved);
+      } catch (e) {}
+    }
   });
 }
 </script>
@@ -45,7 +57,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
 <meta property="og:description" content="How I led discovery and design for a major bank's in-app Budgets feature, from concept testing to development handover.">
 <meta property="og:image" content="https://mrpatel.com/assets/img/budgets/hero.png">
 </head>
-<body data-page="work/budgets" data-case-study="budgets">
+<body class="cs-single cs-single--roomy" data-page="work/budgets" data-case-study="budgets">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-nav">
   <div class="container site-nav__inner">
@@ -254,87 +266,79 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       </div>
     </section>
 
-    <section class="cs-challenges" aria-labelledby="challenges">
-      <div class="cs-challenges__title-track">
-        <div class="cs-challenges__title"><h2 class="cs-pill" id="challenges">Key challenges</h2></div>
-      </div>
-
-      <div class="topic" data-topic="accounts-vs-categories">
-        <div class="topic__subtitle-track">
-          <h3 class="t-h3 topic__subtitle">Budget on Accounts vs categories</h3>
+    <section class="cs-challenges-flat" aria-labelledby="challenges">
+      <h2 class="visually-hidden" id="challenges">Key challenges</h2>
+      <div class="scene" data-section="challenge-accounts-vs-categories-1">
+        <div class="scene__copy prose t-paragraph">
+          <div class="cs-heading">
+            <p class="cs-pill" aria-hidden="true">Key challenges</p>
+            <h3 class="t-h3" id="accounts-vs-categories">Budget on Accounts vs categories</h3>
+          </div>
+          <p>Budgets was scoped against Accounts, backed by one PM; the other PM, the BA, the principal designer and I disagreed, convinced customers reasoned in categories. Ten more concepts from ideation sat unranked, with FY26 roadmap priorities resting on them. One test had to settle the split and order the roadmap, using a sample too thin to trust.</p>
         </div>
-        <div class="scene scene--first" data-section="challenge-accounts-vs-categories-1">
-          <div class="scene__copy prose t-paragraph">
-            <p>Budgets was scoped against Accounts, backed by one PM; the other PM, the BA, the principal designer and I disagreed, convinced customers reasoned in categories. Ten more concepts from ideation sat unranked, with FY26 roadmap priorities resting on them. One test had to settle the split and order the roadmap, using a sample too thin to trust.</p>
-          </div>
-          <div class="scene__visual">
-            <figure class="cs-visual">
-              <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-accounts-1.png" width="640" height="480" loading="lazy" alt="Three of the other concepts tested: a push notification reading 'You've spent $410 of your $565 limit on groceries', a Budget Planner card, and a Budgeting tips and tools card."></div>
-              <figcaption class="t-caption">Some of other concepts tested and ranked</figcaption>
-            </figure>
-          </div>
-        </div>
-        <div class="scene" data-section="challenge-accounts-vs-categories-2">
-          <div class="scene__copy prose t-paragraph">
-            <p>With the concept test too thin to call outright, the deciding factor turned technical: categories carried no dependency on a separate uplift workstream, unlike accounts, cutting delivery risk. That combination, inconclusive desirability data plus lower risk, was enough to align both PMs behind the pivot to categories.</p>
-          </div>
-          <div class="scene__visual">
-            <figure class="cs-visual">
-              <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-accounts-2.png" width="640" height="480" loading="lazy" alt="The two concepts tested side by side: Account Budgets, a single bar of $2,460 spent of a $3,000 limit across selected accounts, and Category budgets, separate progress bars for Child allowance, Groceries and Subscriptions."></div>
-              <figcaption class="t-caption">Concept testing: Account Budgets vs Category Budgets</figcaption>
-            </figure>
-          </div>
+        <div class="scene__visual">
+          <figure class="cs-visual">
+            <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-accounts-1.png" width="640" height="480" loading="lazy" alt="Three of the other concepts tested: a push notification reading 'You've spent $410 of your $565 limit on groceries', a Budget Planner card, and a Budgeting tips and tools card."></div>
+            <figcaption class="t-caption">Some of other concepts tested and ranked</figcaption>
+          </figure>
         </div>
       </div>
-
-      <div class="topic" data-topic="least-room-to-spare" style="--sub-h: 5rem">
-        <div class="topic__subtitle-track">
-          <h3 class="t-h3 topic__subtitle">Designing for customers with the <br>least room to spare</h3>
+      <div class="scene" data-section="challenge-accounts-vs-categories-2">
+        <div class="scene__copy prose t-paragraph">
+          <p>With the concept test too thin to call outright, the deciding factor turned technical: categories carried no dependency on a separate uplift workstream, unlike accounts, cutting delivery risk. That combination, inconclusive desirability data plus lower risk, was enough to align both PMs behind the pivot to categories.</p>
         </div>
-        <div class="scene scene--text scene--first" data-section="challenge-least-room-to-spare">
-          <div class="scene__copy prose t-paragraph">
-            <p>Budgeting matters most to customers with the least room to spare, people tracking every dollar week to week. I engaged financial hardship counsellors directly to understand their needs, which shaped the feature's content writing and built-in educational guidance, rather than treating inclusivity as a late-stage accessibility pass.</p>
-          </div>
+        <div class="scene__visual">
+          <figure class="cs-visual">
+            <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-accounts-2.png" width="640" height="480" loading="lazy" alt="The two concepts tested side by side: Account Budgets, a single bar of $2,460 spent of a $3,000 limit across selected accounts, and Category budgets, separate progress bars for Child allowance, Groceries and Subscriptions."></div>
+            <figcaption class="t-caption">Concept testing: Account Budgets vs Category Budgets</figcaption>
+          </figure>
         </div>
       </div>
-
-      <div class="topic" data-topic="category-colour">
-        <div class="topic__subtitle-track">
-          <h3 class="t-h3 topic__subtitle">Category colour vs. budget status</h3>
+      <div class="scene" data-section="challenge-least-room-to-spare">
+        <div class="scene__copy prose t-paragraph">
+          <div class="cs-heading">
+            <p class="cs-pill" aria-hidden="true">Key challenges</p>
+            <h3 class="t-h3" id="least-room-to-spare">Designing for customers with the <br>least room to spare</h3>
+          </div>
+          <p>Budgeting matters most to customers with the least room to spare, people tracking every dollar week to week. I engaged financial hardship counsellors directly to understand their needs, which shaped the feature's content writing and built-in educational guidance, rather than treating inclusivity as a late-stage accessibility pass.</p>
         </div>
-        <div class="scene scene--first" data-section="challenge-category-colour-1">
-          <div class="scene__copy prose t-paragraph">
-            <p>Budgets shared a mini-app with Spending because of a platform split between the existing iOS app and the new React Native build, which meant it inherited Spending's fixed per-category colours rather than getting its own. Ten of twelve customers testing category budgets couldn't tell at a glance which ones were over their limit.</p>
+      </div>
+      <div class="scene" data-section="challenge-category-colour-1">
+        <div class="scene__copy prose t-paragraph">
+          <div class="cs-heading">
+            <p class="cs-pill" aria-hidden="true">Key challenges</p>
+            <h3 class="t-h3" id="category-colour">Category colour vs. budget status</h3>
           </div>
-          <div class="scene__visual">
-            <figure class="cs-visual">
-              <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-colour-1.png" width="640" height="616" loading="lazy" alt="Two screens of the Spending mini app, where each spending category keeps its own fixed colour."></div>
-              <figcaption class="t-caption">The ‘Spending mini app’</figcaption>
-            </figure>
-          </div>
+          <p>Budgets shared a mini-app with Spending because of a platform split between the existing iOS app and the new React Native build, which meant it inherited Spending's fixed per-category colours rather than getting its own. Ten of twelve customers testing category budgets couldn't tell at a glance which ones were over their limit.</p>
         </div>
-        <div class="scene" data-section="challenge-category-colour-2">
-          <div class="scene__copy prose t-paragraph">
-            <p>Testing validated the full status-colour scheme, green for met, red for over. But the Spending mini app ran on a design system that had been frozen for further investment as the business moved other mini-apps to its replacement, and category colours themselves were already scoped for a separate, wider redefinition owned by another team.</p>
-                  <p><strong>Recolouring every category wasn't mine to ship.</strong></p>
-          </div>
-          <div class="scene__visual">
-            <figure class="cs-visual">
-              <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-colour-2.png" width="640" height="616" loading="lazy" alt="The Budgets tab in testing with traffic-light status bars: green for Groceries, Pets and Fuel under budget, red for Utilities and Restaurants over budget."></div>
-              <figcaption class="t-caption">Traffic light status testing</figcaption>
-            </figure>
-          </div>
+        <div class="scene__visual">
+          <figure class="cs-visual">
+            <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-colour-1.png" width="640" height="616" loading="lazy" alt="Two screens of the Spending mini app, where each spending category keeps its own fixed colour."></div>
+            <figcaption class="t-caption">The ‘Spending mini app’</figcaption>
+          </figure>
         </div>
-        <div class="scene" data-section="challenge-category-colour-3">
-          <div class="scene__copy prose t-paragraph">
-            <p>Colour alone still asked customers to scan every row to find the one that mattered. So I extended the same logic to order: categories now auto-sort by how far over budget they are, worst first, so the one needing attention sits at the top without being searched for.</p>
-          </div>
-          <div class="scene__visual">
-            <figure class="cs-visual">
-              <div class="cs-visual__frame cs-visual__frame--centred"><img src="/assets/img/budgets/ch-colour-3-screen.png" width="255" height="553" loading="lazy" alt="The shipped Budgets list, sorted worst first: Utilities $23 over, Restaurants $15 over, then categories with money left."></div>
-              <figcaption class="t-caption">Budgets auto sorted</figcaption>
-            </figure>
-          </div>
+      </div>
+      <div class="scene" data-section="challenge-category-colour-2">
+        <div class="scene__copy prose t-paragraph">
+          <p>Testing validated the full status-colour scheme, green for met, red for over. But the Spending mini app ran on a design system that had been frozen for further investment as the business moved other mini-apps to its replacement, and category colours themselves were already scoped for a separate, wider redefinition owned by another team.</p>
+                <p><strong>Recolouring every category wasn't mine to ship.</strong></p>
+        </div>
+        <div class="scene__visual">
+          <figure class="cs-visual">
+            <div class="cs-visual__frame"><img src="/assets/img/budgets/ch-colour-2.png" width="640" height="616" loading="lazy" alt="The Budgets tab in testing with traffic-light status bars: green for Groceries, Pets and Fuel under budget, red for Utilities and Restaurants over budget."></div>
+            <figcaption class="t-caption">Traffic light status testing</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="scene" data-section="challenge-category-colour-3">
+        <div class="scene__copy prose t-paragraph">
+          <p>Colour alone still asked customers to scan every row to find the one that mattered. So I extended the same logic to order: categories now auto-sort by how far over budget they are, worst first, so the one needing attention sits at the top without being searched for.</p>
+        </div>
+        <div class="scene__visual">
+          <figure class="cs-visual">
+            <div class="cs-visual__frame cs-visual__frame--centred"><img src="/assets/img/budgets/ch-colour-3-screen.png" width="255" height="553" loading="lazy" alt="The shipped Budgets list, sorted worst first: Utilities $23 over, Restaurants $15 over, then categories with money left."></div>
+            <figcaption class="t-caption">Budgets auto sorted</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -395,7 +399,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791198443" defer></script>
+<script src="/assets/js/site.js?v=1791346544" defer></script>
 </body>
 </html>
 

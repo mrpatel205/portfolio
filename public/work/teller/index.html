@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791198443">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791346544">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -29,7 +29,19 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     capture_pageview: true,           // $pageview / $pageleave feed Web Analytics + time on page
     capture_pageleave: true,
     autocapture: false,               // only the named events from track()
-    disable_session_recording: true
+    disable_session_recording: true,
+    loaded: function (ph) {
+      // Cookieless mode forgets everything between pages, so keep the visit's UTM tags in sessionStorage
+      // and attach them to every event (clicks, later pageviews), not just the landing page.
+      try {
+        var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        var q = new URLSearchParams(location.search), found = {}, any = false;
+        keys.forEach(function (k) { if (q.get(k)) { found[k] = q.get(k); any = true; } });
+        if (any) sessionStorage.setItem('utm', JSON.stringify(found));
+        var saved = JSON.parse(sessionStorage.getItem('utm') || 'null');
+        if (saved) ph.register(saved);
+      } catch (e) {}
+    }
   });
 }
 </script>
@@ -45,7 +57,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
 <meta property="og:description" content="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
 <meta property="og:image" content="https://mrpatel.com/assets/img/teller/hero.png">
 </head>
-<body data-page="work/teller" data-case-study="teller">
+<body class="cs-single" data-page="work/teller" data-case-study="teller">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-nav">
   <div class="container site-nav__inner">
@@ -171,7 +183,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
           </div>
           <div class="prose t-body-lg">
             <p>The programme was planned as one big-bang release covering <span class="story-mark" data-stage="1">every withdrawal, payment and deposit transaction type</span>, but we designed them <span class="story-mark" data-stage="1">one at a time</span>. <span data-from="2">Each ran <span class="story-mark" data-stage="2">its own design process</span>, <span class="story-mark" data-stage="3">sized to its breadth and complexity, and to the time and capacity we actually had</span>.</span></p>
-              <p data-from="4">Some got <span class="story-mark" data-stage="4">deep discovery</span>: time in branch, moderated testing and workshops with our SMEs. Others didn't have that luxury, so <span class="story-mark" data-stage="4">the process flexed to match</span>.</p>
+              <p data-from="4">Some got deep discovery: time in branch, moderated testing and workshops with our SMEs. Others didn't have that luxury, so the process flexed to match.</p>
           </div>
         </div>
         <figure class="story__figure">
@@ -211,118 +223,209 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <g class="story__fade" data-stage="2" style="--i:0">
                 <path d="M561.3 724C519.7 764.8 462.8 790 400 790C337.2 790 280.3 764.8 238.7 724H561.3Z" fill="#EBEBEB"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:1">
+              <g class="story__fade" data-stage="2" style="--i:1;--d:0">
                 <circle cx="250" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:2;--d:30">
                 <circle cx="250" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:3;--d:60">
                 <circle cx="250" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:4;--d:90">
                 <circle cx="250" cy="616" r="10" fill="#737373"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:2">
+              <g class="story__fade" data-stage="2" style="--i:5">
+                <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
+                <path d="M249 587.7C250.5 587.7 251.7 586.5 251.7 585C251.7 583.5 250.5 582.3 249 582.3C247.5 582.3 246.3 583.5 246.3 585C246.3 586.5 247.5 587.7 249 587.7ZM249 585L249.5 585L249.5 485L249 485L248.5 485L248.5 585L249 585Z" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:6;--d:60">
                 <circle cx="310" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:7;--d:90">
                 <circle cx="310" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:8;--d:120">
                 <circle cx="310" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:9;--d:150">
                 <circle cx="310" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:10;--d:180">
                 <circle cx="310" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:11;--d:210">
                 <circle cx="310" cy="560" r="10" fill="#737373"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:3">
+              <g class="story__fade" data-stage="2" style="--i:12;--d:120">
                 <circle cx="370" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:13;--d:150">
                 <circle cx="370" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:14;--d:180">
                 <circle cx="370" cy="644" r="10" fill="#737373"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:4">
+              <g class="story__fade" data-stage="2" style="--i:15;--d:180">
                 <circle cx="430" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:16;--d:210">
                 <circle cx="430" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:17;--d:240">
                 <circle cx="430" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:18;--d:270">
                 <circle cx="430" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:19;--d:300">
                 <circle cx="430" cy="588" r="10" fill="#737373"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:5">
+              <g class="story__fade" data-stage="2" style="--i:20;--d:240">
                 <circle cx="490" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:21;--d:270">
                 <circle cx="490" cy="672" r="10" fill="#737373"/>
               </g>
-              <g class="story__grow" data-stage="2" style="--i:6">
+              <g class="story__fade" data-stage="2" style="--i:22;--d:300">
                 <circle cx="550" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:23;--d:330">
                 <circle cx="550" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:24;--d:360">
                 <circle cx="550" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:25;--d:390">
                 <circle cx="550" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:26">
+                <path d="M1181.3 724C1139.8 764.8 1082.8 790 1020 790C957.2 790 900.3 764.8 858.7 724H1181.3Z" fill="#EBEBEB"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:27;--d:360">
+                <circle cx="870" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:28;--d:390">
+                <circle cx="870" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:29;--d:420">
+                <circle cx="870" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:30;--d:420">
+                <circle cx="930" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:31;--d:450">
+                <circle cx="930" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:32;--d:480">
+                <circle cx="930" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:33;--d:510">
+                <circle cx="930" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:34;--d:540">
+                <circle cx="930" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:35;--d:570">
+                <circle cx="930" cy="560" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:36;--d:600">
+                <circle cx="930" cy="532" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:37;--d:630">
+                <circle cx="930" cy="504" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:38;--d:660">
+                <circle cx="930" cy="476" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:39;--d:480">
+                <circle cx="990" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:40;--d:510">
+                <circle cx="990" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:41;--d:540">
+                <circle cx="990" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:42;--d:570">
+                <circle cx="990" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:43;--d:540">
+                <circle cx="1050" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:44;--d:570">
+                <circle cx="1050" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:45;--d:600">
+                <circle cx="1050" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:46;--d:630">
+                <circle cx="1050" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:47;--d:660">
+                <circle cx="1050" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:48;--d:600">
+                <circle cx="1110" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:49;--d:630">
+                <circle cx="1110" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:50;--d:660">
+                <circle cx="1170" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:51;--d:690">
+                <circle cx="1170" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:52;--d:720">
+                <circle cx="1170" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:53">
+                <path d="M1801.3 724C1759.8 764.8 1702.8 790 1640 790C1577.2 790 1520.2 764.8 1478.7 724H1801.3Z" fill="#EBEBEB"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:54;--d:720">
+                <circle cx="1500" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:55;--d:750">
+                <circle cx="1500" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:56;--d:780">
+                <circle cx="1570" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:57;--d:810">
+                <circle cx="1570" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:58;--d:840">
+                <circle cx="1570" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:59;--d:840">
+                <circle cx="1640" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:60;--d:870">
+                <circle cx="1640" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:61;--d:900">
+                <circle cx="1710" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:62;--d:930">
+                <circle cx="1710" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:63;--d:960">
+                <circle cx="1710" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:64;--d:990">
+                <circle cx="1710" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:65;--d:960">
+                <circle cx="1780" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:66;--d:990">
+                <circle cx="1780" cy="672" r="10" fill="#737373"/>
               </g>
               <!-- Stage 3 -->
               <g class="story__fade" data-stage="3" style="--i:0">
                 <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
                 <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373"/>
-              </g>
-              <g class="story__fade" data-stage="3" style="--i:1">
-                <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
-                <path d="M249 587.7C250.5 587.7 251.7 586.5 251.7 585C251.7 583.5 250.5 582.3 249 582.3C247.5 582.3 246.3 583.5 246.3 585C246.3 586.5 247.5 587.7 249 587.7ZM249 585L249.5 585L249.5 485L249 485L248.5 485L248.5 585L249 585Z" fill="#737373"/>
-              </g>
-              <!-- Stage 4 -->
-              <g class="story__fade" data-stage="4" style="--i:0">
-                <path d="M1181.3 724C1139.8 764.8 1082.8 790 1020 790C957.2 790 900.3 764.8 858.7 724H1181.3Z" fill="#EBEBEB"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:1">
-                <circle cx="870" cy="700" r="10" fill="#737373"/>
-                <circle cx="870" cy="672" r="10" fill="#737373"/>
-                <circle cx="870" cy="644" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:2">
-                <circle cx="930" cy="700" r="10" fill="#737373"/>
-                <circle cx="930" cy="672" r="10" fill="#737373"/>
-                <circle cx="930" cy="644" r="10" fill="#737373"/>
-                <circle cx="930" cy="616" r="10" fill="#737373"/>
-                <circle cx="930" cy="588" r="10" fill="#737373"/>
-                <circle cx="930" cy="560" r="10" fill="#737373"/>
-                <circle cx="930" cy="532" r="10" fill="#737373"/>
-                <circle cx="930" cy="504" r="10" fill="#737373"/>
-                <circle cx="930" cy="476" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:3">
-                <circle cx="990" cy="700" r="10" fill="#737373"/>
-                <circle cx="990" cy="672" r="10" fill="#737373"/>
-                <circle cx="990" cy="644" r="10" fill="#737373"/>
-                <circle cx="990" cy="616" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:4">
-                <circle cx="1050" cy="700" r="10" fill="#737373"/>
-                <circle cx="1050" cy="672" r="10" fill="#737373"/>
-                <circle cx="1050" cy="644" r="10" fill="#737373"/>
-                <circle cx="1050" cy="616" r="10" fill="#737373"/>
-                <circle cx="1050" cy="588" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:5">
-                <circle cx="1110" cy="700" r="10" fill="#737373"/>
-                <circle cx="1110" cy="672" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:6">
-                <circle cx="1170" cy="700" r="10" fill="#737373"/>
-                <circle cx="1170" cy="672" r="10" fill="#737373"/>
-                <circle cx="1170" cy="644" r="10" fill="#737373"/>
-              </g>
-              <g class="story__fade" data-stage="4" style="--i:7">
-                <path d="M1801.3 724C1759.8 764.8 1702.8 790 1640 790C1577.2 790 1520.2 764.8 1478.7 724H1801.3Z" fill="#EBEBEB"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:8">
-                <circle cx="1500" cy="700" r="10" fill="#737373"/>
-                <circle cx="1500" cy="672" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:9">
-                <circle cx="1570" cy="700" r="10" fill="#737373"/>
-                <circle cx="1570" cy="672" r="10" fill="#737373"/>
-                <circle cx="1570" cy="644" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:10">
-                <circle cx="1640" cy="700" r="10" fill="#737373"/>
-                <circle cx="1640" cy="672" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:11">
-                <circle cx="1710" cy="700" r="10" fill="#737373"/>
-                <circle cx="1710" cy="672" r="10" fill="#737373"/>
-                <circle cx="1710" cy="644" r="10" fill="#737373"/>
-                <circle cx="1710" cy="616" r="10" fill="#737373"/>
-              </g>
-              <g class="story__grow" data-stage="4" style="--i:12">
-                <circle cx="1780" cy="700" r="10" fill="#737373"/>
-                <circle cx="1780" cy="672" r="10" fill="#737373"/>
               </g>
             </g>
           </svg>
@@ -628,7 +731,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791198443" defer></script>
+<script src="/assets/js/site.js?v=1791346544" defer></script>
 </body>
 </html>
 
