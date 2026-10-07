@@ -92,13 +92,13 @@ def teller(e, st):
         return 1, "fade", "release"
     if b.startswith("circle —") or b in ("WITHDRAWAL", "DEPOSIT", "PAYMENT"):
         return 1, "fade", "c" + who
-    stg = 2 if who == "WITHDRAWAL" else 4
+    stg = 2  # every column (withdrawals, deposits, payments) stacks in together
     if b.startswith("floor"):
         return stg, "fade", "floor" + who
     if b.startswith("dot"):
-        return stg, "grow", "col" + b
+        return stg, "dot", e["id"]
     if b in ("label — one column", "pointer — one column"):
-        return 3, "fade", "ann1"
+        return 2, "fade", "ann1"
     return 3, "fade", "ann2"
 
 
@@ -197,6 +197,13 @@ def build(key):
         stage, kind, uid = h["rule"](e, st)
         u = units.setdefault((stage, uid), dict(kind=kind, els=[]))
         u["els"].append(e)
+    # Dots drop in one by one, bottom of each column first, columns left to right (--d, ms)
+    dots = [(uid, u["els"][0]["bb"]) for (_, uid), u in units.items() if u["kind"] == "dot"]
+    cols = sorted({round(bb[0]) for _, bb in dots})
+    dot_delay = {}
+    for c in cols:
+        for r, (uid, _) in enumerate(sorted((d for d in dots if round(d[1][0]) == c), key=lambda d: -d[1][3])):
+            dot_delay[uid] = cols.index(c) * 60 + r * 30
     stages = sorted({s for s, _ in units})
     parts = []
     for s in stages:
@@ -206,12 +213,15 @@ def build(key):
                 continue
             solid = [e for e in u["els"] if e["tag"] != "text"] or u["els"]
             left = -1 if uid == "title" else h["over"].get(uid, min(e["bb"][0] for e in solid))
-            us.append((left, u["kind"] == "grow", uid, u))
+            us.append((left, u["kind"] != "fade", uid, u))
         us.sort(key=lambda t: t[:2])
         parts.append(f"    <!-- Stage {s} -->")
         for i, (_, _, uid, u) in enumerate(us):
             body = "\n".join("      " + render(e) for e in u["els"])
-            parts.append(f'    <g class="story__{u["kind"]}" data-stage="{s}" style="--i:{i}">\n{body}\n    </g>')
+            style = f"--i:{i}"
+            if u["kind"] == "dot":
+                style = f"--i:{i};--d:{dot_delay[uid]}"
+            parts.append(f'    <g class="story__{"fade" if u["kind"] == "dot" else u["kind"]}" data-stage="{s}" style="{style}">\n{body}\n    </g>')
     xs0 = min(e["bb"][0] for e in els); ys0 = min(e["bb"][1] for e in els)
     xs1 = max(e["bb"][2] for e in els); ys1 = max(e["bb"][3] for e in els)
     x, y, w, hh = round(xs0 - 40), round(ys0 - 40), round(xs1 - xs0 + 80), round(ys1 - ys0 + 80)

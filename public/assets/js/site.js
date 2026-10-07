@@ -7,6 +7,7 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FADE_MS = reduceMotion ? 0 : 400; // MBTJ duration-hover on ease (expo.out)
   // Stacked layout: no pins, so no scroll-driven fades. Keep in sync with the small-screen query in site.css.
+  var STATIC_LAYOUT = document.body.classList.contains('cs-single');
   var SMALL_SCREEN = window.matchMedia('(max-width: 699px), (max-height: 520px) and (orientation: landscape)');
 
   /* ---------- Start at the top on refresh ----------
@@ -332,6 +333,8 @@
      On small screens there is no pin, so the stages play once in sequence when the
      illustration scrolls into view. Reduced motion shows the finished state. */
   document.querySelectorAll('.story').forEach(function (story) {
+    // Single-column layout: only the metrics block is static; Approach stays pinned and scroll-stepped
+    var STATIC = SMALL_SCREEN.matches || (STATIC_LAYOUT && story.classList.contains('story--metrics'));
     var n = parseInt(story.dataset.stages, 10) || 1;
     var copy = story.querySelector('.story__copy');
     var figure = story.querySelector('[data-play-target]') || story.querySelector('.story__figure');
@@ -382,7 +385,7 @@
     if ('IntersectionObserver' in window) {
       var playObs = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (!SMALL_SCREEN.matches || played || !e.isIntersecting) return;
+          if (!STATIC || played || !e.isIntersecting) return;
           played = true;
           for (var s = 1; s <= n; s++) (function (s) { setTimeout(function () { setStage(s); }, (s - 1) * 1100); })(s);
         });
@@ -393,7 +396,7 @@
     var ticking = false;
     function update() {
       ticking = false;
-      if (SMALL_SCREEN.matches) { if (!played) setStage(0); return; }
+      if (STATIC) { if (!played) setStage(0); return; }
       var nav = navEl ? navEl.offsetHeight : 0;
       var avail = window.innerHeight - nav;
       var r = story.getBoundingClientRect();
