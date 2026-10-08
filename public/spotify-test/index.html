@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Listening Shelf (test)</title>
+<title>Now Playing (test)</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
@@ -87,31 +87,14 @@ main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28
       <p class="note" id="note"></p>
     </div>
   </section>
-
-  <section class="shelf-wrap">
-    <div class="label">On the shelf</div>
-    <div>
-      <div class="shelf" id="shelf"></div>
-      <div class="ledge"></div>
-    </div>
-  </section>
 </main>
 
 <script>
 (function () {
-  var KEY = "listening-shelf-test-v1", MAX = 14, POLL = 4000;
+  var POLL = 4000;
   var $ = function (id) { return document.getElementById(id); };
-  var deck = $("deck"), stage = $("stage"), shelfEl = $("shelf");
-  var current = null, shelf = [];
-  var SEED = [
-    { id: "multitudes", album: "Multitudes", artist: "Rhode & Brown", cover: "covers/41817314d711544ec3ce0c96.jpg" },
-    { id: "funksoulsex", album: "FUNKSOULSEX", artist: "Liv East", cover: "covers/c95e0077630a995078bf3143.jpg" },
-    { id: "premiere", album: "Premiere Classé", artist: "Kenneth Bager", cover: "covers/f6783bc37033ac0b50ae92ed.jpg" },
-    { id: "timeforlove", album: "Time for love", artist: "Kamomille", cover: "covers/54bf4753f86f9e602702571d.jpg" },
-    { id: "blackmatter", album: "Black Matter", artist: "Zoubida Mebarki", cover: "covers/f027218538ce20b369b5006f.jpg" }
-  ];
-  try { shelf = JSON.parse(localStorage.getItem(KEY) || "null") || SEED; } catch (e) { shelf = SEED; }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(shelf.slice(0, MAX))); } catch (e) {} }
+  var deck = $("deck"), stage = $("stage");
+  var current = null;
   function hue(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
   function setText(id, v) { $(id).textContent = v || ""; }
 
@@ -131,16 +114,6 @@ main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28
     }
     return d;
   }
-  function renderShelf() {
-    shelfEl.textContent = "";
-    shelf.slice(0, MAX).forEach(function (it) {
-      var w = document.createElement("div"); w.className = "item";
-      w.appendChild(sleeve(it));
-      var c = document.createElement("div"); c.className = "cap";
-      c.textContent = it.album + (it.artist ? " \u00b7 " + it.artist : "");
-      w.appendChild(c); shelfEl.appendChild(w);
-    });
-  }
   function renderDeck() {
     var old = stage.querySelector(".sleeve"); if (old) old.remove();
     if (current) { stage.appendChild(sleeve(current)); }
@@ -152,13 +125,7 @@ main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28
       setText("artist", ""); setText("album", ""); return;
     }
     if (!current || current.id !== n.id) {
-      if (current) {
-        shelf = shelf.filter(function (s) { return s.id !== current.id && s.id !== n.id; });
-        shelf.unshift(current);
-      } else {
-        shelf = shelf.filter(function (s) { return s.id !== n.id; });
-      }
-      current = n; save(); renderShelf(); renderDeck();
+      current = n; renderDeck();
     }
     setText("title", n.track); setText("artist", n.artist); setText("album", n.album);
     setText("state", "Playing on Spotify");
@@ -169,7 +136,7 @@ main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28
       .then(function (r) { return r.json(); }).then(apply)
       .catch(function () { setText("state", "No now-playing.json found"); });
   }
-  renderShelf(); poll(); setInterval(poll, POLL);
+  poll(); setInterval(poll, POLL);
 })();
 </script>
 </body></html>
