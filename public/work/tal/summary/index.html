@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791354747">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791457834">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -98,17 +98,26 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
 </main>
 <footer class="site-footer" id="contact" data-section="footer">
   <div class="container">
-    <p class="site-footer__colophon t-caption">Designed and built by mrpatel in Figma and Claude Code, connected through the Figma MCP. Hand-written HTML, CSS and JavaScript, with analytics by PostHog. Published from GitHub to Cloudflare.</p>
-    <div class="site-footer__row t-caption">
-      <p>© 2026</p>
-      <a class="link link--small link--external" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="linkedin">LinkedIn<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 7h10v10" /> <path d="M7 17 17 7" /></svg><span class="visually-hidden"> (opens in a new tab)</span></a>
-      <a class="link link--small" href="mailto:ash@mrpatel.com" data-track="email_click">ash@mrpatel.com</a>
+    <h2 class="site-footer__headline t-h1">Let's talk.</h2>
+    <div class="site-footer__cols">
+      <div class="site-footer__col">
+        <p class="site-footer__label t-eyebrow-sm">Email me:</p>
+        <a class="site-footer__big-link t-h3" href="mailto:ash@mrpatel.com" data-track="email_click"><svg class="site-footer__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.2 4.8H28.8C29.65 4.8 30.46 5.14 31.06 5.74C31.66 6.34 32 7.15 32 8V8.48L16 18.4L0 8.48V8C0 7.15 0.34 6.34 0.94 5.74C1.54 5.14 2.35 4.8 3.2 4.8ZM0 12.16V24C0 24.85 0.34 25.66 0.94 26.26C1.54 26.86 2.35 27.2 3.2 27.2H28.8C29.65 27.2 30.46 26.86 31.06 26.26C31.66 25.66 32 24.85 32 24V12.16L16.85 21.6C16.59 21.76 16.3 21.84 16 21.84C15.7 21.84 15.41 21.76 15.15 21.6L0 12.16Z"/></svg>ash@mrpatel.com</a>
+        <p class="site-footer__copy t-caption">© 2026</p>
+        <p class="site-footer__built t-paragraph">Site built by <strong>MRPATEL</strong> with Claude Code x Figma MCP</p>
+        <p class="site-footer__colophon t-caption">Designed and built by mrpatel in Figma and Claude Code, connected through the Figma MCP. Published via GitHub. Hosted on Cloudflare.</p>
+      </div>
+      <div class="site-footer__col">
+        <p class="site-footer__label t-eyebrow-sm">Connect with me:</p>
+        <a class="site-footer__big-link t-h3" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="linkedin"><svg class="site-footer__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M27.2627 27.2693H22.524V19.844C22.524 18.0733 22.488 15.7947 20.0547 15.7947C17.584 15.7947 17.2067 17.7213 17.2067 19.7133V27.2693H12.468V12H17.02V14.0813H17.0813C17.7173 12.8813 19.264 11.6147 21.5747 11.6147C26.376 11.6147 27.264 14.7747 27.264 18.888L27.2627 27.2693ZM7.116 9.91067C5.59067 9.91067 4.36533 8.676 4.36533 7.15733C4.36533 5.64 5.592 4.40667 7.116 4.40667C8.636 4.40667 9.868 5.64 9.868 7.15733C9.868 8.676 8.63467 9.91067 7.116 9.91067ZM9.492 27.2693H4.74V12H9.492V27.2693ZM29.6333 0H2.36133C1.056 0 0 1.032 0 2.30533V29.6947C0 30.9693 1.056 32 2.36133 32H29.6293C30.9333 32 32 30.9693 32 29.6947V2.30533C32 1.032 30.9333 0 29.6293 0H29.6333Z"/></svg>LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a class="site-footer__small-link t-paragraph" href="https://www.instagram.com/slow__grain/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="instagram"><svg class="site-footer__icon site-footer__icon--sm" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.2 0H16.8C18.71 0 20.54 0.76 21.89 2.11C23.24 3.46 24 5.29 24 7.2V16.8C24 18.71 23.24 20.54 21.89 21.89C20.54 23.24 18.71 24 16.8 24H7.2C5.29 24 3.46 23.24 2.11 21.89C0.76 20.54 0 18.71 0 16.8V7.2C0 5.29 0.76 3.46 2.11 2.11C3.46 0.76 5.29 0 7.2 0ZM12 6C10.41 6 8.88 6.63 7.76 7.76C6.63 8.88 6 10.41 6 12C6 13.59 6.63 15.12 7.76 16.24C8.88 17.37 10.41 18 12 18C13.59 18 15.12 17.37 16.24 16.24C17.37 15.12 18 13.59 18 12C18 10.41 17.37 8.88 16.24 7.76C15.12 6.63 13.59 6 12 6ZM12 8.4C12.95 8.4 13.87 8.78 14.55 9.45C15.22 10.13 15.6 11.05 15.6 12C15.6 12.95 15.22 13.87 14.55 14.55C13.87 15.22 12.95 15.6 12 15.6C11.05 15.6 10.13 15.22 9.45 14.55C8.78 13.87 8.4 12.95 8.4 12C8.4 11.05 8.78 10.13 9.45 9.45C10.13 8.78 11.05 8.4 12 8.4ZM18.6 3.9C18.2 3.9 17.82 4.06 17.54 4.34C17.26 4.62 17.1 5 17.1 5.4C17.1 5.8 17.26 6.18 17.54 6.46C17.82 6.74 18.2 6.9 18.6 6.9C19 6.9 19.38 6.74 19.66 6.46C19.94 6.18 20.1 5.8 20.1 5.4C20.1 5 19.94 4.62 19.66 4.34C19.38 4.06 19 3.9 18.6 3.9Z"/></svg>Follow my woodcraft @slow__grain<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </div>
     </div>
     <div class="site-footer__mark" aria-hidden="true">
       <p>MRPATEL<sup>©</sup></p>
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791354747" defer></script>
+<script src="/assets/js/site.js?v=1791457834" defer></script>
 </body>
 </html>
