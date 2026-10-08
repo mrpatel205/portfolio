@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Now Playing (test)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one record on the deck, previous sleeves resting on a ledge below it. */
+:root {
+  --bg: #efe9df;
+  --fg: #231d17;
+  --muted: #6f655a;
+  --ledge: #b9a58a;
+  --ledge-edge: #8f7a5c;
+  --brass: #9a6a1f;
+  --vinyl: #15120f;
+  --shadow: rgba(35, 29, 23, .28);
+  --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17120e; --fg: #f0e6d6; --muted: #a39683; --ledge: #4a3a29;
+    --ledge-edge: #2c2217; --brass: #d9a24a; --vinyl: #060504; --shadow: rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17120e; --fg: #f0e6d6; --muted: #a39683; --ledge: #4a3a29;
+  --ledge-edge: #2c2217; --brass: #d9a24a; --vinyl: #060504; --shadow: rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--display); }
+main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 40px; display: grid; gap: 36px; }
+.label { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+.deck { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 28px 36px; align-items: center; }
+.stage { position: relative; width: 100%; aspect-ratio: 1; max-width: 340px; }
+.disc {
+  position: absolute; inset: 4% 0 4% 0; border-radius: 50%; transform: translateX(26%);
+  background: radial-gradient(circle at 50% 50%, var(--brass) 0 13%, var(--vinyl) 13.5% 100%),
+              repeating-radial-gradient(circle, transparent 0 3px, rgba(255,255,255,.05) 3px 4px);
+  background-blend-mode: normal;
+  box-shadow: 0 6px 18px var(--shadow);
+  opacity: 0; transition: opacity .6s, transform .8s;
+}
+.playing .disc { opacity: 1; transform: translateX(34%); }
+.sleeve { position: relative; aspect-ratio: 1; border-radius: 3px; overflow: hidden; box-shadow: 0 10px 24px var(--shadow); background: var(--ledge); }
+.stage .sleeve { position: absolute; inset: 0; }
+.sleeve img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sleeve .alt { position: absolute; inset: 0; padding: 10%; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; color: #fff; font-weight: 600; line-height: 1.05; text-wrap: balance; }
+.sleeve .alt small { font: 500 .6em/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+
+.meta { display: grid; gap: 10px; min-width: 0; }
+.meta h1 { margin: 0; font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.05; font-weight: 600; text-wrap: balance; overflow-wrap: anywhere; }
+.meta .artist { font-size: 1.15rem; }
+.meta .album { color: var(--muted); font-size: .95rem; }
+.meta .state { display: flex; align-items: center; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.playing .dot { background: var(--brass); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brass) 25%, transparent); }
+.note { font-size: .9rem; color: var(--muted); max-width: 46ch; }
+.note b { color: var(--fg); font-weight: 600; }
+
+.shelf-wrap { display: grid; gap: 14px; }
+.shelf { display: flex; gap: 14px; align-items: flex-end; overflow-x: auto; padding: 18px 14px 0; min-height: 150px; scrollbar-width: thin; }
+.shelf .item { flex: 0 0 clamp(88px, 17vw, 120px); display: grid; gap: 6px; transform-origin: bottom center; animation: arrive .7s cubic-bezier(.2,.8,.2,1); }
+.shelf .item:nth-child(odd) { rotate: -1.2deg; }
+.shelf .item:nth-child(even) { rotate: .8deg; }
+.shelf .cap { font: 500 10px/1.25 var(--mono); color: var(--muted); letter-spacing: .02em; overflow-wrap: anywhere; }
+.ledge { height: 14px; border-radius: 2px; background: linear-gradient(var(--ledge), var(--ledge-edge)); box-shadow: 0 8px 14px -6px var(--shadow); }
+.empty { color: var(--muted); font-size: .9rem; padding: 40px 14px 18px; }
+@keyframes arrive { from { opacity: 0; translate: 0 -18px; } to { opacity: 1; translate: 0 0; } }
+
+@media (max-width: 560px) { .deck { grid-template-columns: 1fr; } .stage { max-width: 280px; margin-inline: 12px 0; } }
+</style>
+
+<style>html,body{margin:0}[hidden]{display:none!important}</style></head><body>
+<main id="app">
+  <section class="deck" id="deck" aria-live="polite">
+    <div class="stage" id="stage"><div class="disc"></div></div>
+    <div class="meta">
+      <div class="state label"><span class="dot"></span><span id="state">Connecting to Spotify</span></div>
+      <h1 id="title">Nothing on the deck</h1>
+      <div class="artist" id="artist"></div>
+      <div class="album" id="album"></div>
+      <p class="note" id="note"></p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var POLL = 4000;
+  var $ = function (id) { return document.getElementById(id); };
+  var deck = $("deck"), stage = $("stage");
+  var current = null;
+  function hue(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
+  function setText(id, v) { $(id).textContent = v || ""; }
+
+  function sleeve(item) {
+    var d = document.createElement("div");
+    d.className = "sleeve";
+    var alt = document.createElement("div");
+    alt.className = "alt";
+    alt.style.background = "hsl(" + hue(item.album || item.track || "") + " 38% 32%)";
+    var t = document.createElement("span"); t.textContent = item.album || item.track;
+    var a = document.createElement("small"); a.textContent = item.artist;
+    alt.appendChild(t); alt.appendChild(a); d.appendChild(alt);
+    if (item.cover) {
+      var img = new Image(); img.alt = "";
+      img.onload = function () { d.insertBefore(img, alt); alt.hidden = true; };
+      img.src = item.cover;
+    }
+    return d;
+  }
+  function renderDeck() {
+    var old = stage.querySelector(".sleeve"); if (old) old.remove();
+    if (current) { stage.appendChild(sleeve(current)); }
+  }
+  function apply(n) {
+    if (!n || !n.playing) {
+      deck.classList.remove("playing");
+      setText("state", "Nothing playing"); setText("title", "Nothing on the deck");
+      setText("artist", ""); setText("album", ""); return;
+    }
+    if (!current || current.id !== n.id) {
+      current = n; renderDeck();
+    }
+    setText("title", n.track); setText("artist", n.artist); setText("album", n.album);
+    setText("state", "Playing on Spotify");
+    deck.classList.add("playing");
+  }
+  function poll() {
+    fetch("now-playing.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.json(); }).then(apply)
+      .catch(function () { setText("state", "No now-playing.json found"); });
+  }
+  poll(); setInterval(poll, POLL);
+})();
+</script>
+</body></html>
