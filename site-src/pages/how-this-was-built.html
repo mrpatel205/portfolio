@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+{{> head}}
+<title>How this site was built · MRPATEL</title>
+<meta name="description" content="The prompts I typed, in order, while designing this site in Figma and building it in Claude Code.">
+<meta name="robots" content="noindex">
+</head>
+<body data-page="how-this-was-built">
+{{> nav}}
+<main id="main">
+  <div class="container hb-intro">
+    <h1 class="t-h3" data-reveal>How this site was built</h1>
+    <p class="t-body hb-intro__lede" data-reveal style="--i:1">I designed this site in Figma and built it in Claude Code, connected through the Figma MCP. These are the prompts I typed, in order, kept as I wrote them. Scroll to step through.</p>
+    <p class="t-caption hb-intro__scope" data-reveal style="--i:2">Showing {{prompt-scope}}.</p>
+  </div>
+  {{prompt-index}}
+</main>
+{{> footer}}
+<script src="/assets/js/prompt-index.js?v={{v}}" defer></script>
+</body>
+</html>

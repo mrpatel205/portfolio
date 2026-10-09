@@ -558,10 +558,13 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-footer__big-link:hover, .site-footer__small-link:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .site-footer__big-link { font-weight: var(--weight-semibold); }
 .site-footer__icon { flex: none; color: var(--muted-text); }
+.site-footer__built .nowrap { white-space: nowrap; }
+.site-footer__brand { display: inline-block; width: 1rem; height: 1rem; vertical-align: -0.125em; color: var(--muted-text); }
 .site-footer__icon--sm { width: 1.5rem; height: 1.5rem; }
-.site-footer__copy { margin-top: var(--space-6); }
-.site-footer__colophon { max-width: 39.25rem; margin: var(--space-2) 0 var(--space-4); color: var(--muted-text); }
-.site-footer__small-link { margin-top: calc(var(--spacer-tiny) - 6px); } /* two-column: puts its text on the baseline of "Site built by" in the left column */
+.site-footer__timeline { margin-top: 0; }
+.site-footer__built { margin-top: var(--space-6); }
+.site-footer__colophon { max-width: 39.25rem; margin: 0 0 var(--space-4); color: var(--muted-text); }
+.site-footer__small-link { margin-top: calc(var(--spacer-tiny) - 26px); } /* two-column: puts its text on the baseline of "Site designed and built by" in the left column */
 .site-footer__mark {
   container-type: inline-size;
   margin-top: var(--space-4);
@@ -1049,3 +1052,151 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 /* Budgets single column (Figma Work/Budgets – single column v3 2723:1460): copy-to-image gap is spacer/medium (96) */
 .cs-single--roomy.cs-single--roomy .scene.scene > .scene__visual { margin-top: var(--spacer-medium); }
 .cs-single--roomy .cs-challenges-flat + .final-visuals { margin-top: var(--spacer-medium); }
+
+/* ---------- How this site was built (/how-this-was-built; Figma Exploration 2736:22815, wireframe 2738:13635) ----------
+   One chronological list of prompts. On wide screens the track is tall and the stage sticks under the nav:
+   the active prompt (set by scroll, prompt-index.js) sits at the stage's vertical centre and the rest fade
+   by distance. Below 700px, and without JS, it is a plain list with each image inline. */
+.hb-intro { padding-top: var(--space-5); padding-bottom: var(--spacer-tiny); }
+.hb-intro__lede { max-width: 40rem; margin-top: var(--space-3); }
+.hb-intro__scope { margin-top: var(--space-3); color: var(--muted-text); }
+
+.hb {
+  /* Tune here: row type, date type and how much scroll each prompt takes */
+  --hb-text-size: 0.875rem; --hb-text-lh: 1.25rem;
+  --hb-date-size: 0.75rem; --hb-date-lh: 1rem;
+  --hb-step: max(3.5rem, 9svh);
+  --hb-stage-h: calc(100vh - var(--nav-height));
+  --hb-stage-h: calc(100svh - var(--nav-height));
+  --hb-date-col: 7rem;
+  width: 100%; max-width: calc(var(--content-max) + 2 * var(--page-margin)); margin: 0 auto;
+  padding: 0 var(--page-margin) var(--spacer-medium);
+}
+.hb__list, .hb__group ol { margin: 0; padding: 0; list-style: none; }
+.hb__aside, .hb__rail, .hb__cue, .hb__hint, .hb__marks, .hb__legend { display: none; }
+
+/* Plain list (small screens, no JS) */
+.hb__item { display: grid; grid-template-columns: var(--hb-date-col) minmax(0, 1fr); gap: var(--space-4); --hb-pad: var(--space-5); position: relative; padding: var(--hb-pad) 0; border-top: 1px solid var(--muted); }
+.hb__when { white-space: nowrap; color: var(--muted-text); font-size: var(--hb-date-size); line-height: var(--hb-date-lh); }
+.hb__text { font-size: 1rem; line-height: 1.5rem; white-space: pre-line; overflow-wrap: anywhere; }
+.hb__inline { margin-top: var(--space-4); }
+/* dashed link from a prompt's timestamp down to its reply's timestamp */
+.hb__item--asked::after, .hb__item--claude::before { content: ""; position: absolute; left: 0.5rem; border-left: 1.5px dashed var(--muted-text); display: none; }
+.hb__item--asked::after { top: calc(var(--hb-pad) + 2 * var(--hb-when-lh, 1rem) + 0.25rem); bottom: 0; }
+.hb__item--claude::before { top: 0; height: calc(var(--hb-pad) - 0.25rem); }
+@media (min-width: 700px) { .hb__item--asked::after, .hb__item--claude::before { display: block; } }
+.hb__item--claude .hb__text { border: 1.5px solid currentColor; border-radius: 1.25rem; padding: var(--space-3) var(--space-4); }
+.hb__item--claude .hb__text, .js .hb__item.hb__item--claude.is-active .hb__text { font-weight: var(--weight-regular, 400); }
+.js .hb__item.hb__item--claude.is-active .hb__text { overflow: visible; }
+
+.hb__inline figcaption { margin-top: var(--space-2); color: var(--muted-text); }
+.hb__ph { display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--surface-image); padding: var(--space-5); text-align: center; color: var(--muted-text); font-size: 0.875rem; line-height: 1.25rem; }
+.hb__soon { margin: var(--space-4) 0 0; color: var(--muted-text); }
+.hb__ph span { position: relative; z-index: 1; max-width: 22rem; }
+.hb__group summary {
+  display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; list-style: none;
+  padding: var(--space-1) var(--space-3); border: 1px solid var(--button-tertiary-border); border-radius: 999px; color: var(--muted-text);
+}
+.hb__group summary::-webkit-details-marker { display: none; }
+.hb__group summary::before { content: "\25B8"; font-size: 0.625rem; transition: transform var(--duration-hover) var(--ease); }
+.hb__group[open] summary::before { transform: rotate(90deg); }
+.hb__group ol { margin-top: var(--space-3); display: grid; gap: var(--space-3); }
+.hb__group li { font-size: 1rem; line-height: 1.5rem; white-space: pre-line; overflow-wrap: anywhere; }
+@media (max-width: 699px) {
+  .hb__item { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+}
+
+/* Stepped stage (wide screens, JS on) */
+@media (min-width: 700px) and (min-height: 521px), (min-width: 700px) and (orientation: portrait) {
+  .js .hb { max-width: none; padding: 0; height: calc(var(--hb-stage-h) + (var(--hb-n) - 1) * var(--hb-step)); }
+  .js .hb__stage {
+    position: sticky; top: var(--nav-height); height: var(--hb-stage-h); overflow: hidden;
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: var(--spacer-medium);
+    padding: 0 var(--page-margin) 0 var(--space-5);
+  }
+  .js .hb__viewport {
+    grid-column: 1; grid-row: 1; margin: 3rem 0 3rem 3rem; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+  .js .hb__list { position: relative; transition: transform 0.5s var(--ease); will-change: transform; }
+  .js .hb__item { border-top: 0; --hb-pad: var(--space-2); --hb-when-lh: var(--hb-text-lh); opacity: 0.12; transition: opacity var(--duration-hover) var(--ease); }
+  .js .hb__item[data-dist="0"] { opacity: 1; }
+  .js .hb__item[data-dist="1"] { opacity: 0.6; }
+  .js .hb__item[data-dist="2"] { opacity: 0.38; }
+  .js .hb__item[data-dist="3"] { opacity: 0.22; }
+  .js .hb__when { color: inherit; }
+  .js .hb__text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+  .js .hb__when { font-size: var(--hb-date-size); line-height: var(--hb-text-lh); }
+  .js .hb__text { font-size: var(--hb-text-size); line-height: var(--hb-text-lh); }
+  .js .hb__item.is-active .hb__text { display: block; font-weight: var(--weight-bold); }
+  .js .hb__item:not(.is-active) .hb__group { pointer-events: none; }
+  /* The sticky image panel stands in for the inline images; keep those for screen readers only */
+  .js .hb__item .hb__soon { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+  .js .hb__inline { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+
+  .js .hb__aside { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; padding: var(--space-6) 0 var(--space-3); min-height: 0; }
+  .hb__panel { position: relative; flex: 1; min-height: 0; }
+  .hb__shot { position: absolute; inset: 0; background: var(--surface-image); opacity: 0; transition: opacity var(--duration-colour) var(--ease); }
+  .hb__shot--soon { display: grid; place-items: center; background: none; }
+  .hb__shot--soon .hb__soon { margin: 0; text-align: center; font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--weight-black); text-transform: uppercase; letter-spacing: var(--tracking-heading); }
+  .hb__shot.is-on { opacity: 1; }
+  .hb__shot img { width: 100%; height: 100%; object-fit: cover; }
+  .hb__shot .hb__ph { width: 100%; height: 100%; aspect-ratio: auto; place-items: start center; padding-top: var(--space-6); }
+  .hb__caption { display: none; } /* the "Prompt N of 818" line is hidden; the markup stays for the script */
+  .hb__caption-count::before { content: "\00b7\00a0"; margin-left: var(--space-2); }
+  .hb__caption-label:empty + .hb__caption-count::before { content: none; margin: 0; }
+
+  .js .hb__rail { display: block; position: absolute; left: var(--space-5); top: 0; bottom: 0; width: 0; }
+  .js .hb__rail { pointer-events: none; }
+  .hb__rail-date { position: absolute; left: 0; color: var(--muted-text); font-size: 0.75rem; line-height: 1.25rem; white-space: nowrap; }
+  .hb__rail-date--start { top: 0.75rem; }
+  .hb__rail-date--end { bottom: 0.75rem; }
+  .hb__rail-line { position: absolute; left: 0.5rem; top: 3rem; bottom: 3rem; width: 1px; background: var(--muted); }
+  .js .hb__rail-line { cursor: grab; pointer-events: auto; touch-action: none; }
+  .js .hb__rail-line::before { content: ""; position: absolute; inset: 0 -0.75rem; } /* wider grab area */
+  .hb.is-scrubbing .hb__rail-line { cursor: grabbing; }
+  .hb.is-scrubbing .hb__list { transition-duration: 0.12s; }
+  .hb__thumb { position: absolute; left: 0; width: 0; height: 2.25rem; top: calc(var(--hb-p, 0) * (100% - 2.25rem)); } /* same track maths as .hb__mark, so it sits centred on a marker */
+  .hb__thumb::before { content: ""; position: absolute; left: 0; top: 50%; width: 0.5rem; height: 0.5rem; margin: -0.25rem 0 0 -0.25rem; border-radius: 50%; background: var(--white); border: 1.5px solid var(--muted-text); }
+  /* Milestones: tick buttons on the rail, same vertical maths as the thumb; the label shows on hover/focus */
+  .js .hb__marks { display: block; position: absolute; left: var(--space-5); top: 3rem; bottom: 3rem; width: 1rem; z-index: 3; pointer-events: none; }
+  .hb__marks ol { margin: 0; padding: 0; list-style: none; }
+  .hb__mark {
+    position: absolute; left: 0; top: calc(var(--at) * (100% - 2.25rem) + 1.125rem); transform: translateY(-50%);
+    width: 1.25rem; height: 1.25rem; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; color: var(--black);
+  }
+  .hb__mark::before { content: ""; position: absolute; left: 0.5rem; top: 50%; width: 0.5rem; height: 0.5rem; margin: -0.25rem 0 0 -0.25rem; border-radius: 50%; background: var(--white); border: 1.5px solid currentColor; transition: transform var(--duration-hover) var(--ease); }
+  .hb__mark:hover::before, .hb__mark:focus-visible::before, .hb__mark.is-here::before { transform: scale(1.4); background: var(--black); }
+  .hb__mark--accent { color: #c2410c; }
+  .hb__mark--accent::before, .hb__mark--accent:hover::before, .hb__mark--accent.is-here::before { background: #f97316; border-color: #c2410c; }
+  .hb__mark--accent .hb__mark-label { background: #c2410c; color: var(--white); font-weight: var(--weight-bold); }
+  .hb__mark:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; border-radius: 4px; }
+  .hb__mark-label {
+    position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); white-space: nowrap; padding: var(--space-1) var(--space-3);
+    background: var(--black); color: var(--white); border-radius: 999px; opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity var(--duration-hover) var(--ease), visibility 0s var(--duration-hover);
+  }
+  .hb__mark:hover .hb__mark-label, .hb__mark:focus-visible .hb__mark-label, .hb__mark.is-here .hb__mark-label { opacity: 1; visibility: visible; transition-delay: 0s; }
+  .js .hb__cue { display: flex; align-items: center; gap: var(--space-2); position: absolute; left: 4.5rem; color: var(--muted-text); transition: opacity var(--duration-hover) var(--ease); }
+  .hb__cue .icon { width: 1rem; height: 1rem; }
+  .hb__cue--older { top: 0.75rem; }
+  .js .hb__legend { display: flex; align-items: center; gap: var(--space-2); position: absolute; top: 0.75rem; left: 15rem; color: var(--black); opacity: 0; visibility: hidden; transition: opacity var(--duration-hover) var(--ease), visibility 0s var(--duration-hover); }
+  .hb.is-started .hb__legend { opacity: 1; visibility: visible; transition-delay: 0s; }
+  .hb__pill { width: 1.5rem; height: 0.875rem; border: 1.5px solid currentColor; border-radius: 0.5rem; }
+  .hb__cue--newer { bottom: 0.75rem; }
+  .hb:is(.is-first) .hb__cue--older, .hb:is(.is-last) .hb__cue--newer { opacity: 0; }
+  .js .hb__hint {
+    display: inline-flex; align-items: center; gap: var(--space-2); position: absolute; left: 4.5rem; bottom: 3rem; z-index: 2;
+    padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3); border-radius: 999px; background: var(--black); color: var(--white);
+    transition: opacity var(--duration-hover) var(--ease);
+  }
+  .hb.is-started .hb__hint { opacity: 0; visibility: hidden; transition: opacity var(--duration-hover) var(--ease), visibility 0s var(--duration-hover); }
+  .hb__mouse { position: relative; width: 0.75rem; height: 1.125rem; border: 1.5px solid currentColor; border-radius: 0.5rem; }
+  .hb__mouse::after { content: ""; position: absolute; left: 50%; top: 0.2rem; width: 2px; height: 0.25rem; margin-left: -1px; border-radius: 1px; background: currentColor; animation: hb-wheel 1.6s var(--ease) infinite; }
+  @keyframes hb-wheel { 0% { opacity: 0; transform: translateY(0); } 25% { opacity: 1; } 80%, 100% { opacity: 0; transform: translateY(0.4rem); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hb__list, .hb__item, .hb__shot, .hb__cue, .hb__hint { transition: none !important; }
+  .hb__mouse::after { animation: none; opacity: 1; }
+}

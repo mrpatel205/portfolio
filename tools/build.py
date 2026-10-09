@@ -7,6 +7,8 @@ No dependencies. Pages in site-src/pages/ are copied to public/ with:
                          (20px, 2px stroke at 20px, aria-hidden)
   {{current:key}}        replaced by aria-current="page" when the page's `current` matches key
   {{v}}                  replaced by a build stamp, used to cache-bust CSS/JS URLs
+  {{prompt-index}}       the /how-this-was-built prompt list, from site-src/data/how-built.json (tools/prompt_index.py)
+  {{prompt-scope}}       e.g. "12 prompts, 20th Sep"
   <x-*> components       case study building blocks, expanded first (see tools/components.py)
 A page may start with a comment `<!-- current: work -->` to set its current nav item.
 
@@ -17,6 +19,7 @@ import re
 import time
 
 import components
+import prompt_index
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "site-src"
@@ -53,6 +56,8 @@ def render(text: str, current: str) -> str:
                       lambda m: (SRC / "partials" / f"{m.group(1)}.html").read_text().rstrip("\n"), text)
     text = re.sub(r"\{\{icon:([\w-]+)\}\}", lambda m: icon(m.group(1)), text)
     text = text.replace("{{v}}", BUILD)
+    if "{{prompt-index}}" in text:
+        text = text.replace("{{prompt-index}}", prompt_index.render()).replace("{{prompt-scope}}", prompt_index.scope())
     text = re.sub(r"\{\{current:([\w-]+)\}\}",
                   lambda m: 'aria-current="page"' if m.group(1) == current else "", text)
     return text
@@ -92,8 +97,10 @@ def main() -> None:
         url = "/" + ("" if rel.name == "index.html" and rel.parent == pathlib.Path(".") else str(rel.parent) + "/")
         if rel.name != "index.html":
             url = "/" + str(rel.with_suffix("")) + "/"
-        urls.append(url)
-        target.write_text(share_meta(render(components.expand(raw), current), url))
+        built = share_meta(render(components.expand(raw), current), url)
+        if not re.search(r'<meta name="robots" content="[^"]*noindex', built):  # noindex pages stay out of the sitemap
+            urls.append(url)
+        target.write_text(built)
         print(f"built {target.relative_to(ROOT)}")
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
