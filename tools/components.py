@@ -316,6 +316,9 @@ def story(n):
     svg = (ROOT / "site-src" / "illustrations" / f"{n.req('svg')}.svg").read_text().strip()
     vb = re.search(r'viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"', svg)
     ratio = round(float(vb.group(1)) / float(vb.group(2)), 3)
+    after = n.kid("after")
+    after_html = (f'\n    <div class="story__after prose t-body-lg">\n{indent(after.text(), 6)}\n    </div>'
+                  if after else "")
     return f"""<section class="story" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"
          data-stages="{stages}" style="--stages: {stages}; --story-ratio: {ratio}">
   <div class="story__pin">
@@ -325,7 +328,7 @@ def story(n):
     </div>
     <figure class="story__figure">
 {indent(svg, 6)}
-    </figure>
+    </figure>{after_html}
   </div>
 </section>"""
 

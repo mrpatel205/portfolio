@@ -6,21 +6,24 @@
     <!-- Stage 1 -->
     <g class="story__fade" data-stage="1" style="--i:0">
       <circle cx="400" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-      <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="315.2" y="286.2">WITHDRAWAL</tspan></text>
+      <rect x="302.0" y="255.0" width="196.4" height="46.8" rx="23.4" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="315.2" y="286.2">WITHDRAWAL</tspan></text>
     </g>
     <g class="story__fade" data-stage="1" style="--i:1">
       <path d="M660 560H760M744 571L760 560L744 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
     <g class="story__fade" data-stage="1" style="--i:2">
       <circle cx="1020" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-      <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="967.5" y="286.2">DEPOSIT</tspan></text>
+      <rect x="954.3" y="255.0" width="130.4" height="46.8" rx="23.4" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="967.5" y="286.2">DEPOSIT</tspan></text>
     </g>
     <g class="story__fade" data-stage="1" style="--i:3">
       <path d="M1280 560H1380M1364 571L1380 560L1364 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
     <g class="story__fade" data-stage="1" style="--i:4">
       <circle cx="1640" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-      <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1581.3" y="286.2">PAYMENT</tspan></text>
+      <rect x="1568.1" y="255.0" width="145.4" height="46.8" rx="23.4" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1581.3" y="286.2">PAYMENT</tspan></text>
     </g>
     <g class="story__fade" data-stage="1" style="--i:5">
       <path d="M1900 560H2060M2044 571L2060 560L2044 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -28,7 +31,8 @@
     <g class="story__fade" data-stage="1" style="--i:6">
       <circle cx="2170" cy="560" r="90" fill="#EBEBEB"/>
       <circle cx="2170" cy="560" r="40" fill="black"/>
-      <text fill="black" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2116.6" y="286.2">RELEASE</tspan></text>
+      <rect x="2103.4" y="255.0" width="132.4" height="46.8" rx="23.4" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2116.6" y="286.2">RELEASE</tspan></text>
     </g>
     <!-- Stage 2 -->
     <g class="story__fade" data-stage="2" style="--i:0">
@@ -47,7 +51,8 @@
       <circle cx="250" cy="616" r="10" fill="#737373"/>
     </g>
     <g class="story__fade" data-stage="2" style="--i:5">
-      <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
+      <rect x="227.9" y="402.9" width="239.8" height="69.9" rx="12.0" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
       <path d="M249 587.7C250.5 587.7 251.7 586.5 251.7 585C251.7 583.5 250.5 582.3 249 582.3C247.5 582.3 246.3 583.5 246.3 585C246.3 586.5 247.5 587.7 249 587.7ZM249 585L249.5 585L249.5 485L249 485L248.5 485L248.5 585L249 585Z" fill="#737373"/>
     </g>
     <g class="story__fade" data-stage="2" style="--i:6;--d:60">
@@ -235,8 +240,9 @@
     </g>
     <!-- Stage 3 -->
     <g class="story__fade" data-stage="3" style="--i:0">
-      <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
-      <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373"/>
+      <rect x="20.9" y="613.9" width="121.2" height="96.9" rx="12.0" fill="#595959"/>
+      <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
+      <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373" transform="translate(16 0)"/>
     </g>
   </g>
 </svg>

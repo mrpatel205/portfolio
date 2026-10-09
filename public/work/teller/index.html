@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=1791523911">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791532102">
 <script>document.documentElement.classList.add("js")</script>
 <!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
 <script>
@@ -45,13 +45,13 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
   });
 }
 </script>
-<title>A simpler system for tellers · Major bank case study · MRPATEL</title>
+<title>Modernising the teller experience · Major bank case study · MRPATEL</title>
 <meta name="description" content="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://mrpatel.com/work/teller/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MRPATEL">
-<meta property="og:title" content="A simpler system for tellers · Major bank case study · MRPATEL">
+<meta property="og:title" content="Modernising the teller experience · Major bank case study · MRPATEL">
 <meta property="og:url" content="https://mrpatel.com/work/teller/">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:description" content="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
@@ -78,7 +78,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     <header class="cs-hero" data-section="hero">
       <a class="back-link link link--small" href="/work/teller/summary/" data-track="back" data-track-target="/work/teller/summary/"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /> <path d="M19 12H5" /></svg>Back to summary</a>
   
-      <h1 class="t-h1 cs-hero__title">A simpler system for tellers</h1>
+      <h1 class="t-h1 cs-hero__title">Modernising the teller experience</h1>
       <dl class="cs-meta t-caption">
         <div class="cs-meta__group">
           <div class="cs-meta__item"><dt>Company</dt><dd>Major bank</dd></div>
@@ -97,10 +97,10 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       <div class="scene__copy">
         <div class="cs-heading">
           <p class="cs-pill">Situation</p>
-          <h2 class="t-h3" id="situation">Building for every branch, every banker</h2>
+          <h2 class="t-h3" id="situation">A 40-year system powered branch work</h2>
         </div>
         <div class="prose t-body-lg">
-          <p>At a major bank, a legacy system had powered branch teller transactions — withdrawals, deposits, payments — for nearly 40 years across all 400+ of its branches in Australia, run daily by an estimated 1,000+ frontline bankers.</p>
+          <p>The legacy system supported withdrawals, deposits and payments across the bank’s 437 branches, used daily by more than 1,000 frontline bankers.</p>
         </div>
       </div>
       <div class="scene__visual">
@@ -115,11 +115,11 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       <div class="scene__copy">
         <div class="cs-heading">
           <p class="cs-pill">Situation</p>
-          <h2 class="t-h3" id="situation-switching">A system you had to memorise</h2>
+          <h2 class="t-h3" id="situation-switching">Tellers held the missing instructions</h2>
         </div>
         <div class="prose t-body-lg">
-          <p>Many transactions meant switching systems: checking policy thresholds information, and entering one of many of 4-digit numeric codes tellers had to memorise to initiate a transaction.</p>
-            <p>It was reliable and earned genuine loyalty once tellers learned it. But it came with a high barrier to entry. For the business it was too costly to maintain, with too few engineers knowing how to build on the legacy code.</p>
+          <p>A significant withdrawal could mean switching between up to eight systems to check thresholds, authorise cash and work out what came next. Tellers memorised shortcodes and policy rules to keep work moving.</p>
+            <p>That knowledge made the legacy system dependable for experienced bankers, but hard to learn and costly to maintain. Replacing it risked moving the complexity onto tellers.</p>
         </div>
       </div>
       <div class="scene__visual">
@@ -134,10 +134,10 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       <div class="scene__copy">
         <div class="cs-heading">
           <p class="cs-pill">Situation</p>
-          <h2 class="t-h3" id="situation-response">The response</h2>
+          <h2 class="t-h3" id="situation-response">Rebuilding the colleague banking channel</h2>
         </div>
         <div class="prose t-body-lg">
-          <p>Over three years, the programme brought together a cross-functional team of 6 designers and 3 agile squads, working closely with the SME partner Future of Retail, toward a shared vision: removing all switching of systems by migrating withdrawal, deposit, and payment transactions into the new colleague banking channel, built on a modern, API-enabled web stack and the bank's new design system.</p>
+          <p>The programme moved withdrawal, deposit and payment transactions into the colleague banking channel. The design challenge was moving the work, its decision logic and its links to branch hardware with it.</p>
         </div>
       </div>
     </section>
@@ -149,8 +149,8 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
           <h2 class="t-h3" id="task">Withdrawals &amp; Deposits</h2>
         </div>
         <div class="prose t-body-lg">
-          <p>I picked the Withdrawals epic half way through the programme, after the previous design team had nailed down the core interaction model along with initial designs in the bank's old design system. My job was to own the key complexity in the base experience, uplift everything to the new design system, and take it all the way through to a complete, responsive handover for engineering.</p>
-            <p>Deposits had no head start — I owned it from the design brief through to shipped, responsive design, across every sub-transaction type it spawned.</p>
+          <p><strong>Withdrawals:</strong> I joined after the core interaction model was set. I owned cash breakup, cash dispense and the transaction summary, moved the design onto the bank’s new design system, and completed the engineering handover.</p>
+            <p><strong>Deposits:</strong> I led the work from discovery through handover, covering the core flow plus cheque, third-party and business deposits, including rollback and edit scenarios.</p>
         </div>
       </div>
     </section>
@@ -182,8 +182,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
             <h2 class="t-h3" id="approach">Process, sized to constraints</h2>
           </div>
           <div class="prose t-body-lg">
-            <p>The programme was planned as one big-bang release covering <span class="story-mark" data-stage="1">every withdrawal, payment and deposit transaction type</span>, but we designed them <span class="story-mark" data-stage="1">one at a time</span>. <span data-from="2">Each ran <span class="story-mark" data-stage="2">its own design process</span>, <span class="story-mark" data-stage="3">sized to its breadth and complexity, and to the time and capacity we actually had</span>.</span></p>
-              <p data-from="4">Some got deep discovery: time in branch, moderated testing and workshops with our SMEs. Others didn't have that luxury, so the process flexed to match.</p>
+            <p>The programme was planned as <span class="story-mark" data-stage="1">a big-bang release across withdrawals, deposits and payments</span>. <span data-from="2">We designed <span class="story-mark" data-stage="2">one transaction type at a time</span>, treating each as a connected workflow and <span class="story-mark" data-stage="3">scaling the process to its complexity and available capacity</span>.</span></p>
           </div>
         </div>
         <figure class="story__figure">
@@ -195,21 +194,24 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <!-- Stage 1 -->
               <g class="story__fade" data-stage="1" style="--i:0">
                 <circle cx="400" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-                <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="315.2" y="286.2">WITHDRAWAL</tspan></text>
+                <rect x="302.0" y="255.0" width="196.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="315.2" y="286.2">WITHDRAWAL</tspan></text>
               </g>
               <g class="story__fade" data-stage="1" style="--i:1">
                 <path d="M660 560H760M744 571L760 560L744 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </g>
               <g class="story__fade" data-stage="1" style="--i:2">
                 <circle cx="1020" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-                <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="967.5" y="286.2">DEPOSIT</tspan></text>
+                <rect x="954.3" y="255.0" width="130.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="967.5" y="286.2">DEPOSIT</tspan></text>
               </g>
               <g class="story__fade" data-stage="1" style="--i:3">
                 <path d="M1280 560H1380M1364 571L1380 560L1364 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </g>
               <g class="story__fade" data-stage="1" style="--i:4">
                 <circle cx="1640" cy="560" r="230" stroke="#737373" stroke-width="3"/>
-                <text fill="#737373" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1581.3" y="286.2">PAYMENT</tspan></text>
+                <rect x="1568.1" y="255.0" width="145.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1581.3" y="286.2">PAYMENT</tspan></text>
               </g>
               <g class="story__fade" data-stage="1" style="--i:5">
                 <path d="M1900 560H2060M2044 571L2060 560L2044 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -217,7 +219,8 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <g class="story__fade" data-stage="1" style="--i:6">
                 <circle cx="2170" cy="560" r="90" fill="#EBEBEB"/>
                 <circle cx="2170" cy="560" r="40" fill="black"/>
-                <text fill="black" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2116.6" y="286.2">RELEASE</tspan></text>
+                <rect x="2103.4" y="255.0" width="132.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2116.6" y="286.2">RELEASE</tspan></text>
               </g>
               <!-- Stage 2 -->
               <g class="story__fade" data-stage="2" style="--i:0">
@@ -236,7 +239,8 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
                 <circle cx="250" cy="616" r="10" fill="#737373"/>
               </g>
               <g class="story__fade" data-stage="2" style="--i:5">
-                <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
+                <rect x="227.9" y="402.9" width="239.8" height="69.9" rx="12.0" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
                 <path d="M249 587.7C250.5 587.7 251.7 586.5 251.7 585C251.7 583.5 250.5 582.3 249 582.3C247.5 582.3 246.3 583.5 246.3 585C246.3 586.5 247.5 587.7 249 587.7ZM249 585L249.5 585L249.5 485L249 485L248.5 485L248.5 585L249 585Z" fill="#737373"/>
               </g>
               <g class="story__fade" data-stage="2" style="--i:6;--d:60">
@@ -424,12 +428,17 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               </g>
               <!-- Stage 3 -->
               <g class="story__fade" data-stage="3" style="--i:0">
-                <text fill="#737373" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
-                <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373"/>
+                <rect x="20.9" y="613.9" width="121.2" height="96.9" rx="12.0" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
+                <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373" transform="translate(16 0)"/>
               </g>
             </g>
           </svg>
         </figure>
+        <div class="story__after prose t-body-lg">
+          <p>Where time allowed, I observed teller work in branches, ran moderated tests and held SME workshops. That surfaced keyboard-first habits and cash-recycler dependencies.</p>
+              <p>When time was tight, I focused on the riskiest decisions and worked with product and engineering as policy and API readiness changed.</p>
+        </div>
       </div>
     </section>
 
@@ -439,27 +448,27 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
         <div class="panel metrics" data-play-target>
           <div class="metrics__left">
             <div class="metrics__header" data-from="1">
-              <h2 class="t-h3 metrics__subheading" id="research">Evidence in place of live data</h2>
-              <p class="t-body-lg metrics__lead">Without real-world feedback for ~18&nbsp;months, we used testing rounds and branch observation to cut experience risk before go-live.</p>
+              <h2 class="t-h3 metrics__subheading" id="research">Validate the risky steps</h2>
+              <p class="t-body-lg metrics__lead">Five days in branches and 82 observed transactions gave Deposits real-world context. Moderated rounds and surveys then helped validate high-risk interactions before handover.</p>
             </div>
             <div class="metrics__headline">
               <p class="metrics__big" data-from="2"><span class="metrics__big-value" aria-hidden="true" data-count-stage="2" data-count-ms="1400">22</span><span class="visually-hidden">22</span></p>
-              <p class="metrics__big-label" data-from="2">Hours of moderated testing</p>          <p class="metrics__note" data-from="4">11 on deposits · 11 on withdrawals</p>
+              <p class="metrics__big-label" data-from="2">hours of moderated testing</p>          <p class="metrics__note" data-from="4">11 on deposits · 11 on withdrawals</p>
             </div>
           </div>
           <div class="metrics__right">
             <div class="metrics__group">
               <h3 class="metrics__group-head" data-from="3" style="--i: 0">Deposits</h3>
               <ul class="metrics__list">
-                <li class="metrics__stat metrics__stat--callout" data-from="3" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">5</span><span class="visually-hidden">5</span><span class="metrics__text"><span class="metrics__label">Days observing in branch</span><span class="metrics__sub">82 transactions · ~10 tellers at the counter</span></span></li>
-                <li class="metrics__stat" data-from="3" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">16</span><span class="visually-hidden">16</span><span class="metrics__text"><span class="metrics__label">Rounds of moderated testing</span></span></li>
+                <li class="metrics__stat metrics__stat--callout" data-from="3" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">5</span><span class="visually-hidden">5</span><span class="metrics__text"><span class="metrics__label">days observing in branch</span><span class="metrics__sub">82 transactions · ~10 tellers at the counter</span></span></li>
+                <li class="metrics__stat" data-from="3" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">16</span><span class="visually-hidden">16</span><span class="metrics__text"><span class="metrics__label">rounds of moderated testing</span></span></li>
               </ul>
             </div>
             <div class="metrics__group">
               <h3 class="metrics__group-head" data-from="4" style="--i: 0">Withdrawals</h3>
               <ul class="metrics__list">
-                <li class="metrics__stat" data-from="4" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="4" data-count-ms="800">14</span><span class="visually-hidden">14</span><span class="metrics__text"><span class="metrics__label">Rounds of moderated testing</span></span></li>
-                <li class="metrics__stat" data-from="4" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="4" data-count-ms="800">3</span><span class="visually-hidden">3</span><span class="metrics__text"><span class="metrics__label">Quant surveys</span></span></li>
+                <li class="metrics__stat" data-from="4" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="4" data-count-ms="800">14</span><span class="visually-hidden">14</span><span class="metrics__text"><span class="metrics__label">rounds of moderated testing</span></span></li>
+                <li class="metrics__stat" data-from="4" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="4" data-count-ms="800">3</span><span class="visually-hidden">3</span><span class="metrics__text"><span class="metrics__label">quant surveys</span></span></li>
               </ul>
             </div>
           </div>
@@ -497,45 +506,15 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
           <h2 class="t-h3" id="challenges">Key challenges</h2>
         </div>
         <div class="prose t-paragraph">
-          <p>This wasn't a blank canvas — the data, workflows, and trust already existed, built over years with the system it replaced, and the real test was earning that confidence back. That shaped everything: a dependency that shifted mid-project, practices that needed questioning, and work split between a wider team and solo ownership. Open any challenge below.</p>
+          <p>Six connected challenges shaped the work: reducing system switching, uncovering what branch practice revealed beyond the requirements, designing around hidden device dependencies, changing habits carried over from the legacy system, extending a customer-focused design system for colleague work, and aligning decisions across a broad team. Together, they pointed to one goal: make teller work simpler without losing the safeguards it relied on.</p>
         </div>
       </div>
       <ol class="accordion__list">
-        <li class="accordion__item" data-reveal data-section="challenge-old-habits">
+        <li class="accordion__item" data-reveal data-section="challenge-system-switching">
           <div class="accordion__row">
             <span class="accordion__number t-h3" aria-hidden="true">01</span>
             <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="old-habits-title">Removing old teller habits</h3>    <p class="accordion__subtitle t-body-lg">Designing trust into a cash count</p>
-              <div class="accordion__skills t-caption">
-                <p class="accordion__skills-label">Skills used:</p>
-                <ul class="accordion__skill-list">
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg>Usability testing</li>
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
-                </ul>
-              </div>
-              <p class="accordion__context t-paragraph-bold">Tellers read the new system through a legacy lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</p>
-              <button type="button" class="accordion__trigger accordion__more link" id="old-habits-trigger" aria-expanded="true"
-                      aria-controls="old-habits-panel" data-track="accordion_toggle" data-track-target="old-habits" data-track-title="Removing old teller habits"><span
-                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Removing old teller habits</span></button>
-            </div>
-          </div>
-          <div class="accordion__panel" id="old-habits-panel" role="region" aria-labelledby="old-habits-title">
-            <div class="accordion__clip">
-              <div class="accordion__body">
-                <div class="accordion__copy prose t-paragraph">
-                  <p class="accordion__label">What I did</p>
-                      <p>I split the TCR into standard accounting inputs and TCR-specific patterns, and tested the TCR-specific ones hardest, since they carried the most risk of old habits misleading tellers. Withdrawal got an Automatic/Custom toggle that hides break-up fields until needed. Deposit's two-screen count became one live screen with Roll back to recount. “Amounts match” and “Counted: $X” tested well as reassurance.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="accordion__item" data-reveal data-section="challenge-system-switching">
-          <div class="accordion__row">
-            <span class="accordion__number t-h3" aria-hidden="true">02</span>
-            <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="system-switching-title">Removing system switching</h3>    <p class="accordion__subtitle t-body-lg">One task list instead of eight systems</p>
-              <div class="accordion__skills t-caption">
+              <h3 class="accordion__title t-h3" id="system-switching-title">Removing system switching</h3>    <div class="accordion__skills t-caption">
                 <p class="accordion__skills-label">Skills used:</p>
                 <ul class="accordion__skill-list">
                   <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg>Systems thinking</li>
@@ -553,7 +532,91 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <div class="accordion__body">
                 <div class="accordion__copy prose t-paragraph">
                   <p class="accordion__label">What I did</p>
-                      <p>I drove the early call between a full page and a side sheet, then shaped the Hub: a dynamic task list for withdrawals and payments that consolidates steps and shows only what a transaction needs, with conditional logic across flows. The system now carries policy tellers used to memorise. Deposits skipped the Hub on purpose: 80% of deposit tasks were already quick.</p>
+                      <p>I drove the early decision between a full-page, side-sheet and Hub approach, then shaped the Hub as a dynamic task list for withdrawals and payments. It consolidated steps, showed only the tasks relevant to each transaction, and carried policy checks into the flow. Deposits were different: observation showed about 80% were simple, so we left the Hub out to avoid adding steps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-branch-observation">
+          <div class="accordion__row">
+            <span class="accordion__number t-h3" aria-hidden="true">02</span>
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h3" id="branch-observation-title">Branch observation: uncovering what the requirements missed</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /></svg>Survey creation and synthesis</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">Withdrawal observation happened in fragments: half-days squeezed between other work, under pressure to deliver high-fidelity screens. Deposits carried far more machine interaction, so designing it without real branch context was too big a risk.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="branch-observation-trigger" aria-expanded="true"
+                      aria-controls="branch-observation-panel" data-track="accordion_toggle" data-track-target="branch-observation" data-track-title="Branch observation: uncovering what the requirements missed"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Branch observation: uncovering what the requirements missed</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="branch-observation-panel" role="region" aria-labelledby="branch-observation-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>For Deposits, I arranged a four-day immersion across four branches before design, using observation to check the brief against teller practice. I found two missing requirements: the TCR’s inventory warning colour and a way to roll back cash already fed during a count. I brought both into the design, making machine feedback and recovery part of the transaction flow.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-devices">
+          <div class="accordion__row">
+            <span class="accordion__number t-h3" aria-hidden="true">03</span>
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h3" id="devices-title">The devices: No one saw the full picture</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg>Systems thinking</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">The legacy system read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24-inch monitors, often across several resized windows the brief never mentioned.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="devices-trigger" aria-expanded="true"
+                      aria-controls="devices-panel" data-track="accordion_toggle" data-track-target="devices" data-track-title="The devices: No one saw the full picture"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The devices: No one saw the full picture</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="devices-panel" role="region" aria-labelledby="devices-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>I designed the Deposits flows end to end for simple, mixed, third-party and cheque acceptance, including device and API states that could interrupt a transaction: an occupied TCR, unavailable inventory, no cash, or a transaction already in progress. For fixed 24-inch teller screens, I reorganised the TCR panel for narrow windows instead of simply shrinking it. The narrow-window layout still needs validation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-old-habits">
+          <div class="accordion__row">
+            <span class="accordion__number t-h3" aria-hidden="true">04</span>
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h3" id="old-habits-title">Removing old teller habits</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg>Usability testing</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">Tellers read the new system through a legacy lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="old-habits-trigger" aria-expanded="true"
+                      aria-controls="old-habits-panel" data-track="accordion_toggle" data-track-target="old-habits" data-track-title="Removing old teller habits"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Removing old teller habits</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="old-habits-panel" role="region" aria-labelledby="old-habits-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>To keep legacy TCR assumptions from carrying into the new colleague banking channel, I separated standard accounting inputs from device-specific controls and tested the riskiest interactions first. For withdrawals, I added an Automatic/Custom choice so denomination fields appeared only when needed. For deposits, I combined the count into one live screen and added Roll back to recount. In testing, “Amounts match” and “Counted: $X” gave tellers reassurance.</p>
                 </div>
               </div>
             </div>
@@ -561,17 +624,16 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
         </li>
         <li class="accordion__item" data-reveal data-section="challenge-design-system">
           <div class="accordion__row">
-            <span class="accordion__number t-h3" aria-hidden="true">03</span>
+            <span class="accordion__number t-h3" aria-hidden="true">05</span>
             <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="design-system-title">Unfamiliar platform, unready design system</h3>    <p class="accordion__subtitle t-body-lg">From consumer to contributor</p>
-              <div class="accordion__skills t-caption">
+              <h3 class="accordion__title t-h3" id="design-system-title">Unfamiliar platform, unready design system</h3>    <div class="accordion__skills t-caption">
                 <p class="accordion__skills-label">Skills used:</p>
                 <ul class="accordion__skill-list">
                   <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.536 11.293a1 1 0 0 0 0 1.414l2.376 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /> <path d="M2.297 11.293a1 1 0 0 0 0 1.414l2.377 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414L6.088 8.916a1 1 0 0 0-1.414 0z" /> <path d="M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z" /> <path d="M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /></svg>Design systems contribution</li>
                   <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z" /> <path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18" /> <path d="m2.3 2.3 7.286 7.286" /> <circle cx="11" cy="11" r="2" /></svg>Visual design</li>
                 </ul>
               </div>
-              <p class="accordion__context t-paragraph-bold">The new system's design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and the bank's atomic design conventions, learning the tool and the system's logic at the same time.</p>
+              <p class="accordion__context t-paragraph-bold">The new system’s design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and the bank’s atomic design conventions, learning the tool and the system’s logic at the same time.</p>
               <button type="button" class="accordion__trigger accordion__more link" id="design-system-trigger" aria-expanded="true"
                       aria-controls="design-system-panel" data-track="accordion_toggle" data-track-target="design-system" data-track-title="Unfamiliar platform, unready design system"><span
                       class="accordion__more-label">Read less</span><span class="visually-hidden">: Unfamiliar platform, unready design system</span></button>
@@ -582,65 +644,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <div class="accordion__body">
                 <div class="accordion__copy prose t-paragraph">
                   <p class="accordion__label">What I did</p>
-                      <p>I built fluency fast, then started giving back. I contributed components to the shared library for colleague use cases, including a horizontal radio group and a progress tracker built with the Business Lending team, plus patterns other teams adopted. Through the Design Guild, I helped extend the system from customer journeys into colleague ones.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="accordion__item" data-reveal data-section="challenge-branch-observation">
-          <div class="accordion__row">
-            <span class="accordion__number t-h3" aria-hidden="true">04</span>
-            <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="branch-observation-title">Branch observation</h3>    <p class="accordion__subtitle t-body-lg">Uncovering what the requirements missed</p>
-              <div class="accordion__skills t-caption">
-                <p class="accordion__skills-label">Skills used:</p>
-                <ul class="accordion__skill-list">
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /></svg>Survey creation and synthesis</li>
-                </ul>
-              </div>
-              <p class="accordion__context t-paragraph-bold">Withdrawal observation happened in fragments: half-days squeezed between other work, under pressure to deliver high-fidelity screens. Deposits carried far more machine interaction, so designing it without real branch context was too big a risk.</p>
-              <button type="button" class="accordion__trigger accordion__more link" id="branch-observation-trigger" aria-expanded="true"
-                      aria-controls="branch-observation-panel" data-track="accordion_toggle" data-track-target="branch-observation" data-track-title="Branch observation"><span
-                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Branch observation</span></button>
-            </div>
-          </div>
-          <div class="accordion__panel" id="branch-observation-panel" role="region" aria-labelledby="branch-observation-title">
-            <div class="accordion__clip">
-              <div class="accordion__body">
-                <div class="accordion__copy prose t-paragraph">
-                  <p class="accordion__label">What I did</p>
-                      <p>For Deposits, I built in a four-day immersion across four branches before designing anything, checking the requirements against what tellers actually did. It surfaced two gaps no document had captured: a TCR inventory warning colour, and a way to roll back cash already fed in mid-count. Both became part of the Deposits design.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="accordion__item" data-reveal data-section="challenge-devices">
-          <div class="accordion__row">
-            <span class="accordion__number t-h3" aria-hidden="true">05</span>
-            <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="devices-title">The devices</h3>    <p class="accordion__subtitle t-body-lg">No one saw the full picture</p>
-              <div class="accordion__skills t-caption">
-                <p class="accordion__skills-label">Skills used:</p>
-                <ul class="accordion__skill-list">
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg>Systems thinking</li>
-                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
-                </ul>
-              </div>
-              <p class="accordion__context t-paragraph-bold">The legacy system read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24&quot; monitors, often across several resized windows the brief never mentioned.</p>
-              <button type="button" class="accordion__trigger accordion__more link" id="devices-trigger" aria-expanded="true"
-                      aria-controls="devices-panel" data-track="accordion_toggle" data-track-target="devices" data-track-title="The devices"><span
-                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The devices</span></button>
-            </div>
-          </div>
-          <div class="accordion__panel" id="devices-panel" role="region" aria-labelledby="devices-title">
-            <div class="accordion__clip">
-              <div class="accordion__body">
-                <div class="accordion__copy prose t-paragraph">
-                  <p class="accordion__label">What I did</p>
-                      <p>I designed every Deposits flow end to end, including simple, mixed, third-party and cheque acceptance, and the device states around them: TCR in use, inventory API down, no notes in the TCR, transaction already in progress. For narrow windows, I rebuilt the TCR panel's order rather than scaling it down. That layout is still untested at narrow widths.</p>
+                      <p>I learned Figma and the bank’s atomic design conventions while adapting a customer-focused library for colleague work. I contributed reusable patterns, including a horizontal radio group and a progress tracker built with Business Lending. Through the Design Guild, I shared colleague use cases and helped extend the library into colleague journeys; other teams adopted some of the patterns.</p>
                 </div>
               </div>
             </div>
@@ -650,18 +654,17 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
           <div class="accordion__row">
             <span class="accordion__number t-h3" aria-hidden="true">06</span>
             <div class="accordion__summary">
-              <h3 class="accordion__title t-h3" id="team-title">The team</h3>    <p class="accordion__subtitle t-body-lg">A wider net than usual</p>
-              <div class="accordion__skills t-caption">
+              <h3 class="accordion__title t-h3" id="team-title">The team: a wider net than usual</h3>    <div class="accordion__skills t-caption">
                 <p class="accordion__skills-label">Skills used:</p>
                 <ul class="accordion__skill-list">
                   <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /></svg>Workshop facilitation</li>
                   <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg>Usability testing</li>
                 </ul>
               </div>
-              <p class="accordion__context t-paragraph-bold">Teller spanned several designers, product, SMEs, BAs and an offshore team working on Deposits. Shared patterns, like the Hub's cards and error states, needed agreement across all of them, not just sign-off at the end.</p>
+              <p class="accordion__context t-paragraph-bold">Teller spanned several designers, product, SMEs, BAs and an offshore team working on Deposits. Shared patterns, like the Hub’s cards and error states, needed agreement across all of them, not just sign-off at the end.</p>
               <button type="button" class="accordion__trigger accordion__more link" id="team-trigger" aria-expanded="true"
-                      aria-controls="team-panel" data-track="accordion_toggle" data-track-target="team" data-track-title="The team"><span
-                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The team</span></button>
+                      aria-controls="team-panel" data-track="accordion_toggle" data-track-target="team" data-track-title="The team: a wider net than usual"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The team: a wider net than usual</span></button>
             </div>
           </div>
           <div class="accordion__panel" id="team-panel" role="region" aria-labelledby="team-title">
@@ -669,7 +672,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
               <div class="accordion__body">
                 <div class="accordion__copy prose t-paragraph">
                   <p class="accordion__label">What I did</p>
-                      <p>I set up chat huddles with Product, SMEs and BAs to settle requirement questions quickly, and ran weekly testing for fast validation. We iterated the Hub card through Elevate design sessions, ran team workshops on error states and had flows tested across designers. I also helped the lead researcher run an end-to-end withdrawal test in a mock branch lab.</p>
+                      <p>I set up quick huddles with Product, SMEs and BAs to resolve requirement questions, and ran weekly tests to validate flows. I iterated the Hub card in Elevate design sessions, facilitated workshops on error states, and ran cross-designer flow reviews so shared patterns stayed consistent. I also supported the lead researcher with an end-to-end withdrawal test in a mock branch lab.</p>
                 </div>
               </div>
             </div>
@@ -682,18 +685,18 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       <div class="impact__copy">
         <div class="impact__heading">
           <h2 class="t-h3" id="impact">Impact</h2>
-          <p class="t-body-lg impact__lead impact__muted">Piloting since Aug 2026, with a staged roll-out planned through the rest of 2026.</p>
-
+          <p class="t-body-lg impact__lead impact__muted">190,000 banker hours projected saved yearly</p>
+          <p class="t-paragraph">Business case · planning estimate</p>
         </div>
-        <p class="impact__stamp t-caption"><span class="impact__stamp-dot" aria-hidden="true"></span>Impact as of Oct 2026. Updated as roll-out continues.</p>
+        <p class="impact__stamp t-caption"><span class="impact__stamp-dot" aria-hidden="true"></span>Impact snapshot · October 2026</p>
       </div>
       <div class="impact__right">
         <dl class="impact__metrics">
-          <div class="impact__metric"><dt class="t-paragraph-bold">Branches live at pilot start, 6 Aug 2026</dt><dd class="t-metric-xl" data-count-to="3" aria-label="3">3</dd></div>
+          <div class="impact__metric"><dt class="t-paragraph-bold">Branches live at pilot start · 6 Aug 2026</dt><dd class="t-metric-xl" data-count-to="3" aria-label="3">3</dd></div>
         </dl>
         <ul class="impact__signals">
-          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">Quick to learn</p><p class="t-paragraph impact__muted">Bankers picked it up quickly in the first branches.</p></div></li>
-          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">The flow lands</p><p class="t-paragraph impact__muted">Bankers like the overall flow.</p></div></li>
+          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">Quick to learn</p><p class="t-paragraph impact__muted">Early pilot feedback suggested tellers picked up the guided flow quickly.</p></div></li>
+          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">The flow lands</p><p class="t-paragraph impact__muted">Bankers responded positively to the overall flow.</p></div></li>
         </ul>
       </div>
     </section>
@@ -732,7 +735,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
       <div class="site-footer__col">
         <p class="site-footer__label t-eyebrow-sm">Connect with me:</p>
         <a class="site-footer__big-link t-h3" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="linkedin"><svg class="site-footer__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M27.2627 27.2693H22.524V19.844C22.524 18.0733 22.488 15.7947 20.0547 15.7947C17.584 15.7947 17.2067 17.7213 17.2067 19.7133V27.2693H12.468V12H17.02V14.0813H17.0813C17.7173 12.8813 19.264 11.6147 21.5747 11.6147C26.376 11.6147 27.264 14.7747 27.264 18.888L27.2627 27.2693ZM7.116 9.91067C5.59067 9.91067 4.36533 8.676 4.36533 7.15733C4.36533 5.64 5.592 4.40667 7.116 4.40667C8.636 4.40667 9.868 5.64 9.868 7.15733C9.868 8.676 8.63467 9.91067 7.116 9.91067ZM9.492 27.2693H4.74V12H9.492V27.2693ZM29.6333 0H2.36133C1.056 0 0 1.032 0 2.30533V29.6947C0 30.9693 1.056 32 2.36133 32H29.6293C30.9333 32 32 30.9693 32 29.6947V2.30533C32 1.032 30.9333 0 29.6293 0H29.6333Z"/></svg>LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
-        <a class="site-footer__small-link t-paragraph" href="https://www.instagram.com/slow__grain/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="instagram"><svg class="site-footer__icon site-footer__icon--sm" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.2 0H16.8C18.71 0 20.54 0.76 21.89 2.11C23.24 3.46 24 5.29 24 7.2V16.8C24 18.71 23.24 20.54 21.89 21.89C20.54 23.24 18.71 24 16.8 24H7.2C5.29 24 3.46 23.24 2.11 21.89C0.76 20.54 0 18.71 0 16.8V7.2C0 5.29 0.76 3.46 2.11 2.11C3.46 0.76 5.29 0 7.2 0ZM12 6C10.41 6 8.88 6.63 7.76 7.76C6.63 8.88 6 10.41 6 12C6 13.59 6.63 15.12 7.76 16.24C8.88 17.37 10.41 18 12 18C13.59 18 15.12 17.37 16.24 16.24C17.37 15.12 18 13.59 18 12C18 10.41 17.37 8.88 16.24 7.76C15.12 6.63 13.59 6 12 6ZM12 8.4C12.95 8.4 13.87 8.78 14.55 9.45C15.22 10.13 15.6 11.05 15.6 12C15.6 12.95 15.22 13.87 14.55 14.55C13.87 15.22 12.95 15.6 12 15.6C11.05 15.6 10.13 15.22 9.45 14.55C8.78 13.87 8.4 12.95 8.4 12C8.4 11.05 8.78 10.13 9.45 9.45C10.13 8.78 11.05 8.4 12 8.4ZM18.6 3.9C18.2 3.9 17.82 4.06 17.54 4.34C17.26 4.62 17.1 5 17.1 5.4C17.1 5.8 17.26 6.18 17.54 6.46C17.82 6.74 18.2 6.9 18.6 6.9C19 6.9 19.38 6.74 19.66 6.46C19.94 6.18 20.1 5.8 20.1 5.4C20.1 5 19.94 4.62 19.66 4.34C19.38 4.06 19 3.9 18.6 3.9Z"/></svg>Follow my woodcraft @slow__grain<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a class="site-footer__small-link t-paragraph" href="https://www.instagram.com/slow__grain/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="instagram"><svg class="site-footer__icon site-footer__icon--sm" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.2 0H16.8C18.71 0 20.54 0.76 21.89 2.11C23.24 3.46 24 5.29 24 7.2V16.8C24 18.71 23.24 20.54 21.89 21.89C20.54 23.24 18.71 24 16.8 24H7.2C5.29 24 3.46 23.24 2.11 21.89C0.76 20.54 0 18.71 0 16.8V7.2C0 5.29 0.76 3.46 2.11 2.11C3.46 0.76 5.29 0 7.2 0ZM12 6C10.41 6 8.88 6.63 7.76 7.76C6.63 8.88 6 10.41 6 12C6 13.59 6.63 15.12 7.76 16.24C8.88 17.37 10.41 18 12 18C13.59 18 15.12 17.37 16.24 16.24C17.37 15.12 18 13.59 18 12C18 10.41 17.37 8.88 16.24 7.76C15.12 6.63 13.59 6 12 6ZM12 8.4C12.95 8.4 13.87 8.78 14.55 9.45C15.22 10.13 15.6 11.05 15.6 12C15.6 12.95 15.22 13.87 14.55 14.55C13.87 15.22 12.95 15.6 12 15.6C11.05 15.6 10.13 15.22 9.45 14.55C8.78 13.87 8.4 12.95 8.4 12C8.4 11.05 8.78 10.13 9.45 9.45C10.13 8.78 11.05 8.4 12 8.4ZM18.6 3.9C18.2 3.9 17.82 4.06 17.54 4.34C17.26 4.62 17.1 5 17.1 5.4C17.1 5.8 17.26 6.18 17.54 6.46C17.82 6.74 18.2 6.9 18.6 6.9C19 6.9 19.38 6.74 19.66 6.46C19.94 6.18 20.1 5.8 20.1 5.4C20.1 5 19.94 4.62 19.66 4.34C19.38 4.06 19 3.9 18.6 3.9Z"/></svg><span>Follow my woodcraft @slow__grain<span class="site-footer__logo" aria-hidden="true"></span></span><span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
     <div class="site-footer__mark" aria-hidden="true">
@@ -740,7 +743,7 @@ if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=1791523911" defer></script>
+<script src="/assets/js/site.js?v=1791532102" defer></script>
 </body>
 </html>
 
