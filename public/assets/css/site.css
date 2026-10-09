@@ -667,6 +667,10 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .story__figure { width: 100%; margin-top: var(--space-5); }
   .js .story [data-from], .js .story .story__fade { opacity: 1; transition: none; }
   .js .story .story__grow { transform: none; transition: none; }
+  /* Mobile: static text only. No illustration (unreadable at this size), no underline marks. */
+  .story:not(.story--metrics) .story__figure,
+  .cs-single .story:not(.story--metrics) .story__figure { display: none; }
+  .story .story-mark, .story[data-current] .story-mark[data-stage] { background: none; transition: none; }
 
   /* Dark panels */
   .panel { border-radius: var(--radius-lg); padding: var(--spacer-medium) var(--space-5); }
