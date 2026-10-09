@@ -44,6 +44,7 @@
   --space-6: 2rem;     /* 32 */
   /* Spacing: content scale (Figma content spacers) */
   --spacer-tiny: 3rem;     /* 48 */
+  --spacer-small: 4rem;    /* 64 */
   --spacer-medium: 6rem;   /* 96 */
   --spacer-large: 12rem;   /* 192 */
   --spacer-xl: 24rem;      /* 384 */
@@ -370,7 +371,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   gap: var(--spacer-tiny);
   padding-block: var(--space-6);
 }
-.story__copy { max-width: 40rem; }
+.story__copy, .story__after { max-width: 40rem; }
 .story__figure {
   margin: 0; flex: 0 1 auto;
   /* As wide as the column, unless the viewport is too short for the copy + figure */
@@ -561,10 +562,11 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-footer__built .nowrap { white-space: nowrap; }
 .site-footer__brand { display: inline-block; width: 1rem; height: 1rem; vertical-align: -0.125em; color: var(--muted-text); }
 .site-footer__icon--sm { width: 1.5rem; height: 1.5rem; }
+.site-footer__logo { display: inline-block; vertical-align: middle; margin-left: var(--space-1); width: 1.5rem; height: 1.5rem; background-color: var(--muted-text); -webkit-mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; }
 .site-footer__timeline { margin-top: 0; }
-.site-footer__built { margin-top: var(--space-6); }
+.site-footer__built { margin-top: var(--spacer-small); }
 .site-footer__colophon { max-width: 39.25rem; margin: 0 0 var(--space-4); color: var(--muted-text); }
-.site-footer__small-link { margin-top: calc(var(--spacer-tiny) - 26px); } /* two-column: puts its text on the baseline of "Site designed and built by" in the left column */
+.site-footer__small-link { margin-top: var(--spacer-small); min-height: 0; } /* two-column: text sits on the baseline of "Site designed and built by" in the left column (same 24px line height, no 44px centring) */
 .site-footer__mark {
   container-type: inline-size;
   margin-top: var(--space-4);
@@ -575,6 +577,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   /* Inter's baseline sits 0.1365em above the bottom of a 1em line box; pull it up so the
      letters sit flush on the bottom edge of the page */
   margin-bottom: -0.1365em;
+  margin-left: -0.0469em; /* cancel the M's left side bearing in Inter Black so the stem sits on the content edge */
   font-size: calc(100cqw * 0.194); /* fits "MRPATEL©" to the content width (measured in Inter Black) */
   white-space: nowrap;
 }
@@ -697,7 +700,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   /* Footer */
   .site-footer { margin-top: var(--spacer-large); }
   .site-footer__cols { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
-  .site-footer__small-link { margin-top: var(--spacer-tiny); }
+  .site-footer__small-link { margin-top: var(--spacer-tiny); min-height: 2.75rem; }
 }
 
 /* Landscape phones and small tablets in the stacked layout: two screens per row */
@@ -1033,7 +1036,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .cs-section:not(.cs-section--tight), .cs-single .cs-section--dark-gap.impact { margin-top: var(--spacer-medium); }
 /* Approach stays pinned: copy at the top, stages step in with scroll, then normal scroll resumes */
 .cs-single .story__pin { justify-content: flex-start; align-items: center; }
-.cs-single .story__copy { max-width: var(--col); width: 100%; }
+.cs-single .story__copy, .cs-single .story__after { max-width: var(--col); width: 100%; }
 .cs-single .story__figure { width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567))); }
 .cs-single .story--metrics { height: auto; }
 .cs-single .story--metrics .story__pin { position: static; height: auto; display: block; padding: 0; }
@@ -1042,7 +1045,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cs-single .story { height: auto; }
   .cs-single .story__pin { position: static; height: auto; display: block; padding: 0; }
-  .cs-single .story__copy { margin-inline: auto; }
+  .cs-single .story__copy, .cs-single .story__after { margin-inline: auto; }
   .cs-single .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
 }
 .cs-single .cs-hold { height: auto; }

@@ -337,6 +337,7 @@
     var STATIC = SMALL_SCREEN.matches || (STATIC_LAYOUT && story.classList.contains('story--metrics'));
     var n = parseInt(story.dataset.stages, 10) || 1;
     var copy = story.querySelector('.story__copy');
+    var after = story.querySelector('.story__after');
     var figure = story.querySelector('[data-play-target]') || story.querySelector('.story__figure');
     var navEl = document.querySelector('.site-nav');
     var current = -1, reached = {};
@@ -377,7 +378,7 @@
     if (reduceMotion) { for (var i = 1; i <= n; i++) story.classList.add('is-s' + i); return; }
     counts.forEach(function (c) { c.el.textContent = '0'; });
 
-    function measure() { if (copy) story.style.setProperty('--story-copy-h', copy.offsetHeight + 'px'); }
+    function measure() { if (copy) story.style.setProperty('--story-copy-h', (copy.offsetHeight + (after ? after.offsetHeight : 0)) + 'px'); }
     measure();
     window.addEventListener('resize', measure);
 

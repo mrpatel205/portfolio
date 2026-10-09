@@ -74,7 +74,35 @@ def render(e):
         inner = e["inner"].replace("&#x2028;", "")
         inner = re.sub(r"-?\d+\.\d+", rnd, inner)
         return f"<text{a.rstrip('/')}>{inner}</text>"
+    if e["base"] == "height marker":
+        a += ' transform="translate(16 0)"'  # clear of the Height label pill
     return f"<{e['tag']}{a.rstrip('/')}/>"
+
+
+# Measured Inter Bold 24px advance widths (browser getBBox) for the one-line header labels
+MEASURED = {"WITHDRAWAL": 170, "DEPOSIT": 104, "PAYMENT": 119, "RELEASE": 106}
+PILL = ("WITHDRAWAL", "DEPOSIT", "PAYMENT", "RELEASE", "label — one column", "label — height")
+
+
+def pill(e):
+    """Muted grey (#595959, white text = 7:1) pill behind a Teller label so the eye links it to the underlined copy (white text)."""
+    size = float(re.search(r'font-size="([\d.]+)"', e["attrs"]).group(1))
+    bold = "font-weight" in e["attrs"]
+    k = 0.71 if bold else 0.49  # avg glyph width / em, Inter caps bold vs regular mixed case
+    ts = re.findall(r'<tspan x="([-\d.]+)" y="([-\d.]+)">([^<]*)</tspan>', e["inner"])
+    x0 = min(float(x) for x, _, _ in ts)
+    if e["base"] in MEASURED:  # centre text in its pill with text-anchor, from the measured width
+        w = MEASURED[e["base"]] * size / 24
+        x0 = float(ts[0][0])
+        x1 = x0 + w
+    else:
+        x1 = max(float(x) + len(re.sub(r"&#x?\w+;", "", t).strip()) * size * k for x, _, t in ts)
+    y0 = float(ts[0][1]) - size * 0.95
+    y1 = float(ts[-1][1]) + size * 0.3
+    px, py = size * 0.55, size * 0.35
+    r = f'<rect x="{x0 - px:.1f}" y="{y0 - py:.1f}" width="{x1 - x0 + 2 * px:.1f}" height="{y1 - y0 + 2 * py:.1f}" rx="{(y1 - y0 + 2 * py) / 2 if len(ts) == 1 else 12:.1f}" fill="#595959"/>'
+    t = render(e).replace('fill="#737373"', 'fill="#fff"').replace('fill="black"', 'fill="#fff"')
+    return r + "\n      " + t
 
 
 def stage_by_x(x, bounds):
@@ -217,7 +245,7 @@ def build(key):
         us.sort(key=lambda t: t[:2])
         parts.append(f"    <!-- Stage {s} -->")
         for i, (_, _, uid, u) in enumerate(us):
-            body = "\n".join("      " + render(e) for e in u["els"])
+            body = "\n".join("      " + (pill(e) if key == "teller" and e["base"] in PILL and e["tag"] == "text" else render(e)) for e in u["els"])
             style = f"--i:{i}"
             if u["kind"] == "dot":
                 style = f"--i:{i};--d:{dot_delay[uid]}"
