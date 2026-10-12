@@ -8,6 +8,10 @@ so every case study shares one structure and a fix in one place fixes all four.
       The whole page: head, nav, <main><article>, footer. layout="single" = centred 640 column,
       nothing pins (body.cs-single); stories play once when they scroll into view.
 
+  <x-notice>Confidentiality line</x-notice>
+      Grey banner with a "Confidentiality note" label. Standalone on summary pages (first child of
+      .cover__head); inside <x-hero> on full pages. Same markup both places, Figma Confidentiality banner.
+
   <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
     <x-notice>Confidentiality line, shown above the title</x-notice>   optional
     <x-title>Heading, may contain <br></x-title>
@@ -204,6 +208,16 @@ def back_link(href, label):
             f'{{{{icon:arrow-left}}}}{label}</a>')
 
 
+def notice_banner(text):
+    return ('<div class="cs-notice" role="note">'
+            '<span class="cs-notice__label t-eyebrow-sm">Confidentiality note</span>'
+            f'<p class="cs-notice__text t-paragraph">{text}</p></div>')
+
+
+def notice(n):
+    return notice_banner(n.text())
+
+
 def hero(n):
     groups = []
     for i, meta in enumerate(n.kids("meta")):
@@ -214,7 +228,7 @@ def hero(n):
         groups.append(f'<div class="{cls}">\n{indent(items, 2)}\n</div>')
     back = back_link(n.attrs["back-href"], n.attrs.get("back-label", "Back")) + "\n  " if n.attrs.get("back-href") else ""
     notice = n.kid("notice")
-    notice_html = f'<p class="cs-notice t-caption">{notice.text()}</p>\n' if notice else ""
+    notice_html = notice_banner(notice.text()) + "\n" if notice else ""
     return f"""{notice_html}<header class="cs-hero" data-section="hero">\n  {back}
   <h1 class="t-h1 cs-hero__title">{n.kid('title').text()}</h1>
   <dl class="cs-meta t-caption">
@@ -678,6 +692,7 @@ def next_link(n):
 COMPONENTS = {
     "case-study": case_study,
     "hero": hero,
+    "notice": notice,
     "scene": scene,
     "skills": skills,
     "pause": pause,
