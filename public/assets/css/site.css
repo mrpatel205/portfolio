@@ -948,7 +948,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover__hero { height: 41rem; border-radius: var(--radius-xl); background: var(--surface-image); overflow: hidden; }
 .cover__hero img { width: 100%; height: 100%; object-fit: cover; }
 .cover__summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); }
-.cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--spacer-tiny); }
+.cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-6); }
+.cover__impact { margin-top: calc(var(--spacer-small) - var(--space-6)); }  /* lead + CTA 32 apart; 64 from CTA to Impact, as Figma */
 .cover__impact { display: flex; flex-direction: column; gap: var(--space-4); }
 .cover-stats { display: flex; gap: 6rem; margin: var(--space-4) 0 0; }
 .cover-stat { display: flex; flex-direction: column; gap: var(--space-2); }
