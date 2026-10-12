@@ -1225,3 +1225,122 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
   .hb__list, .hb__item, .hb__shot, .hb__cue, .hb__hint { transition: none !important; }
   .hb__mouse::after { animation: none; opacity: 1; }
 }
+
+/* ---------- Buildxact summary hero: self-running prototype ----------
+   Authored at 1312×656 (the hero's design size) and scaled by site.js (--hd-s). One 11s timeline,
+   all keyframes share the same percentages. Without motion (reduced-motion or no JS) it rests
+   on the final frame, the full wizard. Deviation from <x-story>: time-driven, not scroll-driven. */
+.cover__hero--demo { position: relative; height: auto; aspect-ratio: 2 / 1; }
+.hd, .hd__stage { position: absolute; inset: 0; }
+.hd { overflow: hidden; background: #f4f4f4; }
+.hd__stage { width: 1312px; height: 656px; inset: 0 auto auto 0; transform-origin: 0 0; transform: scale(var(--hd-s, 1)); font-family: Inter, system-ui, sans-serif; color: #1a1a1a; }
+.hd__stage * { box-sizing: border-box; margin: 0; }
+.hd__stage i, .hd__stage u, .hd__stage s, .hd__stage em { font-style: normal; text-decoration: none; }
+.hd__a, .hd__roundel { transform-origin: 0 0; }
+.hd__a, .hd__b { position: absolute; inset: 0; }
+.hd__a { opacity: 0; }
+.hd__side { position: absolute; left: 0; top: 0; width: 320px; height: 656px; background: #1c2a3e; color: #fff; font-size: 24px; }
+.hd__side b { position: absolute; left: 88px; top: 36px; font-size: 26px; }
+.hd__side i { position: absolute; left: 80px; width: 240px; height: 68px; line-height: 68px; }
+.hd__side i::before { content: ""; position: absolute; left: -48px; top: 20px; width: 28px; height: 28px; border-radius: 6px; background: #ee7d2c; }
+.hd__side i.on { background: #2b3a52; margin-left: -80px; padding-left: 80px; width: 320px; }
+.hd__side i.on::before { left: 32px; }
+.hd__side i:nth-of-type(1) { top: 96px; } .hd__side i:nth-of-type(2) { top: 164px; } .hd__side i:nth-of-type(3) { top: 232px; } .hd__side i:nth-of-type(4) { top: 300px; }
+.hd__side i:nth-of-type(5) { top: 368px; } .hd__side i:nth-of-type(6) { top: 436px; } .hd__side i:nth-of-type(7) { top: 504px; } .hd__side i:nth-of-type(8) { top: 572px; }
+.hd__top { position: absolute; left: 320px; right: 0; top: 0; height: 48px; background: #111827; }
+.hd__bar { position: absolute; left: 320px; right: 0; top: 48px; height: 96px; background: #131d2f; color: #fff; font-size: 24px; }
+.hd__sel, .hd__bsel { position: absolute; background: #fff; color: #1a1a1a; border-radius: 4px; }
+.hd__sel { top: 16px; height: 64px; line-height: 64px; padding-left: 17px; }
+.hd__sel--a { left: 127px; width: 380px; } .hd__sel--b { left: 619px; width: 240px; }
+.hd__lbl { position: absolute; left: 536px; top: 0; line-height: 96px; }
+.hd__body { position: absolute; left: 320px; right: 0; top: 144px; bottom: 0; background: #f4f4f4; }
+.hd__card { position: absolute; left: 392px; top: 400px; right: 0; bottom: 0; background: #fff; padding: 28px 32px; font-size: 22px; }
+.hd__card div { position: absolute; left: 32px; top: 120px; right: 0; bottom: 0; background: #e8e8e8; }
+.hd__banner { position: absolute; left: 360px; top: 192px; right: -40px; height: 168px; border: 2px solid #2bb97d; border-right: 0; background: #f4f4f4; }
+.hd__banner-old, .hd__banner-new { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.hd__banner-old small { position: absolute; left: 340px; top: 24px; font-size: 20px; color: #666; }
+.hd__banner-old strong { position: absolute; left: 340px; top: 52px; font-size: 32px; white-space: nowrap; }
+.hd__banner-old span { position: absolute; left: 340px; top: 100px; font-size: 20px; color: #555; white-space: nowrap; }
+.hd__banner-new { opacity: 0; }
+.hd__banner-new strong { position: absolute; left: 32px; top: 36px; font-size: 32px; }
+.hd__banner-new span { position: absolute; left: 32px; top: 86px; font-size: 22px; color: #444; }
+.hd__banner-new em { position: absolute; right: 120px; top: 56px; padding: 16px 40px; background: #2bb97d; color: #fff; font-size: 24px; border-radius: 3px; }
+.hd__menu, .hd__sub { position: absolute; opacity: 0; font-size: 26px; }
+.hd__menu { left: 360px; top: 168px; } .hd__sub { left: 708px; top: 168px; }
+.hd__menu u, .hd__sub u { display: block; width: 339px; height: 72px; margin-bottom: 8px; padding: 0 28px; line-height: 70px; background: #fff; border: 2px solid #9aa5b8; position: relative; }
+.hd__menu s { position: absolute; right: 30px; font-size: 22px; }
+.hd__sub u { border-color: #4f5bd5; }
+.hd__start, .hd__np { transition: none; }
+.hd__b { opacity: 1; background: #f4f4f4; }
+.hd__btop { position: absolute; left: 0; right: 0; top: 0; height: 54px; background: #131d2f; }
+.hd__btop i { position: absolute; top: 9px; width: 36px; height: 36px; border-radius: 50%; background: #2a3a55; }
+.hd__btop i:nth-of-type(1) { left: 1073px; } .hd__btop i:nth-of-type(2) { left: 1119px; } .hd__btop i:nth-of-type(3) { left: 1164px; } .hd__btop i:nth-of-type(4) { left: 1208px; }
+.hd__plus { position: absolute; left: 18px; top: 7px; width: 41px; height: 41px; border-radius: 50%; background: #2bb97d; color: #fff; font-size: 34px; line-height: 40px; text-align: center; }
+.hd__bsel { top: 9px; height: 36px; line-height: 36px; padding-left: 9px; font-size: 13px; }
+.hd__bsel--a { left: 73px; width: 216px; } .hd__bsel--b { left: 353px; width: 137px; }
+.hd__blbl { position: absolute; left: 305px; top: 0; line-height: 54px; color: #fff; font-size: 13px; }
+.hd__search { position: absolute; left: 570px; top: 9px; width: 364px; height: 36px; background: #fff; line-height: 36px; padding-left: 34px; font-size: 13px; }
+.hd__search small { position: absolute; left: 160px; font-size: 11px; }
+.hd__bban { position: absolute; left: 23px; right: 25px; top: 82px; height: 68px; border: 1px solid #2bb97d; background: #f4f4f4; }
+.hd__bban strong { position: absolute; left: 22px; top: 11px; font-size: 17px; } .hd__bban span { position: absolute; left: 22px; top: 36px; font-size: 12px; color: #444; }
+.hd__cont { position: absolute; right: 122px; top: 19px; padding: 7px 21px; background: #2bb97d; color: #fff; font-size: 14px; border-radius: 2px; }
+.hd__bpanel { position: absolute; background: #fff; padding: 14px 18px; font-size: 12px; }
+.hd__bpanel--1 { left: 23px; right: 25px; top: 173px; height: 171px; }
+.hd__bpanel--2 { left: 23px; top: 367px; width: 626px; height: 262px; } .hd__bpanel--3 { left: 661px; top: 367px; width: 626px; height: 262px; }
+.hd__bpanel b { font-size: 12px; }
+.hd__bpanel--1 div { display: flex; gap: 34px; margin-top: 18px; } .hd__bpanel--1 label { width: 376px; color: #444; font-size: 11px; }
+.hd__bpanel--1 label span { display: block; margin-top: 4px; height: 36px; line-height: 34px; padding-left: 11px; border: 1px solid #c8cdd8; color: #8a8f99; font-size: 13px; }
+.hd__bpanel--2 div, .hd__bpanel--3 div { margin-top: 14px; height: 170px; background: #eff1f6; border: 1px solid #c8cdd8; text-align: center; line-height: 170px; color: #666; font-size: 14px; }
+.hd__roundel { position: absolute; left: 352px; top: 60px; width: 72px; height: 72px; border-radius: 50%; background: #2bb97d; color: #fff; text-align: center; opacity: 0; }
+.hd__glyph { display: block; width: 72px; height: 72px; font-size: 64px; line-height: 70px; font-weight: 300; }
+.hd__cursor { position: absolute; left: 0; top: 0; transform: translate(1111px, 125px); }
+.hd__caps { position: absolute; left: 360px; bottom: 28px; }
+.hd__cap { position: absolute; left: 0; bottom: 0; white-space: nowrap; padding: 10px 22px; border-radius: 999px; background: rgba(17,24,39,.9); color: #fff; font-size: 24px; font-weight: 600; opacity: 0; }
+.hd__cap--5 { opacity: 1; }
+.hd__toggle { position: absolute; right: var(--spacer-tiny, 16px); bottom: var(--spacer-tiny, 16px); display: none; padding: 6px 14px; border: 1px solid #fff; border-radius: 999px; background: rgba(17,24,39,.85); color: #fff; cursor: pointer; }
+.hd__toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 5px #111; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hd__stage { animation: hdStage 11s linear infinite; }
+  .js .hd__a { animation: hdA 11s linear infinite; }
+  .js .hd__b { animation: hdB 11s linear infinite; }
+  .js .hd__roundel { animation: hdRoundel 11s linear infinite; }
+  .js .hd__glyph { animation: hdGlyph 11s linear infinite; }
+  .js .hd__cursor { animation: hdCursor 11s linear infinite; }
+  .js .hd__menu { animation: hdMenu 11s linear infinite; }
+  .js .hd__sub { animation: hdSub 11s linear infinite; }
+  .js .hd__start { animation: hdStart 11s linear infinite; }
+  .js .hd__np { animation: hdNp 11s linear infinite; }
+  .js .hd__banner-old { animation: hdOld 11s linear infinite; }
+  .js .hd__banner-new { animation: hdNew 11s linear infinite; }
+  .js .hd__cont { animation: hdCont 11s linear infinite; }
+  .js .hd__cap { animation: 11s linear infinite; opacity: 0; }
+  .js .hd__cap--1 { animation-name: hdCap1; } .js .hd__cap--2 { animation-name: hdCap2; } .js .hd__cap--3 { animation-name: hdCap3; }
+  .js .hd__cap--4 { animation-name: hdCap4; } .js .hd__cap--5 { animation-name: hdCap5; }
+  .js .hd__toggle { display: block; }
+  .js .hd-wrap.is-paused *, .js .hd-wrap.is-paused { animation-play-state: paused; }
+}
+@keyframes hdStage { 0% { opacity: 0; } 2% { opacity: 1; } 96% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes hdA { 0%, 63.6% { opacity: 1; transform: none; } 76.4%, 100% { opacity: 0; transform: scale(.569); } }
+@keyframes hdRoundel { 0%, 63.6% { opacity: 1; transform: none; } 76.4%, 100% { opacity: 0; transform: scale(.569); } }
+@keyframes hdB { 0%, 63.6% { opacity: 0; transform: scale(1.76); } 76.4%, 100% { opacity: 1; transform: none; } }
+@keyframes hdGlyph { 0%, 18.2% { transform: rotate(0); } 20%, 49% { transform: rotate(45deg); } 52.7%, 100% { transform: rotate(0); } }
+@keyframes hdCursor {
+  0%, 10.9% { transform: translate(900px, 430px) scale(1); }
+  18.2% { transform: translate(388px, 98px) scale(1); } 18.8% { transform: translate(388px, 98px) scale(.85); } 19.6%, 26% { transform: translate(388px, 98px) scale(1); }
+  32.7%, 38.2% { transform: translate(470px, 215px) scale(1); }
+  45.5% { transform: translate(790px, 215px) scale(1); } 46.2% { transform: translate(790px, 215px) scale(.85); } 47%, 49% { transform: translate(790px, 215px) scale(1); }
+  52.7%, 76.4% { transform: translate(860px, 330px) scale(1); }
+  83.6% { transform: translate(1111px, 125px) scale(1); } 84.6% { transform: translate(1111px, 125px) scale(.85); } 85.6%, 100% { transform: translate(1111px, 125px) scale(1); } }
+@keyframes hdMenu { 0%, 19.5% { opacity: 0; transform: translateY(-8px); } 25.5%, 49% { opacity: 1; transform: none; } 51%, 100% { opacity: 0; transform: none; } }
+@keyframes hdSub { 0%, 38.2% { opacity: 0; transform: translateX(-8px); } 40.5%, 49% { opacity: 1; transform: none; } 51%, 100% { opacity: 0; transform: none; } }
+@keyframes hdStart { 0%, 32.6% { background: #fff; border-color: #9aa5b8; } 33%, 100% { background: #e8edfb; border-color: #4f5bd5; } }
+@keyframes hdNp { 0%, 45.4% { background: #fff; } 45.8%, 100% { background: #e8edfb; } }
+@keyframes hdOld { 0%, 51% { opacity: 1; } 53%, 100% { opacity: 0; } }
+@keyframes hdNew { 0%, 52.7% { opacity: 0; } 55%, 100% { opacity: 1; } }
+@keyframes hdCont { 0%, 84.6% { background: #2bb97d; } 85%, 88%, 100% { background: #1f9a65; } }
+@keyframes hdCap1 { 0%, 1% { opacity: 0; } 3%, 17% { opacity: 1; } 19%, 100% { opacity: 0; } }
+@keyframes hdCap2 { 0%, 19% { opacity: 0; } 21%, 35% { opacity: 1; } 37%, 100% { opacity: 0; } }
+@keyframes hdCap3 { 0%, 37% { opacity: 0; } 39%, 51% { opacity: 1; } 53%, 100% { opacity: 0; } }
+@keyframes hdCap4 { 0%, 53% { opacity: 0; } 55%, 74% { opacity: 1; } 76%, 100% { opacity: 0; } }
+@keyframes hdCap5 { 0%, 77% { opacity: 0; } 79%, 94% { opacity: 1; } 96%, 100% { opacity: 0; } }
