@@ -1040,6 +1040,11 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .cs-section:not(.cs-section--tight), .cs-single .cs-section--dark-gap.impact { margin-top: var(--spacer-medium); }
 /* Approach stays pinned: copy at the top, stages step in with scroll, then normal scroll resumes */
 .cs-single .story__pin { justify-content: flex-start; align-items: center; }
+/* The pin is only as tall as its content, and the scroll runway is a spacer after it, so when the pin
+   releases the illustration is exactly the section gap (96px) above the next module, at any viewport height */
+.cs-single .story { height: auto; }
+.cs-single .story:not(.story--metrics)::after { content: ""; display: block; height: calc(var(--story-step) * (var(--stages) - 0.9)); }
+.cs-single .story__pin { height: auto; padding-bottom: 0; }
 .cs-single .story__copy, .cs-single .story__after { max-width: var(--col); width: 100%; }
 .cs-single .story__figure { width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567))); }
 .cs-single .story--metrics { height: auto; }
@@ -1048,6 +1053,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .story--metrics .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cs-single .story { height: auto; }
+  .cs-single .story::after { display: none; }
   .cs-single .story__pin { position: static; height: auto; display: block; padding: 0; }
   .cs-single .story__copy, .cs-single .story__after { margin-inline: auto; }
   .cs-single .story__figure { width: 100%; margin-top: var(--spacer-tiny); }

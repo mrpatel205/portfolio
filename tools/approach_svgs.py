@@ -134,12 +134,17 @@ def budgets(e, st):
     b, (x0, _, x1, _) = e["base"], e["bb"]
     T = [600, 1230, 1860]
     m = re.match(r"0(\d)\s", e["attrs"] and (re.sub(r"<[^>]+>", "", e["inner"] or "") if e["tag"] == "text" else ""))
+    # Step 1 shows the problem and the Define round; step 2 adds only the Refine round (x >= R)
+    R = 895
     if m:
-        return int(m.group(1)), "fade", "title"
+        return {"1": 1, "2": 1, "3": 3, "4": 4}[m.group(1)], "fade", "title"
     if b == "arrow":
-        return stage_by_x(x1 + 100, T), "fade", e["id"]
+        s = stage_by_x(x1 + 100, T)
+        return ((2 if x0 >= R else 1) if s == 2 else s), "fade", e["id"]
     cx = (x0 + x1) / 2
     s = stage_by_x(cx, T)
+    if s == 2:
+        s = 2 if x0 >= R else 1
     unit = {"hub — Round 1": "hub1", "Define": "hub1", "hub — Round 2": "hub2", "Refine": "hub2",
             "band — settled slice": "band", "halo": "end", "focus — handoff to engineering": "end",
             "line": "oneway", "arrowhead": "oneway", "pill": "loop", "arrowhead — out (A → B)": "loop",
