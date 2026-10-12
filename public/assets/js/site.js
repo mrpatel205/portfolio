@@ -10,22 +10,6 @@
   var STATIC_LAYOUT = document.body.classList.contains('cs-single');
   var SMALL_SCREEN = window.matchMedia('(max-width: 699px), (max-height: 520px) and (orientation: landscape)');
 
-  /* ---------- Buildxact summary hero prototype: scale the 1312×656 stage, play/pause ---------- */
-  var hdWrap = document.querySelector('.hd-wrap');
-  if (hdWrap) {
-    var hdStage = hdWrap.querySelector('.hd__stage');
-    var hdScale = function () { hdStage.style.setProperty('--hd-s', (hdWrap.clientWidth / 1312).toFixed(4)); };
-    hdScale();
-    if (window.ResizeObserver) new ResizeObserver(hdScale).observe(hdWrap); else window.addEventListener('resize', hdScale);
-    var hdBtn = hdWrap.querySelector('.hd__toggle');
-    hdBtn.addEventListener('click', function () {
-      var paused = hdWrap.classList.toggle('is-paused');
-      hdBtn.setAttribute('aria-pressed', String(paused));
-      hdBtn.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation');
-      hdBtn.querySelector('.hd__toggle-txt').textContent = paused ? 'Play' : 'Pause';
-    });
-  }
-
   /* ---------- Start at the top on refresh ----------
      Browsers restore the last scroll position (and jump to any #hash) on reload,
      which skips the scroll-driven scenes. On a reload, start from the top instead;
