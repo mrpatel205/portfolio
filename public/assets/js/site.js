@@ -100,6 +100,36 @@
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') sendEngaged(); });
   window.addEventListener('pagehide', sendEngaged);
 
+  // Back link: point at the same-site page the visitor came from. The hardcoded href/label in the HTML
+  // stays as the fallback for direct visits, external referrers, refreshes and unknown pages.
+  (function () {
+    var back = document.querySelector('.back-link');
+    if (!back || !document.referrer) return;
+    var ref;
+    try { ref = new URL(document.referrer); } catch (err) { return; }
+    if (ref.origin !== location.origin) return;
+    var path = ref.pathname.replace(/index\.html$/, '');
+    if (path.slice(-1) !== '/') path += '/';
+    if (path === location.pathname) return;
+    var LABELS = {
+      '/': 'Home',
+      '/work/': 'Work',
+      '/work/budgets/': 'Budgets case study',
+      '/work/budgets/summary/': 'Budgets summary',
+      '/work/teller/': 'Teller case study',
+      '/work/teller/summary/': 'Teller summary',
+      '/work/tal/summary/': 'TAL summary',
+      '/work/buildxact/summary/': 'Buildxact summary',
+      '/how-this-was-built/': 'How this was built'
+    };
+    if (!LABELS[path]) return;
+    var arrow = back.querySelector('svg');
+    back.textContent = 'Back to ' + LABELS[path];
+    if (arrow) back.insertBefore(arrow, back.firstChild);
+    back.setAttribute('href', path);
+    back.setAttribute('data-track-target', path);
+  })();
+
   // Clicks: anything with data-track sends that event name with its data-track-* props.
   document.addEventListener('click', function (e) {
     var el = e.target.closest('[data-track]');

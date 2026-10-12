@@ -876,7 +876,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   font-size: min(16.875rem, 18.8vw); line-height: 1; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap;
 }
 .home-hero__mark span { font-size: 0.27em; font-weight: 400; letter-spacing: 0; line-height: 1; margin-left: 0.1em; margin-top: 0.1em; }
-.home-hero + .container { padding-top: var(--space-6); }
+.home-hero + .container { padding-top: var(--spacer-small); } /* 64 from the seam to the intro, as Figma */
 
 .home-lead { max-width: 51.5rem; }
 .home-lead p { font-size: 2.125rem; line-height: 3rem; font-weight: 500; letter-spacing: -0.03em; }
@@ -884,15 +884,17 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-lead mark { background: none; color: #ea4e22; }
 
 .home__heading { margin-bottom: var(--spacer-tiny); }
-.home__heading--muted { color: var(--muted-text); }
-.home__rule { margin: var(--spacer-large) 0 var(--space-5); border: 0; border-top: 1px solid var(--black); }
-.home__rule--muted { border-top-color: var(--muted); }
-.home-lead + .home__heading { margin-top: var(--spacer-large); }
-.home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--space-5); margin: 0; padding: 0; list-style: none; }
+.home__rule { margin: var(--spacer-large) 0 var(--space-6); border: 0; border-top: 1px solid var(--black); }
+.home__all + .home__rule { margin-top: var(--spacer-medium); }  /* 96 below All work, rule above Core skills */
+.home-skills { display: grid; grid-template-columns: repeat(3, minmax(0, 25.75rem)); gap: var(--space-6) 0; /* Figma: 412px columns, 32px rows */ margin: 0; padding: 0; list-style: none; }
 .home-skills + .home__rule { margin-top: var(--spacer-medium); }
 .home-skill { display: flex; align-items: center; gap: var(--space-4); font-size: 1.5rem; line-height: 2rem; font-weight: 500; }
 .home-skill img { width: 2rem; height: 2rem; flex: none; }
-.home__all { margin-top: var(--spacer-medium); }
+.home__all { margin-top: var(--spacer-small); }  /* Figma: 64 below last card / last quote */
+.home__heading--work { margin-bottom: var(--spacer-large); }  /* Figma: Selected work H2 → first card, snapped 144→192 */
+.home .work-card + .work-card { margin-top: var(--spacer-medium); }  /* Figma: 112 → 96 */
+.home-exp + .home__rule { margin-top: var(--spacer-medium); }  /* Figma: 120 → 96 */
+@media (max-width: 699px) { .home__heading--work { margin-bottom: var(--spacer-tiny); } }
 .home .work-card:first-of-type { margin-top: 0; }
 
 .home-exp { display: grid; grid-template-columns: minmax(0, 496fr) minmax(0, 816fr); column-gap: var(--space-6); padding-top: var(--space-5); }
@@ -903,12 +905,14 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-exp__role { grid-column: 1; grid-row: 2; color: var(--muted-text); }
 .home-exp__dates { grid-column: 2; grid-row: 1; color: var(--muted-text); text-align: right; align-self: start; padding-top: 0.625rem; }
 
-.home-quote { margin: 0; padding: var(--spacer-medium) 0 var(--space-6); border-bottom: 1px solid var(--muted); max-width: 68.75rem; }
-.home-quote:last-child { border-bottom: 0; }
-.home-quote__text { margin: 0 0 var(--space-5); font-size: 3rem; line-height: 3.625rem; font-weight: 500; letter-spacing: -0.02em; }
+.home-quote { margin: 0; padding: var(--spacer-small) 0; border-bottom: 1px solid var(--muted); max-width: 68.75rem; }
+.home-quote:first-child { padding-top: 0; }
+.home-quote:last-child { border-bottom: 0; padding-bottom: 0; }
+.home-quote__text { margin: 0 0 var(--space-6); font-size: 3rem; line-height: 3.625rem; font-weight: 500; letter-spacing: -0.02em; }
 
-.home-slow { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: var(--space-4) 7.5rem; margin-top: var(--spacer-large); align-items: start; }
-.home-slow__logo { width: 17.5rem; height: 17.5rem; }
+.home-slow { background: var(--black); color: var(--white); margin-top: var(--spacer-medium); padding: var(--spacer-medium) 0; }  /* full-bleed black band: 96 above, 96 inside */
+.home-slow__inner { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: var(--space-4) 7.5rem; align-items: start; }
+.home-slow__logo { width: 17.5rem; height: 17.5rem; filter: invert(1); }  /* black mark → white */
 .home-slow__copy { display: flex; flex-direction: column; gap: var(--space-5); max-width: 56.25rem; }
 .home-slow__imgs { grid-column: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
 .home-slow__imgs img { width: 100%; aspect-ratio: 296 / 400; object-fit: cover; }
@@ -923,7 +927,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 @media (max-width: 999px) {
   .home-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-exp { grid-template-columns: 1fr; row-gap: var(--space-5); }
-  .home-slow { grid-template-columns: 1fr; }
+  .home-slow__inner { grid-template-columns: 1fr; }
   .home-slow__imgs { grid-column: 1; }
 }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
@@ -948,7 +952,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover__hero { height: 41rem; border-radius: var(--radius-xl); background: var(--surface-image); overflow: hidden; }
 .cover__hero img { width: 100%; height: 100%; object-fit: cover; }
 .cover__summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); }
-.cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--spacer-tiny); }
+.cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-6); }
+.cover__impact { margin-top: calc(var(--spacer-small) - var(--space-6)); }  /* lead + CTA 32 apart; 64 from CTA to Impact, as Figma */
 .cover__impact { display: flex; flex-direction: column; gap: var(--space-4); }
 .cover-stats { display: flex; gap: 6rem; margin: var(--space-4) 0 0; }
 .cover-stat { display: flex; flex-direction: column; gap: var(--space-2); }
