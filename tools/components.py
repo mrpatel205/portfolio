@@ -636,7 +636,7 @@ def impact(n):
   <div class="impact__copy">
     <div class="impact__heading">
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
-      <p class="t-body-lg impact__lead impact__muted">{n.req('lead')}</p>
+      <p class="t-body-lg impact__lead">{n.req('lead')}</p>
 {indent(n.text().replace('<p>', '<p class="t-paragraph">'), 6)}
     </div>{stamp_html}
   </div>
