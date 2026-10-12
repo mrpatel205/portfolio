@@ -191,11 +191,18 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .back-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-5); }
 .cover__head .back-link { align-self: flex-start; margin-bottom: 0; }
 .back-link svg { width: 1.25rem; height: 1.25rem; flex: none; }
-.cs-notice {
-  background: var(--muted); border-radius: var(--radius-md);
+.cs-notice { /* Figma Confidentiality banner: muted fill, 16/24 padding, 24 gap, md radius */
+  display: flex; align-items: baseline; gap: var(--space-5);
   padding: var(--space-4) var(--space-5);
-  margin-top: var(--space-5);
+  background: var(--muted); color: var(--black); border-radius: var(--radius-md);
+  margin: var(--space-4) 0 var(--space-5);  /* 16 + banner + 24 = the 96px Figma puts above Back */
 }
+.cs-notice__label { flex: none; }
+.cs-notice__text { margin: 0; }
+.cs-notice + .cs-hero { padding-top: 0; }
+.cover:has(.cs-notice) { padding-top: var(--space-4); }
+.cover__head .cs-notice { margin: 0; }
+@media (max-width: 699px) { .cs-notice { flex-direction: column; gap: var(--space-1); } }
 .cs-meta {
   display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter);
   margin-top: var(--space-5);
