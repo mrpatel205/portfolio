@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css?v=1791888456">
+<script>document.documentElement.classList.add("js")</script>
+<!-- Analytics: PostHog (EU, cookieless). Loads on the live domain only; locally, track() logs to the console. -->
+<script>
+// Skip analytics for automated browsers (headless Chrome, webdriver, Lighthouse, crawlers) so bot bursts never reach PostHog.
+var isBot = navigator.webdriver || /HeadlessChrome|PhantomJS|Lighthouse|Playwright|Puppeteer|bot|crawl|spider|slurp|preview/i.test(navigator.userAgent);
+// Owner opt-out: open any page with ?notrack once in a browser to stop it reporting; ?notrack=off turns it back on.
+var optOut = false;
+try {
+  var nt = new URLSearchParams(location.search).get('notrack');
+  if (nt === 'off') localStorage.removeItem('notrack');
+  else if (nt !== null) localStorage.setItem('notrack', '1');
+  optOut = localStorage.getItem('notrack') === '1';
+} catch (e) {}
+if (!isBot && !optOut && /(^|\.)mrpatel\.com$/.test(location.hostname)) {
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags on onFeatureFlags onSessionId identify setPersonProperties group resetGroups reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_tcXcJ6bWu5rnQh7zhscUsGzcLjm6EBT7NLjpmyAvRkTg', {
+    api_host: 'https://eu.i.posthog.com',
+    cookieless_mode: 'always',        // cookieless: no cookies or localStorage; visitors hashed server-side
+    person_profiles: 'identified_only',
+    capture_pageview: true,           // $pageview / $pageleave feed Web Analytics + time on page
+    capture_pageleave: true,
+    autocapture: false,               // only the named events from track()
+    disable_session_recording: true,
+    loaded: function (ph) {
+      // Cookieless mode forgets everything between pages, so keep the visit's UTM tags in sessionStorage
+      // and attach them to every event (clicks, later pageviews), not just the landing page.
+      try {
+        var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        var q = new URLSearchParams(location.search), found = {}, any = false;
+        keys.forEach(function (k) { if (q.get(k)) { found[k] = q.get(k); any = true; } });
+        if (any) sessionStorage.setItem('utm', JSON.stringify(found));
+        var saved = JSON.parse(sessionStorage.getItem('utm') || 'null');
+        if (saved) ph.register(saved);
+      } catch (e) {}
+    }
+  });
+}
+</script>
+<title>Modernising the teller experience · Major bank case study · MRPATEL</title>
+<meta name="description" content="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://mrpatel.com/work/teller-test/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MRPATEL">
+<meta property="og:title" content="Modernising the teller experience · Major bank case study · MRPATEL">
+<meta property="og:url" content="https://mrpatel.com/work/teller-test/">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
+</head>
+<body class="cs-single" data-page="work/teller-test" data-case-study="teller">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="container site-nav__inner">
+    <a class="wordmark" href="/" aria-label="MRPATEL, home" data-track="nav_click" data-track-target="home">MRPATEL<sup aria-hidden="true">©</sup></a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a class="link link--small" href="/work/" aria-current="page" data-track="nav_click" data-track-target="work">Work</a></li>
+        <li><a class="link link--small" href="#contact" data-track="contact_click">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <article class="container">
+
+    <div class="cs-notice" role="note"><span class="cs-notice__label t-eyebrow-sm">Confidentiality note</span><p class="cs-notice__text t-paragraph">Some information in this case study has been removed or recreated.</p></div>
+    <header class="cs-hero" data-section="hero">
+  
+      <h1 class="t-h1 cs-hero__title">Modernising the teller experience</h1>
+      <dl class="cs-meta t-caption">
+        <div class="cs-meta__group">
+          <div class="cs-meta__item"><dt>Company</dt><dd>Major bank</dd></div>
+          <div class="cs-meta__item"><dt>Industry</dt><dd>Fin-Tech</dd></div>
+          <div class="cs-meta__item"><dt>Duration</dt><dd>Oct 24 to Jun 26</dd></div>
+          <div class="cs-meta__item"><dt>Channel</dt><dd>React mini web app</dd></div>
+        </div>
+      </dl>
+      <nav class="view-toggle" aria-label="Case study length"><a class="view-toggle__option" href="/work/teller-test/summary/" data-track="view_toggle" data-track-target="summary">Summary<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6v6l4 2" /> <circle cx="12" cy="12" r="10" /></svg>1 min</a><a class="view-toggle__option" href="#main" aria-current="page">Case study<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6v6l4 2" /> <circle cx="12" cy="12" r="10" /></svg>6 min</a></nav>
+      <figure class="cs-hero__image" data-reveal>
+        <img src="/assets/img/teller/hero.png" width="1312" height="656"
+             alt="A teller's monitor in a bank branch showing the Deposit screen: Count cash and deposit amount, with counted notes, coins and a total.">
+      </figure>
+    </header>
+
+    <section class="scene" aria-labelledby="situation" data-section="situation">
+      <div class="scene__copy">
+        <div class="cs-heading">
+          <p class="cs-pill">01 / 06 · Situation</p>
+          <h2 class="t-h3" id="situation">A 40-year system powered branch work</h2>
+        </div>
+        <div class="prose t-body-lg">
+          <p>The legacy system supported withdrawals, deposits and payments across the bank’s 437 branches, used daily by more than 1,000 frontline bankers.</p>
+        </div>
+      </div>
+      <div class="scene__visual">
+        <figure class="cs-visual">
+          <div class="cs-visual__frame"><img src="/assets/img/teller/situation-ebobs.png" width="640" height="496" loading="lazy" alt="A representation of the legacy teller screen: a dense, text-based layout of fields and numeric codes."></div>
+          <figcaption class="t-caption">Legacy system (representation)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="scene" aria-labelledby="situation-switching" data-section="situation-switching">
+      <div class="scene__copy">
+        <div class="cs-heading">
+          <p class="cs-pill">01 / 06 · Situation</p>
+          <h2 class="t-h3" id="situation-switching">Tellers held the missing instructions</h2>
+        </div>
+        <div class="prose t-body-lg">
+          <p>A significant withdrawal could mean switching between up to eight systems to check thresholds, authorise cash and work out what came next. Tellers memorised shortcodes and policy rules to keep work moving.</p>
+            <p>That knowledge made the legacy system dependable for experienced bankers, but hard to learn and costly to maintain. Replacing it risked moving the complexity onto tellers.</p>
+        </div>
+      </div>
+      <div class="scene__visual">
+        <figure class="cs-visual">
+          <div class="cs-visual__frame"><img src="/assets/img/teller/situation-shortcodes.png" width="640" height="496" loading="lazy" alt="A teller's desk with a handwritten note of transaction shortcodes beside the keyboard."></div>
+          <figcaption class="t-caption">Teller transaction shortcodes</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="scene" aria-labelledby="situation-response" data-section="situation-response">
+      <div class="scene__copy">
+        <div class="cs-heading">
+          <p class="cs-pill">01 / 06 · Situation</p>
+          <h2 class="t-h3" id="situation-response">Rebuilding the colleague banking channel</h2>
+        </div>
+        <div class="prose t-body-lg">
+          <p>The programme moved withdrawal, deposit and payment transactions into the colleague banking channel. The design challenge was moving the work, its decision logic and its links to branch hardware with it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene" aria-labelledby="task" data-section="task">
+      <div class="scene__copy">
+        <div class="cs-heading">
+          <p class="cs-pill">02 / 06 · Task</p>
+          <h2 class="t-h3" id="task">Withdrawals &amp; Deposits</h2>
+        </div>
+        <div class="prose t-body-lg">
+          <p><strong>Withdrawals:</strong> I joined after the core interaction model was set. I owned cash breakup, cash dispense and the transaction summary, moved the design onto the bank’s new design system, and completed the engineering handover.</p>
+            <p><strong>Deposits:</strong> I led the work from discovery through handover, covering the core flow plus cheque, third-party and business deposits, including rollback and edit scenarios.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cs-section cs-hold" data-section="skills">
+      <div class="cs-hold__frame">
+        <section class="panel skills" aria-labelledby="skills">
+          <h2 class="t-h3" id="skills">Skills used</h2>
+          <ul class="skills__list t-body-lg">
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg></span>Systems Thinking</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.536 11.293a1 1 0 0 0 0 1.414l2.376 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /> <path d="M2.297 11.293a1 1 0 0 0 0 1.414l2.377 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414L6.088 8.916a1 1 0 0 0-1.414 0z" /> <path d="M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z" /> <path d="M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /></svg></span>Design Systems Contribution</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg></span>Contextual Enquiry</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg></span>Usability Testing</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /> <path d="M20 2v4" /> <path d="M22 4h-4" /> <circle cx="4" cy="20" r="2" /></svg></span>Rapid AI Prototyping</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z" /> <path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18" /> <path d="m2.3 2.3 7.286 7.286" /> <circle cx="11" cy="11" r="2" /></svg></span>Visual Design</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /></svg></span>Survey Creation and Synthesis</li>
+            <li class="skill"><span class="skill__tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="19" r="3" /> <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /> <circle cx="18" cy="5" r="3" /></svg></span>User and Wireflows</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <section class="story" aria-labelledby="approach" data-section="approach"
+             data-stages="4" style="--stages: 4; --story-ratio: 3.807">
+      <div class="story__pin">
+        <div class="story__copy">
+          <div class="cs-heading">
+            <p class="cs-pill">03 / 06 · Approach</p>
+            <h2 class="t-h3" id="approach">Process, sized to constraints</h2>
+          </div>
+          <div class="prose t-body-lg">
+            <p>The programme was planned as <span class="story-mark" data-stage="1">a big-bang release across withdrawals, deposits and payments</span>. <span data-from="2">We designed <span class="story-mark" data-stage="2">one transaction type at a time</span>, treating each as a connected workflow and <span class="story-mark" data-stage="3">scaling the process to its complexity and available capacity</span>.</span></p>
+          </div>
+        </div>
+        <figure class="story__figure">
+          <svg class="story__svg" viewBox="-7 224 2307 606" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="teller-approach-title teller-approach-desc">
+            <title id="teller-approach-title">Three design processes run one after another, ending in one release</title>
+            <desc id="teller-approach-desc">Three large circles in a row, Withdrawal, Deposit and Payment, joined by arrows that lead to a single release point. Each column of dots inside a circle is one transaction type, and the column's height is the rigour of its design process.</desc>
+            <!-- Generated by tools/approach_svgs.py from the Figma hero. Stage groups are revealed by site.js. -->
+            <g font-family="Inter, sans-serif" fill="none">
+              <!-- Stage 1 -->
+              <g class="story__fade" data-stage="1" style="--i:0">
+                <circle cx="400" cy="560" r="230" stroke="#737373" stroke-width="3"/>
+                <rect x="302.0" y="255.0" width="196.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="315.2" y="286.2">WITHDRAWAL</tspan></text>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:1">
+                <path d="M660 560H760M744 571L760 560L744 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:2">
+                <circle cx="1020" cy="560" r="230" stroke="#737373" stroke-width="3"/>
+                <rect x="954.3" y="255.0" width="130.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="967.5" y="286.2">DEPOSIT</tspan></text>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:3">
+                <path d="M1280 560H1380M1364 571L1380 560L1364 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:4">
+                <circle cx="1640" cy="560" r="230" stroke="#737373" stroke-width="3"/>
+                <rect x="1568.1" y="255.0" width="145.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="1581.3" y="286.2">PAYMENT</tspan></text>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:5">
+                <path d="M1900 560H2060M2044 571L2060 560L2044 549" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <g class="story__fade" data-stage="1" style="--i:6">
+                <circle cx="2170" cy="560" r="90" fill="#EBEBEB"/>
+                <circle cx="2170" cy="560" r="40" fill="black"/>
+                <rect x="2103.4" y="255.0" width="132.4" height="46.8" rx="23.4" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="24" font-weight="bold" letter-spacing="0em"><tspan x="2116.6" y="286.2">RELEASE</tspan></text>
+              </g>
+              <!-- Stage 2 -->
+              <g class="story__fade" data-stage="2" style="--i:0">
+                <path d="M561.3 724C519.7 764.8 462.8 790 400 790C337.2 790 280.3 764.8 238.7 724H561.3Z" fill="#EBEBEB"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:1;--d:0">
+                <circle cx="250" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:2;--d:30">
+                <circle cx="250" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:3;--d:60">
+                <circle cx="250" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:4;--d:90">
+                <circle cx="250" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:5">
+                <rect x="227.9" y="402.9" width="239.8" height="69.9" rx="12.0" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="240" y="431.5">One column:</tspan><tspan x="240" y="458.5">one transaction type</tspan></text>
+                <path d="M249 587.7C250.5 587.7 251.7 586.5 251.7 585C251.7 583.5 250.5 582.3 249 582.3C247.5 582.3 246.3 583.5 246.3 585C246.3 586.5 247.5 587.7 249 587.7ZM249 585L249.5 585L249.5 485L249 485L248.5 485L248.5 585L249 585Z" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:6;--d:60">
+                <circle cx="310" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:7;--d:90">
+                <circle cx="310" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:8;--d:120">
+                <circle cx="310" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:9;--d:150">
+                <circle cx="310" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:10;--d:180">
+                <circle cx="310" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:11;--d:210">
+                <circle cx="310" cy="560" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:12;--d:120">
+                <circle cx="370" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:13;--d:150">
+                <circle cx="370" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:14;--d:180">
+                <circle cx="370" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:15;--d:180">
+                <circle cx="430" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:16;--d:210">
+                <circle cx="430" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:17;--d:240">
+                <circle cx="430" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:18;--d:270">
+                <circle cx="430" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:19;--d:300">
+                <circle cx="430" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:20;--d:240">
+                <circle cx="490" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:21;--d:270">
+                <circle cx="490" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:22;--d:300">
+                <circle cx="550" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:23;--d:330">
+                <circle cx="550" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:24;--d:360">
+                <circle cx="550" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:25;--d:390">
+                <circle cx="550" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:26">
+                <path d="M1181.3 724C1139.8 764.8 1082.8 790 1020 790C957.2 790 900.3 764.8 858.7 724H1181.3Z" fill="#EBEBEB"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:27;--d:360">
+                <circle cx="870" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:28;--d:390">
+                <circle cx="870" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:29;--d:420">
+                <circle cx="870" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:30;--d:420">
+                <circle cx="930" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:31;--d:450">
+                <circle cx="930" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:32;--d:480">
+                <circle cx="930" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:33;--d:510">
+                <circle cx="930" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:34;--d:540">
+                <circle cx="930" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:35;--d:570">
+                <circle cx="930" cy="560" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:36;--d:600">
+                <circle cx="930" cy="532" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:37;--d:630">
+                <circle cx="930" cy="504" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:38;--d:660">
+                <circle cx="930" cy="476" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:39;--d:480">
+                <circle cx="990" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:40;--d:510">
+                <circle cx="990" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:41;--d:540">
+                <circle cx="990" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:42;--d:570">
+                <circle cx="990" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:43;--d:540">
+                <circle cx="1050" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:44;--d:570">
+                <circle cx="1050" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:45;--d:600">
+                <circle cx="1050" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:46;--d:630">
+                <circle cx="1050" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:47;--d:660">
+                <circle cx="1050" cy="588" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:48;--d:600">
+                <circle cx="1110" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:49;--d:630">
+                <circle cx="1110" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:50;--d:660">
+                <circle cx="1170" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:51;--d:690">
+                <circle cx="1170" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:52;--d:720">
+                <circle cx="1170" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:53">
+                <path d="M1801.3 724C1759.8 764.8 1702.8 790 1640 790C1577.2 790 1520.2 764.8 1478.7 724H1801.3Z" fill="#EBEBEB"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:54;--d:720">
+                <circle cx="1500" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:55;--d:750">
+                <circle cx="1500" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:56;--d:780">
+                <circle cx="1570" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:57;--d:810">
+                <circle cx="1570" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:58;--d:840">
+                <circle cx="1570" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:59;--d:840">
+                <circle cx="1640" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:60;--d:870">
+                <circle cx="1640" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:61;--d:900">
+                <circle cx="1710" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:62;--d:930">
+                <circle cx="1710" cy="672" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:63;--d:960">
+                <circle cx="1710" cy="644" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:64;--d:990">
+                <circle cx="1710" cy="616" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:65;--d:960">
+                <circle cx="1780" cy="700" r="10" fill="#737373"/>
+              </g>
+              <g class="story__fade" data-stage="2" style="--i:66;--d:990">
+                <circle cx="1780" cy="672" r="10" fill="#737373"/>
+              </g>
+              <!-- Stage 3 -->
+              <g class="story__fade" data-stage="3" style="--i:0">
+                <rect x="20.9" y="613.9" width="121.2" height="96.9" rx="12.0" fill="#595959"/>
+                <text fill="#fff" font-family="Inter" font-size="22" letter-spacing="0em"><tspan x="42.6" y="642.5">Height:</tspan><tspan x="33" y="669.5">Rigour of </tspan><tspan x="38.8" y="696.5">process</tspan></text>
+                <path d="M146.5 704L144.1 709L149.9 709L147.5 704L146.5 704ZM147.5 610L149.9 605L144.1 605L146.5 610L147.5 610ZM147 704.5L147.5 704.5L147.5 609.5L147 609.5L146.5 609.5L146.5 704.5L147 704.5Z" fill="#737373" transform="translate(16 0)"/>
+              </g>
+            </g>
+          </svg>
+        </figure>
+        <div class="story__after prose t-body-lg">
+          <p>Where time allowed, I observed teller work in branches, ran moderated tests and held SME workshops. That surfaced keyboard-first habits and cash-recycler dependencies.</p>
+              <p>When time was tight, I focused on the riskiest decisions and worked with product and engineering as policy and API readiness changed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="story story--metrics" aria-labelledby="research" data-section="research"
+             data-stages="3" style="--stages: 3">
+      <div class="story__pin">
+        <div class="panel metrics" data-play-target>
+          <div class="metrics__left">
+            <div class="metrics__header" data-from="1">
+              <p class="cs-pill cs-pill--on-dark">04 / 06 · Research</p>
+              <h2 class="t-h3 metrics__subheading" id="research">Validate the risky steps</h2>
+              <p class="t-body-lg metrics__lead">Five days in branches and 82 observed transactions gave Deposits real-world context. Moderated rounds and surveys then helped validate high-risk interactions before handover.</p>
+            </div>
+            <div class="metrics__headline">
+              <p class="metrics__big" data-from="1"><span class="metrics__big-value" aria-hidden="true" data-count-stage="1" data-count-ms="1400">30</span><span class="visually-hidden">30</span></p>
+              <p class="metrics__big-label" data-from="1">Rounds of moderated testing</p>
+            </div>
+          </div>
+          <div class="metrics__right">
+            <div class="metrics__group">
+              <h3 class="metrics__group-head" data-from="2" style="--i: 0">Deposits</h3>
+              <ul class="metrics__list">
+                <li class="metrics__stat metrics__stat--callout" data-from="2" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="2" data-count-ms="800">5</span><span class="visually-hidden">5</span><span class="metrics__text"><span class="metrics__label">Days observing in branch</span><span class="metrics__sub">82 transactions · ~10 tellers at the counter</span></span></li>
+                <li class="metrics__stat" data-from="2" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="2" data-count-ms="800">16</span><span class="visually-hidden">16</span><span class="metrics__text"><span class="metrics__label">Rounds of moderated testing</span></span></li>
+              </ul>
+            </div>
+            <div class="metrics__group">
+              <h3 class="metrics__group-head" data-from="3" style="--i: 0">Withdrawals</h3>
+              <ul class="metrics__list">
+                <li class="metrics__stat" data-from="3" style="--i: 1"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">14</span><span class="visually-hidden">14</span><span class="metrics__text"><span class="metrics__label">Rounds of moderated testing</span></span></li>
+                <li class="metrics__stat" data-from="3" style="--i: 2"><span class="metrics__value" aria-hidden="true" data-count-stage="3" data-count-ms="800">3</span><span class="visually-hidden">3</span><span class="metrics__text"><span class="metrics__label">Quant surveys</span></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-section final-visuals" aria-labelledby="final-designs-1" data-section="final-designs-1">
+      <h2 class="visually-hidden" id="final-designs-1">Final designs: desktop, tablet and mobile</h2>
+      <img class="final-visuals__full" data-reveal src="/assets/img/teller/final-1.png" width="1312" height="800" loading="lazy"
+           alt="The Withdrawal screen, Calculate cash break up, shown on desktop, tablet and mobile: Automatic and Custom options, the amount requested, and the teller cash recycler and cash drawer note counts.">
+      <ol class="final-visuals__steps" aria-label="The Withdrawal screen on desktop, tablet and mobile">
+        <li><img src="/assets/img/teller/f1-a.png" width="1000" height="711" loading="lazy" alt="Desktop: Withdrawal, Calculate cash break up, with the teller cash recycler and cash drawer in three columns."></li>
+        <li><img src="/assets/img/teller/f1-b.png" width="750" height="1000" loading="lazy" alt="Tablet: the same screen with the cash drawer below the teller cash recycler."></li>
+        <li><img src="/assets/img/teller/f1-c.png" width="461" height="1000" loading="lazy" alt="Mobile: the same screen in a single column."></li>
+      </ol>
+    </section>
+
+    <section class="cs-section final-visuals" aria-labelledby="final-designs-3" data-section="final-designs-3">
+      <h2 class="visually-hidden" id="final-designs-3">Final designs: Withdrawal core flow</h2>
+      <img class="final-visuals__full" data-reveal src="/assets/img/teller/final-3.png" width="1312" height="800" loading="lazy"
+           alt="The Withdrawal core flow in four screens: account and transaction details empty and filled in, the Tasks complete summary, and the Withdrawal summary with a success message.">
+      <ol class="final-visuals__steps" aria-label="The Withdrawal core flow, in four screens">
+        <li><img src="/assets/img/teller/f3-a.png" width="1000" height="882" loading="lazy" alt="Account and transaction details, empty, with a transaction type and amount to fill in."></li>
+        <li><img src="/assets/img/teller/f3-b.png" width="901" height="1000" loading="lazy" alt="Account and transaction details, filled in, with authority details added."></li>
+        <li><img src="/assets/img/teller/f3-c.png" width="1000" height="625" loading="lazy" alt="Tasks complete: a summary of each completed task with a Complete transaction button."></li>
+        <li><img src="/assets/img/teller/f3-d.png" width="961" height="1000" loading="lazy" alt="Withdrawal summary: a success message, then account, authority and amount details."></li>
+      </ol>
+    </section>
+
+    <section class="cs-section accordion accordion--read-more" aria-labelledby="challenges" data-section="challenges" data-accordion>
+      <div class="accordion__intro">
+        <div class="cs-heading">
+          <p class="cs-pill">05 / 06 · Key challenges</p>
+          <h2 class="t-h3" id="challenges">Key challenges</h2>
+        </div>
+        <div class="prose t-paragraph">
+          <p>Six connected challenges shaped the work: reducing system switching, uncovering what branch practice revealed beyond the requirements, designing around hidden device dependencies, changing habits carried over from the legacy system, extending a customer-focused design system for colleague work, and aligning decisions across a broad team. Together, they pointed to one goal: make teller work simpler without losing the safeguards it relied on.</p>
+        </div>
+      </div>
+      <ol class="accordion__list">
+        <li class="accordion__item" data-reveal data-section="challenge-system-switching">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="system-switching-title">Removing system switching</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg>Systems thinking</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="19" r="3" /> <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /> <circle cx="18" cy="5" r="3" /></svg>User and wireflows</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">A significant cash withdrawal could mean switching between up to 8 systems. Tellers held the order and the policy rules in their heads. That worked for veterans, but not for new tellers without legacy-system muscle memory.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="system-switching-trigger" aria-expanded="true"
+                      aria-controls="system-switching-panel" data-track="accordion_toggle" data-track-target="system-switching" data-track-title="Removing system switching"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Removing system switching</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="system-switching-panel" role="region" aria-labelledby="system-switching-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>I drove the early decision between a full-page, side-sheet and Hub approach, then shaped the Hub as a dynamic task list for withdrawals and payments. It consolidated steps, showed only the tasks relevant to each transaction, and carried policy checks into the flow. Deposits were different: observation showed about 80% were simple, so we left the Hub out to avoid adding steps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-branch-observation">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="branch-observation-title">Branch observation: uncovering what the requirements missed</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /></svg>Survey creation and synthesis</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">Withdrawal observation happened in fragments: half-days squeezed between other work, under pressure to deliver high-fidelity screens. Deposits carried far more machine interaction, so designing it without real branch context was too big a risk.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="branch-observation-trigger" aria-expanded="true"
+                      aria-controls="branch-observation-panel" data-track="accordion_toggle" data-track-target="branch-observation" data-track-title="Branch observation: uncovering what the requirements missed"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Branch observation: uncovering what the requirements missed</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="branch-observation-panel" role="region" aria-labelledby="branch-observation-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>For Deposits, I arranged a four-day immersion across four branches before design, using observation to check the brief against teller practice. I found two missing requirements: the TCR’s inventory warning colour and a way to roll back cash already fed during a count. I brought both into the design, making machine feedback and recovery part of the transaction flow.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-devices">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="devices-title">The devices: No one saw the full picture</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></svg>Systems thinking</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">The legacy system read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24-inch monitors, often across several resized windows the brief never mentioned.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="devices-trigger" aria-expanded="true"
+                      aria-controls="devices-panel" data-track="accordion_toggle" data-track-target="devices" data-track-title="The devices: No one saw the full picture"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The devices: No one saw the full picture</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="devices-panel" role="region" aria-labelledby="devices-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>I designed the Deposits flows end to end for simple, mixed, third-party and cheque acceptance, including device and API states that could interrupt a transaction: an occupied TCR, unavailable inventory, no cash, or a transaction already in progress. For fixed 24-inch teller screens, I reorganised the TCR panel for narrow windows instead of simply shrinking it. The narrow-window layout still needs validation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-old-habits">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="old-habits-title">Removing old teller habits</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg>Usability testing</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></svg>Contextual enquiry</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">Tellers read the new system through a legacy lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="old-habits-trigger" aria-expanded="true"
+                      aria-controls="old-habits-panel" data-track="accordion_toggle" data-track-target="old-habits" data-track-title="Removing old teller habits"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Removing old teller habits</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="old-habits-panel" role="region" aria-labelledby="old-habits-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>To keep legacy TCR assumptions from carrying into the new colleague banking channel, I separated standard accounting inputs from device-specific controls and tested the riskiest interactions first. For withdrawals, I added an Automatic/Custom choice so denomination fields appeared only when needed. For deposits, I combined the count into one live screen and added Roll back to recount. In testing, “Amounts match” and “Counted: $X” gave tellers reassurance.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-design-system">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="design-system-title">Unfamiliar platform, unready design system</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.536 11.293a1 1 0 0 0 0 1.414l2.376 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /> <path d="M2.297 11.293a1 1 0 0 0 0 1.414l2.377 2.377a1 1 0 0 0 1.414 0l2.377-2.377a1 1 0 0 0 0-1.414L6.088 8.916a1 1 0 0 0-1.414 0z" /> <path d="M8.916 17.912a1 1 0 0 0 0 1.415l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.415l-2.377-2.376a1 1 0 0 0-1.414 0z" /> <path d="M8.916 4.674a1 1 0 0 0 0 1.414l2.377 2.376a1 1 0 0 0 1.414 0l2.377-2.376a1 1 0 0 0 0-1.414l-2.377-2.377a1 1 0 0 0-1.414 0z" /></svg>Design systems contribution</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z" /> <path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18" /> <path d="m2.3 2.3 7.286 7.286" /> <circle cx="11" cy="11" r="2" /></svg>Visual design</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">The new system’s design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and the bank’s atomic design conventions, learning the tool and the system’s logic at the same time.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="design-system-trigger" aria-expanded="true"
+                      aria-controls="design-system-panel" data-track="accordion_toggle" data-track-target="design-system" data-track-title="Unfamiliar platform, unready design system"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: Unfamiliar platform, unready design system</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="design-system-panel" role="region" aria-labelledby="design-system-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>I learned Figma and the bank’s atomic design conventions while adapting a customer-focused library for colleague work. I contributed reusable patterns, including a horizontal radio group and a progress tracker built with Business Lending. Through the Design Guild, I shared colleague use cases and helped extend the library into colleague journeys; other teams adopted some of the patterns.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="accordion__item" data-reveal data-section="challenge-team">
+          <div class="accordion__row">
+            <div class="accordion__summary">
+              <h3 class="accordion__title t-h4" id="team-title">The team: a wider net than usual</h3>    <div class="accordion__skills t-caption">
+                <p class="accordion__skills-label">Skills used:</p>
+                <ul class="accordion__skill-list">
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /></svg>Workshop facilitation</li>
+                  <li class="accordion__skill"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></svg>Usability testing</li>
+                </ul>
+              </div>
+              <p class="accordion__context t-paragraph-bold">Teller spanned several designers, product, SMEs, BAs and an offshore team working on Deposits. Shared patterns, like the Hub’s cards and error states, needed agreement across all of them, not just sign-off at the end.</p>
+              <button type="button" class="accordion__trigger accordion__more link" id="team-trigger" aria-expanded="true"
+                      aria-controls="team-panel" data-track="accordion_toggle" data-track-target="team" data-track-title="The team: a wider net than usual"><span
+                      class="accordion__more-label">Read less</span><span class="visually-hidden">: The team: a wider net than usual</span></button>
+            </div>
+          </div>
+          <div class="accordion__panel" id="team-panel" role="region" aria-labelledby="team-title">
+            <div class="accordion__clip">
+              <div class="accordion__body">
+                <div class="accordion__copy prose t-paragraph">
+                  <p class="accordion__label">What I did</p>
+                      <p>I set up quick huddles with Product, SMEs and BAs to resolve requirement questions, and ran weekly tests to validate flows. I iterated the Hub card in Elevate design sessions, facilitated workshops on error states, and ran cross-designer flow reviews so shared patterns stayed consistent. I also supported the lead researcher with an end-to-end withdrawal test in a mock branch lab.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="impact" data-section="impact" data-progress-end>
+      <div class="impact__copy">
+        <div class="impact__heading">
+          <p class="cs-pill cs-pill--on-dark">06 / 06 · Impact</p>
+          <h2 class="t-h3" id="impact">Impact</h2>
+          <p class="t-body-lg impact__lead">190,000 banker hours projected saved yearly</p>
+          <p class="t-paragraph">Business case · planning estimate</p>
+        </div>
+        <p class="impact__stamp t-caption"><span class="impact__stamp-dot" aria-hidden="true"></span>Impact snapshot · October 2026</p>
+      </div>
+      <div class="impact__right">
+        <dl class="impact__metrics">
+          <div class="impact__metric"><dt class="t-paragraph-bold">Branches live at pilot start · 6 Aug 2026</dt><dd class="t-metric-xl" data-count-to="3" aria-label="3">3</dd></div>
+        </dl>
+        <ul class="impact__signals">
+          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">Quick to learn</p><p class="t-paragraph impact__muted">Early pilot feedback suggested tellers picked up the guided flow quickly.</p></div></li>
+          <li class="impact__signal"><span class="impact__dot" aria-hidden="true"></span><div><p class="t-paragraph-bold">The flow lands</p><p class="t-paragraph impact__muted">Bankers responded positively to the overall flow.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="cs-section cs-section--tight seq-nav" aria-label="More case studies" data-section="next-prev">
+      <a class="seq seq--prev" href="/work/budgets/" data-track="prev_case_study" data-track-target="budgets">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 19-7-7 7-7" /> <path d="M19 12H5" /></svg><span class="seq__text">
+          <span class="seq__label">Previous case study</span>
+          <span class="t-body-lg">Keeping budgets on track</span>
+        </span>
+    
+      </a>
+      <a class="seq seq--next" href="/work/tal/summary/" data-track="next_case_study" data-track-target="tal">
+        <span class="seq__text">
+          <span class="seq__label">Next case study</span>
+          <span class="t-body-lg">A clearer 19-step quote</span>
+        </span>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /></svg>
+      </a>
+    </nav>
+
+  </article>
+</main>
+
+<footer class="site-footer" id="contact" data-section="footer">
+  <div class="container">
+    <h2 class="site-footer__headline t-h1">Let's talk.</h2>
+    <div class="site-footer__cols">
+      <div class="site-footer__col">
+        <p class="site-footer__label t-eyebrow-sm">Email me:</p>
+        <a class="site-footer__big-link t-h3" href="mailto:ash@mrpatel.com" data-track="email_click"><svg class="site-footer__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.2 4.8H28.8C29.65 4.8 30.46 5.14 31.06 5.74C31.66 6.34 32 7.15 32 8V8.48L16 18.4L0 8.48V8C0 7.15 0.34 6.34 0.94 5.74C1.54 5.14 2.35 4.8 3.2 4.8ZM0 12.16V24C0 24.85 0.34 25.66 0.94 26.26C1.54 26.86 2.35 27.2 3.2 27.2H28.8C29.65 27.2 30.46 26.86 31.06 26.26C31.66 25.66 32 24.85 32 24V12.16L16.85 21.6C16.59 21.76 16.3 21.84 16 21.84C15.7 21.84 15.41 21.76 15.15 21.6L0 12.16Z"/></svg>ash@mrpatel.com</a>
+        <p class="site-footer__built t-paragraph">Site designed and built by <strong>MRPATEL</strong> © 2026 with <span class="nowrap"><svg class="site-footer__brand" width="16" height="16" fill="currentColor" aria-hidden="true" focusable="false" viewBox="90 94 506 506"><path d="M189.531 430.72L288.951 374.971L290.59 370.088L288.951 367.369H284.035L267.374 366.355L210.562 364.835L161.399 362.807L113.6 360.273L101.583 357.739L90.3843 342.788L91.4768 335.439L101.583 328.597L116.059 329.864L148.015 332.145L196.086 335.439L230.774 337.467L282.396 342.788H290.59L291.682 339.494L288.951 337.467L286.766 335.439L237.056 301.736L183.249 266.259L155.117 245.733L140.094 235.344L132.447 225.714L129.169 204.428L142.826 189.223L161.399 190.491L166.042 191.758L184.888 206.202L225.038 237.371L277.48 275.889L285.127 282.224L288.207 280.145L288.678 278.676L285.127 272.848L256.722 221.406L226.404 168.951L212.747 147.158L209.197 134.234C207.821 128.811 207.012 124.324 207.012 118.776L222.58 97.4901L231.32 94.7026L252.351 97.4901L261.092 105.092L274.202 134.994L295.233 181.875L328.009 245.733L337.569 264.739L342.758 282.224L344.67 287.545H347.948V284.505L350.679 248.521L355.595 204.428L360.512 147.665L362.15 131.7L370.071 112.441L385.913 102.051L398.204 107.88L408.31 122.324L406.944 131.7L400.935 170.725L389.19 231.796L381.543 272.848H385.913L391.102 267.526L411.86 240.158L446.548 196.572L461.843 179.341L479.87 160.335L491.342 151.212H513.192L529.034 175.033L521.932 199.613L499.536 227.995L480.963 252.068L454.332 287.747L437.808 316.434L439.29 318.8L443.271 318.461L503.359 305.537L535.862 299.709L574.647 293.12L592.127 301.229L594.039 309.592L587.211 326.57L545.695 336.706L497.077 346.589L424.68 363.632L423.878 364.277L424.824 365.68L457.473 368.636L471.403 369.396H505.545L569.184 374.211L585.845 385.107L595.678 398.538L594.039 408.927L568.365 421.851L533.95 413.742L453.376 394.483L425.79 387.641H421.966V389.922L444.909 412.475L487.245 450.486L539.959 499.647L542.69 511.811L535.862 521.44L528.761 520.427L482.328 485.456L464.302 469.745L423.878 435.535H421.147V439.083L430.433 452.767L479.87 527.015L482.328 549.822L478.778 557.171L465.94 561.732L452.011 559.198L422.786 518.399L393.014 472.786L368.979 431.734L366.076 433.567L351.771 586.312L345.216 594.168L329.921 599.996L317.084 590.367L310.255 574.656L317.084 543.487L325.278 502.941L331.833 470.759L337.842 430.72L341.511 417.345L341.187 416.45L338.255 416.943L308.07 458.342L262.184 520.427L225.858 559.198L217.117 562.746L202.095 554.89L203.461 540.953L211.928 528.536L262.184 464.677L292.502 424.892L312.042 402.055L311.851 398.751L310.773 398.659L177.24 485.71L153.478 488.751L143.099 479.121L144.464 463.41L149.381 458.342L189.531 430.72Z"/></svg> Claude Code</span> x <span class="nowrap"><svg class="site-footer__brand" width="16" height="16" fill="currentColor" aria-hidden="true" focusable="false" viewBox="0 0 384 512"><path d="M14 95.7924C14 42.8877 56.8878 0 109.793 0H274.161C327.066 0 369.954 42.8877 369.954 95.7924C369.954 129.292 352.758 158.776 326.711 175.897C352.758 193.019 369.954 222.502 369.954 256.002C369.954 308.907 327.066 351.795 274.161 351.795H272.081C247.279 351.795 224.678 342.369 207.666 326.904V415.167C207.666 468.777 163.657 512 110.309 512C57.5361 512 14 469.243 14 416.207C14 382.709 31.1945 353.227 57.2392 336.105C31.1945 318.983 14 289.5 14 256.002C14 222.502 31.196 193.019 57.2425 175.897C31.196 158.776 14 129.292 14 95.7924ZM176.288 191.587H109.793C74.2172 191.587 45.3778 220.427 45.3778 256.002C45.3778 291.44 73.9948 320.194 109.381 320.416C109.518 320.415 109.655 320.415 109.793 320.415H176.288V191.587ZM207.666 256.002C207.666 291.577 236.505 320.417 272.081 320.417H274.161C309.737 320.417 338.576 291.577 338.576 256.002C338.576 220.427 309.737 191.587 274.161 191.587H272.081C236.505 191.587 207.666 220.427 207.666 256.002ZM109.793 351.795C109.655 351.795 109.518 351.794 109.381 351.794C73.9948 352.015 45.3778 380.769 45.3778 416.207C45.3778 451.652 74.6025 480.622 110.309 480.622C146.591 480.622 176.288 451.186 176.288 415.167V351.795H109.793ZM109.793 31.3778C74.2172 31.3778 45.3778 60.2173 45.3778 95.7924C45.3778 131.368 74.2172 160.207 109.793 160.207H176.288V31.3778H109.793ZM207.666 160.207H274.161C309.737 160.207 338.576 131.368 338.576 95.7924C338.576 60.2173 309.737 31.3778 274.161 31.3778H207.666V160.207Z"/></svg> Figma</span></p>
+        <p class="site-footer__colophon t-caption">Published via GitHub. Hosted on Cloudflare.</p>
+        <a class="btn btn--outlined site-footer__timeline" href="/how-this-was-built/" data-track="footer_timeline_click">Check out the timeline</a>
+      </div>
+      <div class="site-footer__col">
+        <p class="site-footer__label t-eyebrow-sm">Connect with me:</p>
+        <a class="site-footer__big-link t-h3" href="https://www.linkedin.com/in/misterpatel/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="linkedin"><svg class="site-footer__icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M27.2627 27.2693H22.524V19.844C22.524 18.0733 22.488 15.7947 20.0547 15.7947C17.584 15.7947 17.2067 17.7213 17.2067 19.7133V27.2693H12.468V12H17.02V14.0813H17.0813C17.7173 12.8813 19.264 11.6147 21.5747 11.6147C26.376 11.6147 27.264 14.7747 27.264 18.888L27.2627 27.2693ZM7.116 9.91067C5.59067 9.91067 4.36533 8.676 4.36533 7.15733C4.36533 5.64 5.592 4.40667 7.116 4.40667C8.636 4.40667 9.868 5.64 9.868 7.15733C9.868 8.676 8.63467 9.91067 7.116 9.91067ZM9.492 27.2693H4.74V12H9.492V27.2693ZM29.6333 0H2.36133C1.056 0 0 1.032 0 2.30533V29.6947C0 30.9693 1.056 32 2.36133 32H29.6293C30.9333 32 32 30.9693 32 29.6947V2.30533C32 1.032 30.9333 0 29.6293 0H29.6333Z"/></svg>LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a class="site-footer__small-link t-paragraph" href="https://www.instagram.com/slow__grain/" target="_blank" rel="noopener" data-track="outbound_click" data-track-target="instagram"><svg class="site-footer__icon site-footer__icon--sm" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.2 0H16.8C18.71 0 20.54 0.76 21.89 2.11C23.24 3.46 24 5.29 24 7.2V16.8C24 18.71 23.24 20.54 21.89 21.89C20.54 23.24 18.71 24 16.8 24H7.2C5.29 24 3.46 23.24 2.11 21.89C0.76 20.54 0 18.71 0 16.8V7.2C0 5.29 0.76 3.46 2.11 2.11C3.46 0.76 5.29 0 7.2 0ZM12 6C10.41 6 8.88 6.63 7.76 7.76C6.63 8.88 6 10.41 6 12C6 13.59 6.63 15.12 7.76 16.24C8.88 17.37 10.41 18 12 18C13.59 18 15.12 17.37 16.24 16.24C17.37 15.12 18 13.59 18 12C18 10.41 17.37 8.88 16.24 7.76C15.12 6.63 13.59 6 12 6ZM12 8.4C12.95 8.4 13.87 8.78 14.55 9.45C15.22 10.13 15.6 11.05 15.6 12C15.6 12.95 15.22 13.87 14.55 14.55C13.87 15.22 12.95 15.6 12 15.6C11.05 15.6 10.13 15.22 9.45 14.55C8.78 13.87 8.4 12.95 8.4 12C8.4 11.05 8.78 10.13 9.45 9.45C10.13 8.78 11.05 8.4 12 8.4ZM18.6 3.9C18.2 3.9 17.82 4.06 17.54 4.34C17.26 4.62 17.1 5 17.1 5.4C17.1 5.8 17.26 6.18 17.54 6.46C17.82 6.74 18.2 6.9 18.6 6.9C19 6.9 19.38 6.74 19.66 6.46C19.94 6.18 20.1 5.8 20.1 5.4C20.1 5 19.94 4.62 19.66 4.34C19.38 4.06 19 3.9 18.6 3.9Z"/></svg><span>Follow my woodcraft @slow__grain<span class="site-footer__logo" aria-hidden="true"></span></span><span class="visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+    </div>
+    <div class="site-footer__mark" aria-hidden="true">
+      <p>MRPATEL<sup>©</sup></p>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/site.js?v=1791888456" defer></script>
+</body>
+</html>
+

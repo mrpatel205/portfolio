@@ -26,6 +26,7 @@
   --text-h1-size: 4rem;         --text-h1-lh: 4.5rem;
   --text-h2-size: 3rem;         --text-h2-lh: 3.5rem;
   --text-h3-size: 2rem;         --text-h3-lh: 2.5rem;
+  --text-h4-size: 1.5rem;       --text-h4-lh: 2rem;
   --text-metric-xl-size: 6rem;  --text-metric-xl-lh: 6.5rem;
   --text-body-lg-size: 1.125rem; --text-body-lg-lh: 1.75rem;
   --text-paragraph-size: 1rem;  --text-paragraph-lh: 1.5rem;
@@ -117,14 +118,16 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .t-h2 { font-size: var(--text-h2-size); line-height: var(--text-h2-lh); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-heading); }
 .t-h3 { font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--weight-medium); letter-spacing: var(--tracking-heading); }
 .t-metric-xl { font-size: var(--text-metric-xl-size); line-height: var(--text-metric-xl-lh); font-weight: var(--weight-bold); letter-spacing: var(--tracking-metric); }
+.t-h4 { font-size: var(--text-h4-size); line-height: var(--text-h4-lh); font-weight: var(--weight-medium); letter-spacing: var(--tracking-heading); }
 .t-body-lg { font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); font-weight: var(--weight-regular); }
+.t-body-lg-bold { font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); font-weight: var(--weight-bold); }
 .t-paragraph { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-regular); }
 .t-paragraph-bold { font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-bold); }
 .t-caption { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-regular); }
 .t-caption-bold { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-bold); }
 /* Eyebrows (Figma Typography/Eyebrow/Small and /Large) */
-.t-eyebrow-sm { font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase; }
-.t-eyebrow-lg { font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-lg-tracking); text-transform: uppercase; }
+.t-eyebrow-sm { font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-sm-tracking); }
+.t-eyebrow-lg { font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold); letter-spacing: var(--text-eyebrow-lg-tracking); }
 
 .prose p + p { margin-top: var(--space-5); }
 .prose strong { font-weight: 700; }
@@ -188,8 +191,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* ---------- Case study hero ---------- */
 .cs-hero { padding-top: var(--spacer-medium); }
-.back-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-5); }
-.cover__head .back-link { align-self: flex-start; margin-bottom: 0; }
+.back-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-bottom: var(--spacer-tiny); }
+.cover__head .back-link { align-self: flex-start; margin-bottom: var(--space-5); } /* + 24 flex gap = 48 (--spacer-tiny) above the H1 */
 .back-link svg { width: 1.25rem; height: 1.25rem; flex: none; }
 .cs-notice { /* Figma Confidentiality banner: muted fill, 16/24 padding, 24 gap, md radius */
   display: flex; align-items: baseline; gap: var(--space-5);
@@ -200,6 +203,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cs-notice__label { flex: none; }
 .cs-notice__text { margin: 0; }
 .cs-notice + .cs-hero { padding-top: 0; }
+.cs-notice:has(+ .cs-hero > .cs-hero__title:first-child) { margin-bottom: var(--spacer-tiny); } /* no back link: banner straight to H1 */
 .cover:has(.cs-notice) { padding-top: var(--space-4); }
 .cover__head .cs-notice { margin: 0; }
 @media (max-width: 699px) { .cs-notice { flex-direction: column; gap: var(--space-1); } }
@@ -228,7 +232,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cs-pill { /* Figma eyebrow pill */
   display: inline-block; margin: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; background: var(--muted); color: var(--black);
   font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
-  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+  letter-spacing: var(--text-eyebrow-sm-tracking);
 }
 
 /* Two-column content block: copy left, visual right */
@@ -520,7 +524,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 /* Read-more variant (Figma Accordion/Read more): number | title, subtitle, skills, context and a
    "Read more" link. The open panel is copy only, in the same 628px measure as other sections. */
 .accordion--read-more .accordion__row {
-  display: grid; grid-template-columns: 4rem 1fr; column-gap: var(--space-5);
+  display: block;
   padding: var(--space-6) 0;
 }
 .accordion--read-more .accordion__title { margin: 0; }
@@ -538,7 +542,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 }
 .accordion__label { font-weight: 700; }
 .accordion__copy .accordion__label + p { margin-top: var(--space-3); }
-.accordion--read-more .accordion__body { display: block; padding: 0 0 var(--spacer-tiny) calc(4rem + var(--space-5)); }
+.accordion--read-more .accordion__body { display: block; padding: 0 0 var(--spacer-tiny); }
 
 /* ---------- Final visuals ---------- */
 .final-visuals__full { width: 100%; border-radius: var(--radius-xl); }
@@ -615,6 +619,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
     --text-h1-size: 2.5rem;  --text-h1-lh: 2.875rem;
     --text-h2-size: 2rem;    --text-h2-lh: 2.5rem;
     --text-h3-size: 1.5rem;  --text-h3-lh: 2rem;
+    --text-h4-size: 1.25rem; --text-h4-lh: 1.75rem;
     --text-metric-xl-size: 4rem; --text-metric-xl-lh: 4.5rem;
   }
 
@@ -703,8 +708,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   /* Accordion: narrower number column; the panel stacks copy over its image, full width */
   .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
   .accordion__body { grid-template-columns: 1fr; row-gap: var(--space-5); padding-left: 0; }
-  .accordion--read-more .accordion__row { grid-template-columns: 2.5rem 1fr; column-gap: var(--space-3); padding: var(--space-5) 0; }
-  .accordion--read-more .accordion__body { padding-left: calc(2.5rem + var(--space-3)); }
+  .accordion--read-more .accordion__row { padding: var(--space-5) 0; }
   .accordion__skills { flex-direction: column; gap: 0; }
   .accordion__skills-label { line-height: 1.5rem; }
 
@@ -738,7 +742,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .metrics__eyebrow {
   display: inline-flex; align-items: center; gap: var(--space-2); padding-bottom: var(--space-1);
   font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
-  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+  letter-spacing: var(--text-eyebrow-sm-tracking);
 }
 .metrics__eyebrow::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
 .metrics__lead, .metrics__note, .metrics__sub { color: var(--metrics-grey); }
@@ -750,7 +754,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 .metrics__big-label, .metrics__group-head {
   font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold);
-  letter-spacing: var(--text-eyebrow-lg-tracking); text-transform: uppercase;
+  letter-spacing: var(--text-eyebrow-lg-tracking);
 }
 .metrics__big-label { margin-top: var(--space-3); }
 .metrics__note { margin-top: var(--space-3); font-size: 1rem; line-height: 1.5rem; }
@@ -766,7 +770,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .metrics__stat--callout .metrics__value { font-size: 4.5rem; line-height: 4.5rem; font-weight: 700; }
 .metrics__label {
   display: block; font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-medium);
-  letter-spacing: var(--text-eyebrow-sm-tracking); text-transform: uppercase;
+  letter-spacing: var(--text-eyebrow-sm-tracking);
 }
 .metrics__stat--callout .metrics__label { font-weight: var(--weight-bold); }
 .metrics__sub { display: block; margin-top: 0.125rem; font-size: 0.875rem; line-height: 1.25rem; }
@@ -842,7 +846,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .work-impact {
   display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding-left: var(--space-3);
   border-left: 3px solid #fd6619; /* Figma Impact callout: 3px orange rule, grey label over bold metric */
-  color: var(--black); font-size: 1.0625rem; line-height: 1.25rem; font-weight: 700;
+  color: var(--black); /* type: .t-body-lg-bold */
 }
 .work-impact__label { font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; color: var(--muted-text); }
 .work-skills { display: flex; gap: var(--space-2); width: 100%; padding-top: var(--space-3); }
@@ -1059,16 +1063,19 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .story__pin { height: auto; padding-bottom: 0; }
 .cs-single .story__copy, .cs-single .story__after { max-width: var(--col); width: 100%; }
 .cs-single .story__figure { width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567))); }
-.cs-single .story--metrics { height: auto; }
-.cs-single .story--metrics .story__pin { position: static; height: auto; display: block; padding: 0; }
-.cs-single .story--metrics .story__copy { margin-inline: auto; }
-.cs-single .story--metrics .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
+/* Research metrics pin like Approach: the panel holds while the scroll reveals the headline, then Deposits,
+   then Withdrawals, then the page scrolls on. Small screens skip the pin (no scroll-stepping) */
+.cs-single .story--metrics { height: calc(100vh - var(--nav-height) + var(--story-step) * (var(--stages) + var(--story-hold))); }
+.cs-single .story--metrics { --story-hold: 0.8; } /* extra steps held after the last stage, so the reveal finishes before the page moves on */
+.cs-single .story--metrics .story__pin { position: sticky; height: calc(100vh - var(--nav-height)); display: flex; padding: var(--space-5) 0; }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cs-single .story { height: auto; }
   .cs-single .story::after { display: none; }
   .cs-single .story__pin { position: static; height: auto; display: block; padding: 0; }
   .cs-single .story__copy, .cs-single .story__after { margin-inline: auto; }
   .cs-single .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
+  .cs-single .story--metrics { height: auto; }
+  .cs-single .story--metrics .story__pin { position: static; height: auto; display: block; padding: 0; }
 }
 .cs-single .cs-hold { height: auto; }
 .cs-single .cs-hold__frame { position: static; height: auto; display: block; }
@@ -1164,7 +1171,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
   .hb__panel { position: relative; flex: 1; min-height: 0; }
   .hb__shot { position: absolute; inset: 0; background: var(--surface-image); opacity: 0; transition: opacity var(--duration-colour) var(--ease); }
   .hb__shot--soon { display: grid; place-items: center; background: none; }
-  .hb__shot--soon .hb__soon { margin: 0; text-align: center; font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--weight-black); text-transform: uppercase; letter-spacing: var(--tracking-heading); }
+  .hb__shot--soon .hb__soon { margin: 0; text-align: center; font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--weight-black); letter-spacing: var(--tracking-heading); }
   .hb__shot.is-on { opacity: 1; }
   .hb__shot img { width: 100%; height: 100%; object-fit: cover; }
   .hb__shot .hb__ph { width: 100%; height: 100%; aspect-ratio: auto; place-items: start center; padding-top: var(--space-6); }
@@ -1225,3 +1232,21 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
   .hb__list, .hb__item, .hb__shot, .hb__cue, .hb__hint { transition: none !important; }
   .hb__mouse::after { animation: none; opacity: 1; }
 }
+
+/* ---------- Micro-patterns (test): view toggle + step counter ---------- */
+.view-toggle { /* Summary / Full story, Figma Exploration micro-pattern 08 */
+  display: inline-flex; margin-top: var(--spacer-tiny); padding: 3px; border: 1px solid rgba(0, 0, 0, 0.35); border-radius: 999px;
+}
+.view-toggle__option {
+  padding: var(--space-2) var(--space-4); border-radius: 999px; color: var(--muted-text); text-decoration: none;
+  font-size: var(--text-caption-size, 0.875rem); font-weight: var(--weight-semibold); white-space: nowrap;
+}
+.view-toggle__option .icon { width: 1rem; height: 1rem; margin: 0 var(--space-1) -3px var(--space-2); }
+.view-toggle__option:hover { color: var(--black); }
+.view-toggle__option[aria-current="page"] { background: var(--black); color: var(--white); }
+.cs-pill--on-dark { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+.metrics__header .cs-pill, .impact__heading .cs-pill { align-self: flex-start; margin-bottom: var(--space-2); }
+.view-toggle + .cs-hero__image { margin-top: var(--spacer-tiny); } /* equal space above and below the toggle */
+.cover__head .view-toggle { align-self: flex-start; margin-top: calc(var(--spacer-tiny) - var(--space-5)); } /* + 24 flex gap = --spacer-tiny above */
+.cover__head:has(.view-toggle) + .cover__hero { margin-top: calc(var(--spacer-tiny) - var(--spacer-medium)); } /* cover gap is 96; toggle → hero is 48 */
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) { .cover__head:has(.view-toggle) + .cover__hero { margin-top: 0; } } /* mobile cover gap is already --spacer-tiny */

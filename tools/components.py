@@ -13,6 +13,9 @@ so every case study shares one structure and a fix in one place fixes all four.
       .cover__head); inside <x-hero> on full pages. Same markup both places, Figma Confidentiality banner.
 
   <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
+    <x-view-toggle summary-href summary-time full-time [full-href current]/>   optional: Summary / Case study switch
+                                                           labelled by read time (micro-pattern 08); also usable
+                                                           standalone on a summary page with current="summary"
     <x-notice>Confidentiality line, shown above the title</x-notice>   optional
     <x-title>Heading, may contain <br></x-title>
     <x-meta><x-item label="Company">Major bank</x-item> …</x-meta>   first group (left)
@@ -82,6 +85,9 @@ so every case study shares one structure and a fix in one place fixes all four.
 
   <x-next href title target [label]/>               link to the next case study
 
+step="01 / 06" on <x-scene>, <x-story>, <x-metrics>, <x-accordion> and <x-impact> prefixes the eyebrow pill
+with a step counter (micro-pattern 05). Metrics and Impact have no pill otherwise, so step adds one.
+<x-case-study noindex> adds a robots noindex meta (test pages).
 Attribute values are used as written (write &amp; and &quot; yourself); they may contain
 inline HTML such as <br> or <strong>.
 """
@@ -179,12 +185,13 @@ def case_study(n):
     if _SINGLE and n.attrs.get("visual-gap") == "medium":
         cls.append("cs-single--roomy")
     body_cls = f' class="{" ".join(cls)}"' if cls else ""
+    noindex = '\n<meta name="robots" content="noindex">' if n.attrs.get("noindex") else ""
     return f"""<!doctype html>
 <html lang="en-AU">
 <head>
 {{{{> head}}}}
 <title>{n.req('title')}</title>
-<meta name="description" content="{n.req('description')}">
+<meta name="description" content="{n.req('description')}">{noindex}
 </head>
 <body{body_cls} data-page="{n.req('page')}" data-case-study="{n.req('slug')}">
 {{{{> nav}}}}
@@ -229,13 +236,43 @@ def hero(n):
     back = back_link(n.attrs["back-href"], n.attrs.get("back-label", "Back")) + "\n  " if n.attrs.get("back-href") else ""
     notice = n.kid("notice")
     notice_html = notice_banner(notice.text()) + "\n" if notice else ""
+    toggle = n.kid("view-toggle")
+    toggle_html = "\n  " + view_toggle(toggle) if toggle else ""
     return f"""{notice_html}<header class="cs-hero" data-section="hero">\n  {back}
   <h1 class="t-h1 cs-hero__title">{n.kid('title').text()}</h1>
   <dl class="cs-meta t-caption">
 {indent(chr(10).join(groups), 4)}
-  </dl>
+  </dl>{toggle_html}
   {hero_image(n)}
 </header>"""
+
+
+def view_toggle(n):
+    """Summary / Case study switch, labelled by read time. Two links, not a widget: each is a page.
+    The current one (current="summary" or "full", default full) carries aria-current and the filled style."""
+    cur = n.attrs.get("current", "full")
+    def opt(key, label, href, time):
+        here = cur == key
+        attrs = ' aria-current="page"' if here else f' data-track="view_toggle" data-track-target="{key}"'
+        return (f'<a class="view-toggle__option" href="{"#main" if here else href}"{attrs}>'
+                f'{label}{{{{icon:clock}}}}{time}</a>')
+    return ('<nav class="view-toggle" aria-label="Case study length">'
+            + opt("summary", "Summary", n.req("summary-href"), n.req("summary-time"))
+            + opt("full", "Case study", n.req("full-href") if "full-href" in n.attrs else "#main", n.req("full-time"))
+            + '</nav>')
+
+
+def step_label(n, label):
+    step = n.attrs.get("step")
+    return f"{step} · {label}" if step else label
+
+
+def step_pill(n, label, dark=False):
+    """A standalone pill for sections that otherwise have none (Metrics, Impact), only when step is set."""
+    if not n.attrs.get("step"):
+        return ""
+    cls = "cs-pill cs-pill--on-dark" if dark else "cs-pill"
+    return f'<p class="{cls}">{step_label(n, label)}</p>'
 
 
 def hero_image(n):
@@ -269,6 +306,8 @@ def heading_block(n):
     pill is the heading. A scene with only a subheading (no pill) is a bare H3."""
     id_ = n.req("id")
     h, sub = n.attrs.get("heading"), n.attrs.get("subheading")
+    if h:
+        h = step_label(n, h)
     if h and sub:
         return (f'<div class="cs-heading">\n  <p class="cs-pill">{h}</p>\n'
                 f'  <h2 class="t-h3" id="{id_}">{sub}</h2>\n</div>')
@@ -359,10 +398,14 @@ def metrics(n):
 
     h = n.kid("headline")
     note = h.attrs.get("note")
-    note_html = f'\n    <p class="metrics__note" data-from="4">{note}</p>' if note else ""
+    note_html = f'\n    <p class="metrics__note" data-from="{first if _SINGLE else 4}">{note}</p>' if note else ""
+    # Single column: 1 headline, 2 Deposits, 3 Withdrawals, then the page scrolls on.
+    # Otherwise (approved V3.1.2): 1 header, 2 headline, 3 Deposits, 4 Withdrawals + note.
+    first = 1 if _SINGLE else 2
+    stages = 3 if _SINGLE else 4
     groups = []
     for gi, g in enumerate(n.kids("group")):
-        stage = 3 + gi
+        stage = first + 1 + gi
         rows = []
         for si, st in enumerate(g.kids("stat")):
             call = bool(st.attrs.get("callout"))
@@ -378,17 +421,18 @@ def metrics(n):
   </ul>
 </div>""")
     return f"""<section class="story story--metrics" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"
-         data-stages="4" style="--stages: 4">
+         data-stages="{stages}" style="--stages: {stages}">
   <div class="story__pin">
     <div class="panel metrics" data-play-target>
       <div class="metrics__left">
         <div class="metrics__header" data-from="1">
+{indent(step_pill(n, n.req('heading'), True), 10)}
           <h2 class="t-h3 metrics__subheading" id="{id_}">{n.attrs.get('subheading') or n.req('heading')}</h2>
 {indent(n.text().replace('<p>', '<p class="t-body-lg metrics__lead">'), 10)}
         </div>
         <div class="metrics__headline">
-          <p class="metrics__big" data-from="2">{num(h.req('value'), 2, 1400, 'metrics__big-value')}</p>
-          <p class="metrics__big-label" data-from="2">{h.req('label')}</p>{indent(note_html, 6)}
+          <p class="metrics__big" data-from="{first}">{num(h.req('value'), first, 1400, 'metrics__big-value')}</p>
+          <p class="metrics__big-label" data-from="{first}">{h.req('label')}</p>{indent(note_html, 6)}
         </div>
       </div>
       <div class="metrics__right">
@@ -487,7 +531,7 @@ def accordion(n):
     return f"""<section class="{cls}" aria-labelledby="{id_}" data-section="{id_}" data-accordion>
   <div class="accordion__intro">
     <div class="cs-heading">
-      <p class="cs-pill">{n.attrs.get('heading', 'Key challenges')}</p>
+      <p class="cs-pill">{step_label(n, n.attrs.get('heading', 'Key challenges'))}</p>
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Key challenges')}</h2>
     </div>
     <div class="prose t-paragraph">
@@ -552,9 +596,8 @@ def read_more_item(p, i, thumb):
     context_html = f'\n  <p class="accordion__context t-paragraph-bold">{context.text()}</p>' if context else ""
 
     row = f"""<div class="accordion__row">
-  <span class="accordion__number t-h3" aria-hidden="true">{i:02d}</span>
   <div class="accordion__summary">
-    <h3 class="accordion__title t-h3" id="{pid}-title">{title}</h3>{indent(subtitle + skills_html + context_html, 2)}
+    <h3 class="accordion__title t-h4" id="{pid}-title">{title}</h3>{indent(subtitle + skills_html + context_html, 2)}
     <button type="button" class="accordion__trigger accordion__more link" id="{pid}-trigger" aria-expanded="true"
             aria-controls="{panels}" data-track="accordion_toggle" data-track-target="{pid}" data-track-title="{html.escape(plain_title, quote=True)}"><span
             class="accordion__more-label">Read less</span><span class="visually-hidden">: {plain_title}</span></button>
@@ -649,6 +692,7 @@ def impact(n):
     return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}" data-progress-end>
   <div class="impact__copy">
     <div class="impact__heading">
+{indent(step_pill(n, n.attrs.get('heading', 'Impact'), True), 6)}
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
       <p class="t-body-lg impact__lead">{n.req('lead')}</p>
 {indent(n.text().replace('<p>', '<p class="t-paragraph">'), 6)}
@@ -691,6 +735,7 @@ def next_link(n):
 
 COMPONENTS = {
     "case-study": case_study,
+    "view-toggle": lambda n: view_toggle(n),
     "hero": hero,
     "notice": notice,
     "scene": scene,
