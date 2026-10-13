@@ -232,7 +232,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cs-pill { /* Figma eyebrow pill */
   display: inline-block; margin: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; background: var(--muted); color: var(--black);
   font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
-  letter-spacing: var(--text-eyebrow-sm-tracking);
+  letter-spacing: 0; /* Figma Typography/Eyebrow/Pill: 12/20 Semi Bold, 0% */
 }
 
 /* Two-column content block: copy left, visual right */
@@ -1233,7 +1233,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 }
 
 /* ---------- Micro-patterns (test): view toggle + step counter ---------- */
-.cs-pill--on-dark { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+.cs-pill--on-dark { background: var(--white); color: var(--black); } /* Figma Tag/Skill › Eyebrow white */
 .metrics__header .cs-pill, .impact__heading .cs-pill { align-self: flex-start; margin-bottom: var(--space-2); }
 .cs-hero__read { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); color: var(--muted-text); font-weight: var(--weight-semibold); }
 .cs-hero__read .icon { width: 1rem; height: 1rem; }
