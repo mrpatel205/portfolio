@@ -769,10 +769,9 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .metrics__value { font-size: 2.5rem; line-height: 3rem; font-weight: 600; font-variant-numeric: tabular-nums; }
 .metrics__stat--callout .metrics__value { font-size: 4.5rem; line-height: 4.5rem; font-weight: 700; }
 .metrics__label {
-  display: block; font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-medium);
-  letter-spacing: var(--text-eyebrow-sm-tracking);
+  display: block; font-size: var(--text-paragraph-size); line-height: var(--text-paragraph-lh); font-weight: var(--weight-bold);
+  color: var(--white);
 }
-.metrics__stat--callout .metrics__label { font-weight: var(--weight-bold); }
 .metrics__sub { display: block; margin-top: 0.125rem; font-size: 0.875rem; line-height: 1.25rem; }
 
 .story--metrics .story__pin { padding-block: var(--space-5); }
