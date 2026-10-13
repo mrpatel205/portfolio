@@ -1234,19 +1234,7 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 }
 
 /* ---------- Micro-patterns (test): view toggle + step counter ---------- */
-.view-toggle { /* Summary / Full story, Figma Exploration micro-pattern 08 */
-  display: inline-flex; margin-top: var(--spacer-tiny); padding: 3px; border: 1px solid rgba(0, 0, 0, 0.35); border-radius: 999px;
-}
-.view-toggle__option {
-  padding: var(--space-2) var(--space-4); border-radius: 999px; color: var(--muted-text); text-decoration: none;
-  font-size: var(--text-caption-size, 0.875rem); font-weight: var(--weight-semibold); white-space: nowrap;
-}
-.view-toggle__option .icon { width: 1rem; height: 1rem; margin: 0 var(--space-1) -3px var(--space-2); }
-.view-toggle__option:hover { color: var(--black); }
-.view-toggle__option[aria-current="page"] { background: var(--black); color: var(--white); }
 .cs-pill--on-dark { background: rgba(255, 255, 255, 0.16); color: var(--white); }
 .metrics__header .cs-pill, .impact__heading .cs-pill { align-self: flex-start; margin-bottom: var(--space-2); }
-.view-toggle + .cs-hero__image { margin-top: var(--spacer-tiny); } /* equal space above and below the toggle */
-.cover__head .view-toggle { align-self: flex-start; margin-top: calc(var(--spacer-tiny) - var(--space-5)); } /* + 24 flex gap = --spacer-tiny above */
-.cover__head:has(.view-toggle) + .cover__hero { margin-top: calc(var(--spacer-tiny) - var(--spacer-medium)); } /* cover gap is 96; toggle → hero is 48 */
-@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) { .cover__head:has(.view-toggle) + .cover__hero { margin-top: 0; } } /* mobile cover gap is already --spacer-tiny */
+.cs-hero__read { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); color: var(--muted-text); font-weight: var(--weight-semibold); }
+.cs-hero__read .icon { width: 1rem; height: 1rem; }

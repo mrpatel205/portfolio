@@ -12,10 +12,7 @@ so every case study shares one structure and a fix in one place fixes all four.
       Grey banner with a "Confidentiality note" label. Standalone on summary pages (first child of
       .cover__head); inside <x-hero> on full pages. Same markup both places, Figma Confidentiality banner.
 
-  <x-hero image width height alt [back-href back-label]>   back-href adds a Back link above everything
-    <x-view-toggle summary-href summary-time full-time [full-href current]/>   optional: Summary / Case study switch
-                                                           labelled by read time (micro-pattern 08); also usable
-                                                           standalone on a summary page with current="summary"
+  <x-hero image width height alt [back-href back-label read-time]>   back-href adds a Back link above everything
     <x-notice>Confidentiality line, shown above the title</x-notice>   optional
     <x-title>Heading, may contain <br></x-title>
     <x-meta><x-item label="Company">Major bank</x-item> …</x-meta>   first group (left)
@@ -236,30 +233,14 @@ def hero(n):
     back = back_link(n.attrs["back-href"], n.attrs.get("back-label", "Back")) + "\n  " if n.attrs.get("back-href") else ""
     notice = n.kid("notice")
     notice_html = notice_banner(notice.text()) + "\n" if notice else ""
-    toggle = n.kid("view-toggle")
-    toggle_html = "\n  " + view_toggle(toggle) if toggle else ""
-    return f"""{notice_html}<header class="cs-hero" data-section="hero">\n  {back}
+    read = f'<p class="cs-hero__read t-caption">{{{{icon:clock}}}}{n.attrs["read-time"]}</p>\n  ' if n.attrs.get("read-time") else ""
+    return f"""{notice_html}<header class="cs-hero" data-section="hero">\n  {back}{read}
   <h1 class="t-h1 cs-hero__title">{n.kid('title').text()}</h1>
   <dl class="cs-meta t-caption">
 {indent(chr(10).join(groups), 4)}
-  </dl>{toggle_html}
+  </dl>
   {hero_image(n)}
 </header>"""
-
-
-def view_toggle(n):
-    """Summary / Case study switch, labelled by read time. Two links, not a widget: each is a page.
-    The current one (current="summary" or "full", default full) carries aria-current and the filled style."""
-    cur = n.attrs.get("current", "full")
-    def opt(key, label, href, time):
-        here = cur == key
-        attrs = ' aria-current="page"' if here else f' data-track="view_toggle" data-track-target="{key}"'
-        return (f'<a class="view-toggle__option" href="{"#main" if here else href}"{attrs}>'
-                f'{label}{{{{icon:clock}}}}{time}</a>')
-    return ('<nav class="view-toggle" aria-label="Case study length">'
-            + opt("summary", "Summary", n.req("summary-href"), n.req("summary-time"))
-            + opt("full", "Case study", n.req("full-href") if "full-href" in n.attrs else "#main", n.req("full-time"))
-            + '</nav>')
 
 
 def step_label(n, label):
@@ -471,7 +452,7 @@ def challenges_flat(n, id_):
         for i, st in enumerate(t.kids("stage"), 1):
             head = ""
             if i == 1:
-                head = (f'<div class="cs-heading">\n  <p class="cs-pill" aria-hidden="true">{pill}</p>\n'
+                head = (f'<div class="cs-heading">\n  <p class="cs-pill" aria-hidden="true">{step_label(n, pill)}</p>\n'
                         f'  <h3 class="t-h3" id="{tid}">{t.req("heading")}</h3>\n</div>\n')
             section = f"challenge-{tid}" + (f"-{i}" if len(t.kids("stage")) > 1 else "")
             out.append(f"""<div class="scene" data-section="{section}">
@@ -735,7 +716,6 @@ def next_link(n):
 
 COMPONENTS = {
     "case-study": case_study,
-    "view-toggle": lambda n: view_toggle(n),
     "hero": hero,
     "notice": notice,
     "scene": scene,
