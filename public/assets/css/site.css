@@ -232,7 +232,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cs-pill { /* Figma eyebrow pill */
   display: inline-block; margin: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; background: var(--muted); color: var(--black);
   font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
-  letter-spacing: var(--text-eyebrow-sm-tracking);
+  letter-spacing: 0; /* Figma Typography/Eyebrow/Pill: 12/20 Semi Bold, 0% */
 }
 
 /* Two-column content block: copy left, visual right */

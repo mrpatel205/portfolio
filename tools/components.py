@@ -244,8 +244,8 @@ def hero(n):
 
 
 def step_label(n, label):
-    step = n.attrs.get("step")
-    return f"{step} · {label}" if step else label
+    """Pills show the section name only (Figma Tag/Skill › Eyebrow); the step number is not printed."""
+    return label
 
 
 def step_pill(n, label, dark=False):
