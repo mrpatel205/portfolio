@@ -363,8 +363,8 @@
      On small screens there is no pin, so the stages play once in sequence when the
      illustration scrolls into view. Reduced motion shows the finished state. */
   document.querySelectorAll('.story').forEach(function (story) {
-    // Single-column layout: only the metrics block is static; Approach stays pinned and scroll-stepped
-    var STATIC = SMALL_SCREEN.matches || (STATIC_LAYOUT && story.classList.contains('story--metrics'));
+    // Approach and Research metrics both pin and step with scroll; small screens play once in view instead
+    var STATIC = SMALL_SCREEN.matches;
     var n = parseInt(story.dataset.stages, 10) || 1;
     var copy = story.querySelector('.story__copy');
     var pin = story.querySelector('.story__pin');
@@ -436,7 +436,9 @@
       // --story-step, read back from the layout. Single-column pins are only as tall as their content
       // and end with a 0.1-step hold, so the last stage is not followed by a long empty scroll.
       var single = document.body.classList.contains('cs-single');
-      var step = single ? (r.height - pin.offsetHeight) / (n - 0.9) : (r.height - avail) / n;
+      var metrics = story.classList.contains('story--metrics');
+      var step = metrics && single ? (r.height - avail) / (n + 0.8)   // matches --story-hold in site.css
+               : single ? (r.height - pin.offsetHeight) / (n - 0.9) : (r.height - avail) / n;
       var s = scrolled < -avail * 0.15 ? 0 : Math.min(n, Math.floor(Math.max(0, scrolled) / step) + 1);
       setStage(s);
     }
