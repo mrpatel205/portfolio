@@ -49,6 +49,7 @@
   --spacer-medium: 6rem;   /* 96 */
   --spacer-large: 12rem;   /* 192 */
   --spacer-xl: 24rem;      /* 384 */
+  --spacer-illustration: var(--spacer-medium); /* above and below the Approach illustration: double the 64 gap = 128, snapped to the nearest content spacer (96) */
 
   /* Layout grid */
   --page-margin: 4rem;     /* 64 */
@@ -68,6 +69,7 @@
 
   /* Focus */
   --focus-width: 2px;
+  --border-width-medium: 2px; /* Figma borderWidth/medium: footer divider */
   --focus-offset: 3px;
 
   --nav-height: 2.3125rem; /* 8 + 20 + 8 + 1px rule */
@@ -525,24 +527,31 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
    "Read more" link. The open panel is copy only, in the same 628px measure as other sections. */
 .accordion--read-more .accordion__row {
   display: block;
-  padding: var(--space-6) 0;
+  padding: var(--space-6) 0 0;
 }
 .accordion--read-more .accordion__title { margin: 0; }
 .accordion__subtitle { margin: var(--space-2) 0 0; }
-.accordion__skills { display: flex; gap: var(--space-2); align-items: flex-start; padding-top: var(--space-1); margin-top: var(--space-2); color: var(--muted-text); }
+.accordion__skills { display: flex; gap: var(--space-2); align-items: flex-start; padding-top: var(--space-1); margin-top: var(--space-3); color: var(--muted-text); }
 .accordion__skills-label { flex: none; width: 5rem; margin: 0; line-height: 2rem; }
 .accordion__skill-list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
 .accordion__skill { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; }
 .accordion__skill .icon { width: 1rem; height: 1rem; }
 .accordion__context { max-width: 47.5rem; margin: var(--space-2) 0 0; padding-top: var(--space-2); }
-.accordion--read-more .accordion__more {
-  display: inline; width: auto; margin-top: var(--space-3); padding: 0;
-  font: inherit; color: inherit; text-align: left; white-space: nowrap;
-  text-decoration: underline; background: none; border: 0; cursor: pointer;
+/* "Read more" is a secondary button (.btn--secondary) with a chevron down; open it reads "Close" with an x.
+   It sits after the panel, so it rides down with the revealed copy and back up as the panel closes.
+   These re-assert the button look over the numbered variant's .accordion__trigger rules */
+.accordion--read-more .accordion__more.btn {
+  display: inline-flex; width: auto; padding: var(--space-3) var(--space-5);
+  font: inherit; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; text-align: center; text-decoration: none;
+  color: var(--black); background: var(--button-secondary); border: 1px solid var(--button-secondary);
 }
+.accordion--read-more .accordion__more.btn:hover { color: var(--white); background: var(--black); border-color: var(--black); }
+.accordion__actions { margin-top: var(--space-4); padding-bottom: var(--space-6); }
+.accordion__more-icon { display: inline-flex; }
+.accordion__more .icon { width: 1rem; height: 1rem; }
 .accordion__label { font-weight: 700; }
 .accordion__copy .accordion__label + p { margin-top: var(--space-3); }
-.accordion--read-more .accordion__body { display: block; padding: 0 0 var(--spacer-tiny); }
+.accordion--read-more .accordion__body { display: block; padding: var(--space-5) 0 0; }
 
 /* ---------- Final visuals ---------- */
 .final-visuals__full { width: 100%; border-radius: var(--radius-xl); }
@@ -562,6 +571,9 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .site-footer { margin-top: var(--spacer-large); overflow: clip; } /* clip the empty line space under the wordmark's baseline */
 main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has only the 96px content padding before the footer */
 /* Figma Footer component 57:1335 (V4): headline, two columns, giant wordmark */
+/* Divider above "Let's talk": a 2px muted line on the footer itself, so it runs the full browser width
+   (Figma Footer: 2px divider, 64px above the headline) */
+.site-footer { border-top: var(--border-width-medium) solid var(--muted); padding-top: var(--spacer-small); }
 .site-footer__headline { margin-bottom: var(--space-6); }
 .site-footer__cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--spacer-medium); align-items: start; }
 .site-footer__col { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
@@ -611,6 +623,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   :root {
     --page-margin: 1.25rem;  /* 17.5 at the 14px root */
+    --nav-height: 2.75rem;   /* 44px bar: 43 + 1px rule, so the nav links are 44px touch targets (WCAG 2.5.5 / platform guidance) */
     --spacer-tiny: 2rem;
     --spacer-medium: 3rem;
     --spacer-large: 5rem;
@@ -625,12 +638,13 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 
   .cs-hero__title br, .topic__subtitle br { display: none; }
 
-  /* Nav: 44px touch targets without changing the bar's height */
+  /* Nav: the bar is 44px tall (--nav-height above); each link's hit area is centred on its text and 44px tall */
   .site-nav__links { gap: var(--space-5); }
   .site-nav__links a { position: relative; }
-  .site-nav__links a::after { content: ""; position: absolute; inset: -0.75rem -0.5rem; }
-  .wordmark { position: relative; }
-  .wordmark::after { content: ""; position: absolute; inset: -0.75rem -0.5rem; }
+  .site-nav__links a::after { content: ""; position: absolute; inset: calc((100% - 2.75rem) / 2) -0.5rem; }
+  .wordmark { position: relative; font-size: 1.125rem; line-height: 1.5rem; } /* logo 150% on mobile: 12px to 18px */
+  .wordmark sup { font-size: 0.5625rem; }
+  .wordmark::after { content: ""; position: absolute; inset: calc((100% - 2.75rem) / 2) -0.5rem; }
 
   /* Hero */
   .cs-meta { grid-template-columns: 1fr; row-gap: var(--space-5); }
@@ -708,14 +722,36 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   /* Accordion: narrower number column; the panel stacks copy over its image, full width */
   .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
   .accordion__body { grid-template-columns: 1fr; row-gap: var(--space-5); padding-left: 0; }
-  .accordion--read-more .accordion__row { padding: var(--space-5) 0; }
+  .accordion--read-more .accordion__row { padding: var(--space-5) 0 0; }
+  .accordion__actions { padding-bottom: var(--space-5); }
   .accordion__skills { flex-direction: column; gap: 0; }
   .accordion__skills-label { line-height: 1.5rem; }
+  .accordion__skill-list { flex-direction: column; flex-wrap: nowrap; gap: 0; } /* one skill per row under the label, as in Figma */
 
   /* Footer */
   .site-footer { margin-top: var(--spacer-large); }
-  .site-footer__cols { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
-  .site-footer__small-link { margin-top: var(--spacer-tiny); min-height: 2.75rem; }
+  /* Previous / Next links: the case study titles under the labels are caption size on mobile */
+  .seq-nav .seq__text .t-body-lg { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); }
+
+  /* Mobile footer order and grouping (Figma mobile footer): Let's talk, Email + link, Connect + link,
+     the two captions, woodcraft, wordmark. The two columns dissolve (display: contents) so their items
+     can be re-ordered in one stack. Gaps: 8 label to link, 24 between groups, 48 before the wordmark. */
+  .site-footer__cols { display: flex; flex-direction: column; align-items: flex-start; }
+  .site-footer__col { display: contents; }
+  .site-footer__col:first-child .site-footer__label { order: 1; }
+  .site-footer__col:first-child .site-footer__big-link { order: 2; }
+  .site-footer__col:last-child .site-footer__label { order: 3; margin-top: var(--space-5); }
+  .site-footer__col:last-child .site-footer__big-link { order: 4; }
+  /* The credit line and the colophon run on as one paragraph (with a full stop after Figma), muted, and sit
+     tight above the wordmark; the woodcraft link takes the captions' old place under LinkedIn. */
+  .site-footer__credits { order: 6; margin-top: var(--spacer-medium); color: var(--muted-text); }
+  .site-footer__credits p { display: inline; margin: 0; max-width: none; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); color: inherit; }
+  .site-footer__built { margin-top: 0; }
+  .site-footer__built .nowrap:last-child::after { content: "."; }
+  .site-footer__small-link { order: 5; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); min-height: 2.75rem; margin: calc(var(--space-5) - 0.625rem) 0 -0.625rem; } /* 24px row, 44px tap area */
+  .site-footer__timeline { display: none; } /* "Check out the timeline" is desktop only */
+  .site-footer { padding-top: var(--spacer-medium); } /* 48px below the divider on mobile (the mobile scale's medium) */
+  .site-footer__mark { margin-top: var(--space-4); } /* captions sit 16px above the wordmark */
 }
 
 /* Landscape phones and small tablets in the stacked layout: two screens per row */
@@ -1061,7 +1097,16 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .story:not(.story--metrics)::after { content: ""; display: block; height: calc(var(--story-step) * (var(--stages) - 0.9)); }
 .cs-single .story__pin { height: auto; padding-bottom: 0; }
 .cs-single .story__copy, .cs-single .story__after { max-width: var(--col); width: 100%; }
-.cs-single .story__figure { width: min(100%, calc((100vh - var(--nav-height) - var(--story-copy-h, 20rem) - var(--spacer-tiny) - 2 * var(--space-6)) * var(--story-ratio, 2.567))); }
+/* Approach illustration breaks out of the 1312 column to the full browser width on desktop, capped
+   at --story-figure-max so it stays centred (not edge to edge) on very wide monitors. The height
+   limit sizes it against the heading copy only, so heading + figure always fit the viewport. */
+.cs-single { --story-figure-max: 1920px; } /* The figure is sized to fit under the heading copy only: the paragraphs below it sit under the fold while pinned and scroll into view when the stages finish */
+.cs-single main { overflow-x: clip; } /* the 100vw figure must not add a horizontal scrollbar */
+/* The paragraphs under the figure start below the fold while pinned; keep their first line from peeking in at the screen edge by fading them in with the last stage */
+.js .cs-single .story:not(.story--metrics) .story__after { transition: opacity 0.5s var(--ease); }
+.js .cs-single .story:not(.story--metrics):not(.is-s4) .story__after { opacity: 0; }
+.cs-single .story__pin { padding-top: 0; padding-bottom: var(--space-4); gap: var(--spacer-illustration); } /* copy + 96 + figure + 96 + after + 16 */
+.cs-single .story__figure { width: min(100vw, var(--story-figure-max), calc((100vh - var(--nav-height) - var(--space-4) - var(--story-head-h, 14rem) - var(--spacer-illustration) - var(--space-6)) * var(--story-ratio, 2.567))); }
 /* Research metrics pin like Approach: the panel holds while the scroll reveals the headline, then Deposits,
    then Withdrawals, then the page scrolls on. Small screens skip the pin (no scroll-stepping) */
 .cs-single .story--metrics { height: calc(100vh - var(--nav-height) + var(--story-step) * (var(--stages) + var(--story-hold))); }
@@ -1069,10 +1114,11 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .story--metrics .story__pin { position: sticky; height: calc(100vh - var(--nav-height)); display: flex; padding: var(--space-5) 0; }
 @media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
   .cs-single .story { height: auto; }
-  .cs-single .story::after { display: none; }
+  .cs-single .story::after, .cs-single .story:not(.story--metrics)::after { display: none; } /* match the desktop spacer's specificity */
   .cs-single .story__pin { position: static; height: auto; display: block; padding: 0; }
   .cs-single .story__copy, .cs-single .story__after { margin-inline: auto; }
   .cs-single .story__figure { width: 100%; margin-top: var(--spacer-tiny); }
+  .js .cs-single .story:not(.story--metrics):not(.is-s4) .story__after { opacity: 1; transition: none; } /* no pin on small screens: copy always shows */
   .cs-single .story--metrics { height: auto; }
   .cs-single .story--metrics .story__pin { position: static; height: auto; display: block; padding: 0; }
 }

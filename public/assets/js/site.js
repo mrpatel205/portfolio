@@ -257,7 +257,7 @@
       item.querySelector('.accordion__trigger').setAttribute('aria-expanded', open ? 'true' : 'false');
       item.querySelector('.accordion__panel').inert = !open;
       var label = item.querySelector('.accordion__more-label');
-      if (label) label.textContent = open ? 'Read less' : 'Read more';
+      if (label) label.textContent = open ? 'Close' : 'Read more';
     }
     function syncAll() {
       if (all) all.textContent = items.every(function (i) { return i.classList.contains('is-open'); }) ? 'Collapse all' : 'Expand all';
@@ -409,7 +409,7 @@
     if (reduceMotion) { for (var i = 1; i <= n; i++) story.classList.add('is-s' + i); return; }
     counts.forEach(function (c) { c.el.textContent = '0'; });
 
-    function measure() { if (copy) story.style.setProperty('--story-copy-h', (copy.offsetHeight + (after ? after.offsetHeight : 0)) + 'px'); }
+    function measure() { if (!copy) return; story.style.setProperty('--story-head-h', copy.offsetHeight + 'px'); story.style.setProperty('--story-copy-h', (copy.offsetHeight + (after ? after.offsetHeight : 0)) + 'px'); }
     measure();
     window.addEventListener('resize', measure);
 
