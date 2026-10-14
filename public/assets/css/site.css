@@ -749,7 +749,6 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .site-footer__built { margin-top: 0; }
   .site-footer__built .nowrap:last-child::after { content: "."; }
   .site-footer__small-link { order: 5; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); min-height: 2.75rem; margin: calc(var(--space-5) - 0.625rem) 0 -0.625rem; } /* 24px row, 44px tap area */
-  .site-footer__timeline { display: none; } /* "Check out the timeline" is desktop only */
   .site-footer { padding-top: var(--spacer-medium); } /* 48px below the divider on mobile (the mobile scale's medium) */
   .site-footer__mark { margin-top: var(--space-4); } /* captions sit 16px above the wordmark */
 }
