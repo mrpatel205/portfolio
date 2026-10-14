@@ -84,6 +84,8 @@ so every case study shares one structure and a fix in one place fixes all four.
 
 step="01 / 06" on <x-scene>, <x-story>, <x-metrics>, <x-accordion> and <x-impact> prefixes the eyebrow pill
 with a step counter (micro-pattern 05). Metrics and Impact have no pill otherwise, so step adds one.
+Pill rule: a pill is never printed when its text equals the title beside it (same_label), so Key
+challenges and Impact show the H3 only; Situation, Task, Approach and Research keep their pill.
 <x-case-study noindex> adds a robots noindex meta (test pages).
 Attribute values are used as written (write &amp; and &quot; yourself); they may contain
 inline HTML such as <br> or <strong>.
@@ -166,17 +168,19 @@ def indent(html, spaces):
 
 
 def prose(node):
-    return f'<div class="prose t-body-lg">\n{indent(node.text(), 2)}\n</div>'
+    return f'<div class="prose {_BODY}">\n{indent(node.text(), 2)}\n</div>'
 
 
 # ---------- Components ----------
 
 _SINGLE = False  # set by case_study: lets child components pick their single-column form
+_BODY = "t-body-lg"  # body copy class; <x-case-study body="paragraph"> switches Situation, Task, Approach, Research lead and Skills to t-paragraph (Key challenges and Impact keep their own)
 
 
 def case_study(n):
-    global _SINGLE
+    global _SINGLE, _BODY
     _SINGLE = n.attrs.get("layout") == "single"
+    _BODY = "t-paragraph" if n.attrs.get("body") == "paragraph" else "t-body-lg"
     body = "\n\n".join(render(c).strip("\n") for c in n.children if isinstance(c, Node))
     cls = ["cs-single"] if _SINGLE else []
     if _SINGLE and n.attrs.get("visual-gap") == "medium":
@@ -248,9 +252,16 @@ def step_label(n, label):
     return label
 
 
-def step_pill(n, label, dark=False):
-    """A standalone pill for sections that otherwise have none (Metrics, Impact), only when step is set."""
-    if not n.attrs.get("step"):
+def same_label(a, b):
+    """Rule: a pill is never printed when it would repeat the title next to it (case and spacing ignored)."""
+    norm = lambda t: " ".join(re.sub(r"<[^>]+>", "", t or "").split()).casefold()
+    return bool(a) and norm(a) == norm(b)
+
+
+def step_pill(n, label, dark=False, title=None):
+    """A standalone pill for sections that otherwise have none (Metrics, Impact), only when step is set.
+    Skipped when the pill text equals the title (see same_label)."""
+    if not n.attrs.get("step") or same_label(label, title):
         return ""
     cls = "cs-pill cs-pill--on-dark" if dark else "cs-pill"
     return f'<p class="{cls}">{step_label(n, label)}</p>'
@@ -289,6 +300,8 @@ def heading_block(n):
     h, sub = n.attrs.get("heading"), n.attrs.get("subheading")
     if h:
         h = step_label(n, h)
+    if h and sub and same_label(h, sub):
+        return f'<h2 class="t-h3 cs-heading" id="{id_}">{sub}</h2>'
     if h and sub:
         return (f'<div class="cs-heading">\n  <p class="cs-pill">{h}</p>\n'
                 f'  <h2 class="t-h3" id="{id_}">{sub}</h2>\n</div>')
@@ -321,7 +334,7 @@ def skills(n):
   <div class="cs-hold__frame">
     <section class="panel skills" aria-labelledby="{id_}">
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Skills used')}</h2>
-      <ul class="skills__list t-body-lg">
+      <ul class="skills__list {_BODY}">
 {indent(items, 8)}
       </ul>
     </section>
@@ -351,7 +364,7 @@ def story(n):
     vb = re.search(r'viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"', svg)
     ratio = round(float(vb.group(1)) / float(vb.group(2)), 3)
     after = n.kid("after")
-    after_html = (f'\n    <div class="story__after prose t-body-lg">\n{indent(after.text(), 6)}\n    </div>'
+    after_html = (f'\n    <div class="story__after prose {_BODY}">\n{indent(after.text(), 6)}\n    </div>'
                   if after else "")
     return f"""<section class="story" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"
          data-stages="{stages}" style="--stages: {stages}; --story-ratio: {ratio}">
@@ -409,7 +422,7 @@ def metrics(n):
         <div class="metrics__header" data-from="1">
 {indent(step_pill(n, n.req('heading'), True), 10)}
           <h2 class="t-h3 metrics__subheading" id="{id_}">{n.attrs.get('subheading') or n.req('heading')}</h2>
-{indent(n.text().replace('<p>', '<p class="t-body-lg metrics__lead">'), 10)}
+{indent(n.text().replace('<p>', f'<p class="{_BODY} metrics__lead">'), 10)}
         </div>
         <div class="metrics__headline">
           <p class="metrics__big" data-from="{first}">{num(h.req('value'), first, 1400, 'metrics__big-value')}</p>
@@ -512,10 +525,9 @@ def accordion(n):
     return f"""<section class="{cls}" aria-labelledby="{id_}" data-section="{id_}" data-accordion>
   <div class="accordion__intro">
     <div class="cs-heading">
-      <p class="cs-pill">{step_label(n, n.attrs.get('heading', 'Key challenges'))}</p>
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Key challenges')}</h2>
     </div>
-    <div class="prose t-paragraph">
+    <div class="prose t-body-lg">
 {indent(n.text(), 6)}
     </div>
 {expand_all}  </div>
@@ -566,7 +578,7 @@ def read_more_item(p, i, thumb):
         tags = "\n".join(f'<li class="accordion__skill">{{{{icon:{s.req("icon")}}}}}{s.text()}</li>' for s in skills)
         skills_html = f"""
   <div class="accordion__skills t-caption">
-    <p class="accordion__skills-label">Skills used:</p>
+    <p class="accordion__skills-label t-caption-bold">Skills used:</p>
     <ul class="accordion__skill-list">
 {indent(tags, 6)}
     </ul>
@@ -574,15 +586,20 @@ def read_more_item(p, i, thumb):
     subtitle = (f'\n  <p class="accordion__subtitle t-body-lg">{p.attrs["subtitle"]}</p>'
                 if p.attrs.get("subtitle") else "")
     context = p.kid("context")
-    context_html = f'\n  <p class="accordion__context t-paragraph-bold">{context.text()}</p>' if context else ""
+    context_html = f'\n  <p class="accordion__context t-paragraph">{context.text()}</p>' if context else ""
 
     row = f"""<div class="accordion__row">
   <div class="accordion__summary">
-    <h3 class="accordion__title t-h4" id="{pid}-title">{title}</h3>{indent(subtitle + skills_html + context_html, 2)}
-    <button type="button" class="accordion__trigger accordion__more link" id="{pid}-trigger" aria-expanded="true"
-            aria-controls="{panels}" data-track="accordion_toggle" data-track-target="{pid}" data-track-title="{html.escape(plain_title, quote=True)}"><span
-            class="accordion__more-label">Read less</span><span class="visually-hidden">: {plain_title}</span></button>
+    <h3 class="accordion__title t-h4" id="{pid}-title">{title}</h3>{indent(subtitle + context_html + skills_html, 2)}
   </div>
+</div>"""
+    # The button sits after the panel, so when the panel opens it is pushed down to sit below the
+    # revealed copy (and rides back up as the panel closes). Secondary CTA: chevron down to open,
+    # x to close; site.js swaps the label, CSS swaps the icon from aria-expanded.
+    actions = f"""<div class="accordion__actions">
+  <button type="button" class="accordion__trigger accordion__more btn btn--secondary" id="{pid}-trigger" aria-expanded="true"
+          aria-controls="{panels}" data-track="accordion_toggle" data-track-target="{pid}" data-track-title="{html.escape(plain_title, quote=True)}"><span
+          class="accordion__more-label">Close</span><span class="visually-hidden">: {plain_title}</span><span class="accordion__more-icon" aria-hidden="true">{{{{icon:chevron-down}}}}{{{{icon:x}}}}</span></button>
 </div>"""
     copy = f"""<div class="accordion__copy prose t-paragraph">
 {indent(p.text(), 2)}
@@ -600,6 +617,7 @@ def read_more_item(p, i, thumb):
       </div>
     </div>
   </div>
+{indent(actions, 2)}
 </li>"""
 
     # Thumbnail: the first visual sits beside the row when closed and stays put when open,
@@ -624,6 +642,7 @@ def read_more_item(p, i, thumb):
 {indent(copy, 10)}
         </div>
       </div>
+{indent(actions, 6)}
     </div>
     <div class="accordion__visuals">
       <div class="accordion__thumb">
@@ -673,7 +692,7 @@ def impact(n):
     return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}" data-progress-end>
   <div class="impact__copy">
     <div class="impact__heading">
-{indent(step_pill(n, n.attrs.get('heading', 'Impact'), True), 6)}
+{indent(step_pill(n, n.attrs.get('heading', 'Impact'), True, n.attrs.get('heading', 'Impact')), 6)}
       <h2 class="t-h3" id="{id_}">{n.attrs.get('heading', 'Impact')}</h2>
       <p class="t-body-lg impact__lead">{n.req('lead')}</p>
 {indent(n.text().replace('<p>', '<p class="t-paragraph">'), 6)}
