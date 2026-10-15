@@ -1034,6 +1034,14 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .cover-seq .seq--next { margin-left: 0; }
   .cover-seq .seq--next .seq__text { align-items: flex-start; text-align: left; }
   .cover__head .work-meta__item { width: calc(50% - var(--space-3)); }
+  /* Mobile order (Figma Site final, mobile summaries): lead, Situation + Task, Skills used, Impact, then the
+     Read case study button last before the footer. The grid wrappers dissolve so the blocks can be re-ordered. */
+  .cover__summary, .cover__left, .cover__right { display: contents; }
+  .cover__head { order: 0; } .cover__hero { order: 1; } .cover__lead { order: 2; }
+  .cover-card { order: 3; } .cover__skills { order: 4; } .cover__impact { order: 5; margin-top: 0; } .cover__cta { order: 6; }
+  /* Skills: plain (icon + muted label, no pill), one per row */
+  .cover-skills { flex-direction: column; flex-wrap: nowrap; gap: var(--space-2); }
+  .cover-skill { padding: var(--space-2) 0; background: none; border-radius: 0; color: var(--muted-text); }
 }
 
 /* Impact signals + stamp (Figma Teller Impact 2461:42558) */
