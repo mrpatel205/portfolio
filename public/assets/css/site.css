@@ -940,9 +940,9 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home .work-card + .work-card { margin-top: var(--spacer-medium); }  /* Figma: 112 → 96 */
 .home-exp + .home__rule { margin-top: var(--spacer-medium); }  /* Figma: 120 → 96 */
 @media (max-width: 699px) { .home__heading--work { margin-bottom: var(--spacer-tiny); } .work-card__image { border-radius: calc(var(--radius-lg) / 2); }   /* CTAs sit below the image: content dissolves into the card grid so the buttons can follow the image */
-  .work .work-card__content { display: contents; }
-  .work .work-card__image { order: 1; }
-  .work .work-card__cta { order: 2; }
+  .work .work-card__content, .home .work-card__content { display: contents; }
+  .work .work-card__image, .home .work-card__image { order: 1; }
+  .work .work-card__cta, .home .work-card__cta { order: 2; }
   .work-card__cta { width: 100%; flex-wrap: nowrap; }
   .work-card__cta:has(.btn + .btn) .btn { flex: 1 1 0; min-width: 0; justify-content: center; text-align: center; white-space: normal; padding-inline: var(--space-3); } /* two buttons: 50% each, flush with the image edges */
 }
