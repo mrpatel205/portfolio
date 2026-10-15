@@ -651,7 +651,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .cs-meta__group { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5) var(--gutter); }
   .cs-meta__group--right { grid-template-columns: 1fr; }
   .cs-hero__image { margin-top: var(--spacer-medium); }
-  .cs-hero__image img, .final-visuals__full { border-radius: var(--radius-lg); }
+  .cs-hero__image img, .final-visuals__full { border-radius: calc(var(--radius-lg) / 2); }
 
   /* Scenes: copy stacks above its image, nothing pins */
   .scene,
@@ -715,9 +715,9 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
     display: grid; grid-template-columns: minmax(0, 18rem); justify-content: center; gap: var(--space-6);
     margin: 0; padding: var(--spacer-tiny) var(--space-5);
     list-style: none;
-    background: var(--surface-image); border-radius: var(--radius-lg);
+    background: var(--surface-image); border-radius: calc(var(--radius-lg) / 2);
   }
-  .final-visuals__steps img { width: 100%; border-radius: var(--radius-md); }
+  .final-visuals__steps img { width: 100%; border-radius: calc(var(--radius-md) / 2); }
 
   /* Accordion: narrower number column; the panel stacks copy over its image, full width */
   .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
@@ -841,7 +841,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .work { padding-top: var(--spacer-medium); }
 .work--other { padding-top: var(--spacer-tiny); }
 .work__title { letter-spacing: -0.01em; }
-.work__heading { margin-top: var(--spacer-medium); margin-bottom: var(--spacer-tiny); }
+.work__title { margin-bottom: var(--spacer-tiny); } /* Figma: H1 → first card 48 */
 .work__divider { margin: calc(var(--spacer-large) * 0.6) 0 0; border: 0; border-top: 1px solid var(--black); }
 .work__intro { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--spacer-tiny); }
 .work__intro p { max-width: 47.5rem; }
@@ -939,7 +939,13 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home__heading--work { margin-bottom: var(--spacer-large); }  /* Figma: Selected work H2 → first card, snapped 144→192 */
 .home .work-card + .work-card { margin-top: var(--spacer-medium); }  /* Figma: 112 → 96 */
 .home-exp + .home__rule { margin-top: var(--spacer-medium); }  /* Figma: 120 → 96 */
-@media (max-width: 699px) { .home__heading--work { margin-bottom: var(--spacer-tiny); } }
+@media (max-width: 699px) { .home__heading--work { margin-bottom: var(--spacer-tiny); } .work-card__image { border-radius: calc(var(--radius-lg) / 2); }   /* CTAs sit below the image: content dissolves into the card grid so the buttons can follow the image */
+  .work .work-card__content { display: contents; }
+  .work .work-card__image { order: 1; }
+  .work .work-card__cta { order: 2; }
+  .work-card__cta { width: 100%; flex-wrap: nowrap; }
+  .work-card__cta:has(.btn + .btn) .btn { flex: 1 1 0; min-width: 0; justify-content: center; text-align: center; white-space: normal; padding-inline: var(--space-3); } /* two buttons: 50% each, flush with the image edges */
+}
 .home .work-card:first-of-type { margin-top: 0; }
 
 .home-exp { display: grid; grid-template-columns: minmax(0, 496fr) minmax(0, 816fr); column-gap: var(--space-6); padding-top: var(--space-5); }
@@ -1014,7 +1020,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover-seq { padding-block: var(--spacer-tiny); border-block: 1px solid var(--muted); gap: var(--space-5); }
 .cover-seq .seq--prev .seq__text { align-items: flex-start; }
 @media (max-width: 999px) {
-  .cover__hero { height: auto; aspect-ratio: 2 / 1; }
+  .cover__hero { height: auto; aspect-ratio: 2 / 1; border-radius: calc(var(--radius-xl) / 2); }
   .cover__summary { grid-template-columns: 1fr; row-gap: var(--spacer-tiny); }
   .cover-card { min-height: 0; }
 }
@@ -1124,6 +1130,10 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .cs-single .cs-hold { height: auto; }
 .cs-single .cs-hold__frame { position: static; height: auto; display: block; }
 .cs-single .accordion { max-width: var(--col); margin-inline: auto; }
+/* Approach (text only): same centred 640 column as the scenes, no pin */
+.cs-single .cs-pause { height: auto; margin-top: var(--spacer-medium); }
+.cs-single .cs-pause__inner { position: static; height: auto; display: block; max-width: var(--col); margin-inline: auto; }
+.cs-single .cs-pause .cs-block__copy { max-width: none; }
 
 /* Budgets single column (Figma Work/Budgets – single column v3 2723:1460): copy-to-image gap is spacer/medium (96) */
 .cs-single--roomy.cs-single--roomy .scene.scene > .scene__visual { margin-top: var(--spacer-medium); }
