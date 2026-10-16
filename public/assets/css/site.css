@@ -11,6 +11,7 @@
   --grey-30: #b3b3b3;
   --grey-50: #808080;
   --grey-70: #4d4d4d;
+  --orange: #e8431f;  /* end of the home banner gradient; 4:1 on white, large text only */
   --grey-90: #1a1a1a;
 
   /* Type */
@@ -1001,17 +1002,16 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .cover__hero img { width: 100%; height: 100%; object-fit: cover; }
 .cover__summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); }
 .cover__left { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-6); }
-.cover__impact { margin-top: calc(var(--spacer-small) - var(--space-6)); }  /* lead + CTA 32 apart; 64 from CTA to Impact, as Figma */
+.cover__skills, .cover__impact { margin-top: calc(var(--spacer-small) - var(--space-6)); }  /* lead + CTA 32 apart; 64 between CTA, Skills and Impact, as Figma */
 .cover__impact { display: flex; flex-direction: column; gap: var(--space-4); }
 .cover-stats { display: flex; gap: 6rem; margin: var(--space-4) 0 0; }
 .cover-stat { display: flex; flex-direction: column; gap: var(--space-2); }
-.cover-stat dd { margin: 0; order: -1; }
+.cover-stat dd { margin: 0; order: -1; color: var(--orange); }
 .cover-stat dt { color: var(--grey-70); }
 .cover__right { display: flex; flex-direction: column; gap: var(--space-6); }
 .cover-card { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); min-height: 13.75rem; padding: var(--space-6); background: var(--grey-10); border-radius: var(--radius-lg); }
-.cover__skills { display: flex; flex-direction: column; gap: var(--space-4); margin-top: calc(var(--spacer-tiny) * -1); }
-.cover__soon { margin: 2.5rem 0 0; }
-.cover-skills { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }  /* Figma Tag/Skill Plain: 24 across, 8 down */
+.cover__skills { display: flex; flex-direction: column; gap: var(--space-4); }
+.cover-skills { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); margin: 0; padding: 0; list-style: none; }  /* Figma Tag/Skill Plain: 16 across, tags touch vertically */
 .cover-skill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; color: var(--grey-70); }
 .cover-skill img { width: 1rem; height: 1rem; flex: none; }
 .cover-seq { padding-block: var(--spacer-tiny); border-block: 1px solid var(--grey-10); gap: var(--space-5); }
@@ -1025,6 +1025,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .cover { gap: var(--spacer-tiny); padding-block: var(--spacer-tiny); }
   .cover__head + .cover__hero { margin-top: calc(var(--spacer-medium) - var(--spacer-tiny)); } /* attribution → hero stays spacer-medium */
   .cover__skills { margin-top: 0; }
+  [data-summary-of="teller"] .cover-stats { flex-direction: column; }
   .t-metric-l { font-size: 3rem; line-height: 3.5rem; }
   .cover-stats { gap: var(--space-6); }
   .cover-seq { flex-direction: column; }
