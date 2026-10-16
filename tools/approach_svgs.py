@@ -85,7 +85,7 @@ PILL = ("WITHDRAWAL", "DEPOSIT", "PAYMENT", "RELEASE", "label — one column", "
 
 
 def pill(e):
-    """Muted grey (#595959, white text = 7:1) pill behind a Teller label so the eye links it to the underlined copy (white text)."""
+    """Muted grey (#4d4d4d, white text = 7:1) pill behind a Teller label so the eye links it to the underlined copy (white text)."""
     size = float(re.search(r'font-size="([\d.]+)"', e["attrs"]).group(1))
     bold = "font-weight" in e["attrs"]
     k = 0.71 if bold else 0.49  # avg glyph width / em, Inter caps bold vs regular mixed case
@@ -100,8 +100,8 @@ def pill(e):
     y0 = float(ts[0][1]) - size * 0.95
     y1 = float(ts[-1][1]) + size * 0.3
     px, py = size * 0.55, size * 0.35
-    r = f'<rect x="{x0 - px:.1f}" y="{y0 - py:.1f}" width="{x1 - x0 + 2 * px:.1f}" height="{y1 - y0 + 2 * py:.1f}" rx="{(y1 - y0 + 2 * py) / 2 if len(ts) == 1 else 12:.1f}" fill="#595959"/>'
-    t = render(e).replace('fill="#737373"', 'fill="#fff"').replace('fill="black"', 'fill="#fff"')
+    r = f'<rect x="{x0 - px:.1f}" y="{y0 - py:.1f}" width="{x1 - x0 + 2 * px:.1f}" height="{y1 - y0 + 2 * py:.1f}" rx="{(y1 - y0 + 2 * py) / 2 if len(ts) == 1 else 12:.1f}" fill="#4d4d4d"/>'
+    t = render(e).replace('fill="#808080"', 'fill="#fff"').replace('fill="black"', 'fill="#fff"')
     return r + "\n      " + t
 
 
