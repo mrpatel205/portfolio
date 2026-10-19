@@ -196,12 +196,12 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cover__head .back-link { align-self: flex-start; margin-bottom: var(--space-5); } /* + 24 flex gap = 48 (--spacer-tiny) above the H1 */
 .back-link svg { width: 1.25rem; height: 1.25rem; flex: none; }
 .cs-notice { /* Figma Confidentiality banner: muted fill, 16/24 padding, 24 gap, md radius */
-  display: flex; align-items: baseline; gap: var(--space-5);
+  display: flex; align-items: center; gap: var(--space-5);
   padding: var(--space-4) var(--space-5);
-  background: var(--grey-10); color: var(--black); border-radius: var(--radius-md);
+  background: var(--orange); color: var(--black); border-radius: var(--radius-md);
   margin: var(--space-4) 0 var(--space-5);  /* 16 + banner + 24 = the 96px Figma puts above Back */
 }
-.cs-notice__label { flex: none; }
+.cs-notice__label { flex: none; text-transform: none; letter-spacing: 0; } /* sentence case, no tracking */
 .cs-notice__text { margin: 0; }
 .cs-notice + .cs-hero { padding-top: 0; }
 .cs-notice:has(+ .cs-hero > .cs-hero__title:first-child) { margin-bottom: var(--spacer-tiny); } /* no back link: banner straight to H1 */
@@ -567,14 +567,14 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* ---------- Global footer ---------- */
 /* One footer gap rule (Ash, 2026-10-04): 192px above the footer on every page except cover sheets */
-.site-footer { margin-top: var(--spacer-large); overflow: clip; } /* clip the empty line space under the wordmark's baseline */
+.site-footer { margin-top: var(--spacer-large); overflow-x: clip; } /* clip the empty line space under the wordmark's baseline */
 main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has only the 96px content padding before the footer */
 /* Figma Footer component 57:1335 (V4): headline, two columns, giant wordmark */
 /* Divider above "Let's talk": a 2px muted line on the footer itself, so it runs the full browser width
    (Figma Footer: 2px divider, 64px above the headline) */
 .site-footer { border-top: var(--border-width-medium) solid var(--grey-10); padding-top: var(--spacer-small); }
 .site-footer__headline { margin-bottom: var(--space-6); }
-.site-footer__cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--spacer-medium); align-items: start; }
+.site-footer__cols { display: flex; flex-direction: column; align-items: flex-start; row-gap: var(--space-4); }
 .site-footer__col { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
 .site-footer__label { margin-bottom: var(--space-2); }
 .site-footer__big-link, .site-footer__small-link { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--black); text-decoration: none; min-height: 2.75rem; }
@@ -586,9 +586,11 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-footer__icon--sm { width: 1.5rem; height: 1.5rem; }
 .site-footer__logo { display: inline-block; vertical-align: middle; margin-left: var(--space-1); width: 1.5rem; height: 1.5rem; background-color: var(--grey-70); -webkit-mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; }
 .site-footer__timeline { margin-top: 0; }
-.site-footer__built { margin-top: var(--spacer-small); }
-.site-footer__colophon { max-width: 39.25rem; margin: 0 0 var(--space-4); color: var(--grey-70); }
-.site-footer__small-link { margin-top: var(--spacer-small); min-height: 0; } /* two-column: text sits on the baseline of "Site designed and built by" in the left column (same 24px line height, no 44px centring) */
+.site-footer__row { display: flex; align-items: flex-start; margin-top: var(--spacer-small); }
+.site-footer__credits { flex: none; margin-right: var(--spacer-small); } /* Figma: credits 640px wide, woodcraft link starts at its right edge */
+.site-footer__built, .site-footer__colophon, .site-footer__small-link { font-weight: var(--weight-regular, 400); } /* MRPATEL in the credit line stays bold via <strong> */
+.site-footer__colophon { max-width: 39.25rem; margin: 0; color: var(--grey-70); }
+.site-footer__small-link { min-height: 0; } /* two-column: text sits on the baseline of "Site designed and built by" in the left column (same 24px line height, no 44px centring) */
 .site-footer__mark {
   container-type: inline-size;
   margin-top: var(--space-4);
@@ -604,6 +606,33 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   white-space: nowrap;
 }
 .site-footer__mark sup { font-size: 0.433em; font-weight: 400; line-height: 1; vertical-align: top; }
+
+/* TEST (footer-fullpage-test): footer fills the window on the home banner's orange gradient; site.js auto-scrolls to it on entry */
+.site-footer { border-top: 0; position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; padding-top: 0; }
+.site-footer::before { /* same gradient as the home banner, on its own layer: slow fade out to white, quick fade in on entry */
+  content: ""; position: absolute; inset: calc(var(--spacer-large) * -1) 0 0 0; z-index: -1; pointer-events: none; /* runs on up above the footer and softens into the white page, like the home banner's lower edge */
+  background: linear-gradient(180deg, #f07a2e var(--spacer-large), #e8431f);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 var(--spacer-large)); mask-image: linear-gradient(180deg, transparent, #000 var(--spacer-large));
+  opacity: var(--lit, 0); /* set by site.js: follows the swipe on the way down */
+}
+.site-footer.is-fading::before { transition: opacity 1s ease-in-out; } /* slow fade out when scrolling back up */
+@media (prefers-reduced-motion: reduce) { .site-footer::before { transition: none; } }
+.site-footer > .container { flex: 1; display: grid; grid-template-rows: 1fr auto; }
+.site-footer { scroll-margin-top: calc(var(--nav-height) * -1); } /* Contact lands with the footer at the very top, under the clear nav */
+.site-footer__top { grid-row: 1; align-self: center; padding-top: var(--nav-height); } /* "Let's talk" + contacts: centred in the space between the nav and the credits, so they read as centred on the window */
+.site-footer__bottom { grid-row: 2; display: flex; flex-direction: column; overflow: clip; } /* clip the empty line space under the wordmark's baseline */ /* credits row + wordmark: pinned to the bottom edge */
+@media (max-height: 640px) { /* short windows: stack instead of overlapping */
+  .site-footer > .container { display: flex; flex-direction: column; }
+  .site-footer__top { padding: var(--spacer-small) 0; align-self: stretch; }
+  .site-footer__bottom { margin-top: auto; }
+}
+.site-footer__row { margin-top: auto; } /* credits + woodcraft link pin to the wordmark; the space opens up above them */
+.site-footer__mark { margin-top: var(--space-4); }
+.site-footer__built, .site-footer__colophon { font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); } /* same size as the credit line */
+.site-footer__small-link { font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); }
+.site-footer__logo { background-color: var(--black); }
+.site-footer__icon, .site-footer__brand { color: var(--black); }
+.site-footer__colophon, .site-footer__credits { color: var(--black); } /* grey-70 fails AA on orange */
 
 /* ---------- Placeholder pages (Home, Work) ---------- */
 .placeholder { padding: var(--spacer-large) 0; }
@@ -732,23 +761,18 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   /* Previous / Next links: the case study titles under the labels are caption size on mobile */
   .seq-nav .seq__text .t-body-lg { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); }
 
-  /* Mobile footer order and grouping (Figma mobile footer): Let's talk, Email + link, Connect + link,
-     the two captions, woodcraft, wordmark. The two columns dissolve (display: contents) so their items
-     can be re-ordered in one stack. Gaps: 8 label to link, 24 between groups, 48 before the wordmark. */
-  .site-footer__cols { display: flex; flex-direction: column; align-items: flex-start; }
-  .site-footer__col { display: contents; }
-  .site-footer__col:first-child .site-footer__label { order: 1; }
-  .site-footer__col:first-child .site-footer__big-link { order: 2; }
-  .site-footer__col:last-child .site-footer__label { order: 3; margin-top: var(--space-5); }
-  .site-footer__col:last-child .site-footer__big-link { order: 4; }
-  /* The credit line and the colophon run on as one paragraph (with a full stop after Figma), muted, and sit
-     tight above the wordmark; the woodcraft link takes the captions' old place under LinkedIn. */
-  .site-footer__credits { order: 6; margin-top: var(--spacer-medium); color: var(--grey-70); }
+  /* Mobile footer: one stack, left aligned: Let's talk, email, LinkedIn, credits + colophon, woodcraft, wordmark */
+  .site-footer__row { flex-direction: column; margin-top: var(--spacer-medium); }
+  .site-footer__credits { flex: none; max-width: none; color: var(--black); }
   .site-footer__credits p { display: inline; margin: 0; max-width: none; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); color: inherit; }
   .site-footer__built { margin-top: 0; }
   .site-footer__built .nowrap:last-child::after { content: "."; }
-  .site-footer__small-link { order: 5; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); min-height: 2.75rem; margin: calc(var(--space-5) - 0.625rem) 0 -0.625rem; } /* 24px row, 44px tap area */
-  .site-footer { padding-top: var(--spacer-medium); } /* 48px below the divider on mobile (the mobile scale's medium) */
+  .site-footer__small-link { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); min-height: 2.75rem; margin: var(--space-2) 0 -0.625rem; } /* 24px row, 44px tap area */
+  .site-footer { padding-top: calc(var(--spacer-medium) + var(--nav-height)); }
+  .site-footer > .container { display: flex; flex-direction: column; } /* mobile: normal stack, wordmark at the bottom */
+  .site-footer__top { padding: calc(var(--nav-height) + var(--spacer-medium)) 0 var(--spacer-medium); align-self: stretch; flex: 1; display: flex; flex-direction: column; justify-content: center; } /* left aligned, centred in the space above the credits */
+  .site-footer__headline { font-size: calc(var(--text-h1-size) * 1.2); line-height: calc(var(--text-h1-lh) * 1.2); } /* 48px: 1.2 x the H1 token (40px) */
+  .site-footer__bottom { margin-top: auto; }
   .site-footer__mark { margin-top: var(--space-4); } /* captions sit 16px above the wordmark */
 }
 
@@ -1088,6 +1112,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 /* Home: the hero gradient runs up behind the nav (no white bar) and the nav turns white as the gradient fades on scroll */
 .site-nav { transition: background-color 0.7s ease-in-out, border-color 0.7s ease-in-out; }
 body[data-page="home"]:not(:has(.home-hero.is-faded)) .site-nav { background: transparent; border-bottom-color: transparent; }
+body.on-footer .site-nav { background: transparent; border-bottom-color: transparent; }
+body.on-footer .site-nav__links a { color: var(--black); } /* grey-70 fails AA on orange */ /* TEST (footer-fullpage-test): nav sits clear over the orange footer */
 @media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
 
 /* ---------- Single column (body.cs-single; Figma Work/Teller – single column v2 2700:1847) ----------

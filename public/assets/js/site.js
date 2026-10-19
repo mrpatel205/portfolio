@@ -242,9 +242,55 @@
       var target = document.getElementById('contact');
       if (!target) return;
       e.preventDefault();
+      document.documentElement.dataset.footerNav = '1'; // the footer glide stands down while this smooth scroll runs
       target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
+  /* ---------- TEST: footer takes over the window as soon as the orange starts to fade in ----------
+     Scrolling down into the footer lights it (orange fades in quickly) and glides the page to it; scrolling back up
+     fades the orange out slowly. The glide runs frame by frame (not scrollTo smooth) so a trackpad can't cancel it. */
+  (function () {
+    var footer = document.getElementById('contact');
+    if (!footer) return;
+    var lastY = window.scrollY, armed = true, gliding = false, upRun = 0;
+    function glide() {
+      var from = window.scrollY, to = footer.getBoundingClientRect().top + from, t0 = null, dur = 550;
+      gliding = true;
+      function step(t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        window.scrollTo({ top: from + (to - from) * e, behavior: 'instant' }); // instant: the page's CSS scroll-behavior: smooth would otherwise smooth every frame
+        if (k < 1) requestAnimationFrame(step); else { gliding = false; lastY = window.scrollY; update(); }
+      }
+      requestAnimationFrame(step);
+    }
+    /* The orange is scroll-linked on the way down (--lit follows how far the footer has come into the window, so it
+       fades in at the pace of the swipe) and a slow timed fade on the way back up (.is-fading). */
+    function setLit(v, fading) {
+      footer.classList.toggle('is-fading', fading);
+      footer.style.setProperty('--lit', v.toFixed(3));
+      document.body.classList.toggle('on-footer', v > 0.6);                      // nav goes clear as the orange takes over
+    }
+    function update() {
+      var y = window.scrollY, dy = y - lastY, top = footer.getBoundingClientRect().top, vh = window.innerHeight;
+      lastY = y;
+      var p = Math.max(0, Math.min(1, (vh - top) / vh));
+      if (top >= vh * 0.98) { armed = true; setLit(0, false); return; }          // footer fully out of the window
+      if (top <= 8) { delete document.documentElement.dataset.footerNav; armed = false; setLit(1, false); return; } // landed on the footer (any way)
+      if (gliding) { setLit(p, false); return; }
+      if (dy > 0) {
+        upRun = 0;
+        setLit(p, false);                                                         // swiping down: orange follows the gesture
+        if (armed && p > 0.4 && !reduceMotion && !document.documentElement.dataset.footerNav) { armed = false; glide(); } // orange is well in: glide the footer into place
+      } else if (dy < 0) {
+        upRun += dy;                                                              // ignore the small bounce/settle when a swipe stops: only a deliberate scroll up (24px+) fades the orange out
+        if (upRun < -24) setLit(0, true);                                         // scrolling back up: orange fades out slowly
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
   /* ---------- Accordion (x-accordion) ----------
      Markup ships open (aria-expanded="true") so content survives without JS. Here every panel
      closes, collapsed panels become inert (no focus, hidden from assistive tech), and the
