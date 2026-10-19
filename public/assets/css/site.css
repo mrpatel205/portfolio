@@ -607,7 +607,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 }
 .site-footer__mark sup { font-size: 0.433em; font-weight: 400; line-height: 1; vertical-align: top; }
 
-/* TEST (footer-fullpage-test): footer fills the window on the home banner's orange gradient; site.js auto-scrolls to it on entry */
+/* Footer fills the window on the home banner's orange gradient; site.js auto-scrolls to it on entry */
 .site-footer { border-top: 0; position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; padding-top: 0; }
 .site-footer::before { /* same gradient as the home banner, on its own layer: slow fade out to white, quick fade in on entry */
   content: ""; position: absolute; inset: calc(var(--spacer-large) * -1) 0 0 0; z-index: -1; pointer-events: none; /* runs on up above the footer and softens into the white page, like the home banner's lower edge */
@@ -1113,7 +1113,8 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-nav { transition: background-color 0.7s ease-in-out, border-color 0.7s ease-in-out; }
 body[data-page="home"]:not(:has(.home-hero.is-faded)) .site-nav { background: transparent; border-bottom-color: transparent; }
 body.on-footer .site-nav { background: transparent; border-bottom-color: transparent; }
-body.on-footer .site-nav__links a { color: var(--black); } /* grey-70 fails AA on orange */ /* TEST (footer-fullpage-test): nav sits clear over the orange footer */
+body.on-footer .site-nav__links a, body.on-footer .site-nav__links:has([aria-current="page"]) a:not([aria-current="page"]) { color: var(--black); } /* grey-70 fails AA on orange */
+body.on-footer .reading-progress { opacity: 0; transition: opacity 0.3s ease-in-out; } /* the black reading-progress bar clashes with the orange; it is 100% by the footer anyway */
 @media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
 
 /* ---------- Single column (body.cs-single; Figma Work/Teller – single column v2 2700:1847) ----------
