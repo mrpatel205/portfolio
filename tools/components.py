@@ -218,8 +218,8 @@ def back_link(href, label):
 
 def notice_banner(text):
     return ('<div class="cs-notice" role="note">'
-            '<span class="cs-notice__label t-eyebrow-sm">Confidentiality note</span>'
-            f'<p class="cs-notice__text t-paragraph">{text}</p></div>')
+            '<span class="cs-notice__label t-caption-bold">Confidentiality note</span>'
+            f'<p class="cs-notice__text t-caption">{text}</p></div>')
 
 
 def notice(n):
