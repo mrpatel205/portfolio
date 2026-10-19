@@ -246,7 +246,7 @@
       target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
-  /* ---------- TEST: footer takes over the window as soon as the orange starts to fade in ----------
+  /* ---------- Footer takes over the window as soon as the orange starts to fade in ----------
      Scrolling down into the footer lights it (orange fades in quickly) and glides the page to it; scrolling back up
      fades the orange out slowly. The glide runs frame by frame (not scrollTo smooth) so a trackpad can't cancel it. */
   (function () {
