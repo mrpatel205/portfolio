@@ -245,6 +245,23 @@
       target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
+  /* ---------- TEST: auto-scroll to the footer as soon as it enters the window (scrolling down only) ---------- */
+  (function () {
+    var footer = document.getElementById('contact');
+    if (!footer || reduceMotion || !('IntersectionObserver' in window)) return;
+    var armed = true, lastY = window.scrollY;
+    window.addEventListener('scroll', function () { lastY = window.scrollY; }, { passive: true });
+    var prevY = window.scrollY;
+    new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      if (!e.isIntersecting) { armed = true; prevY = window.scrollY; return; }
+      var down = window.scrollY > prevY;
+      prevY = window.scrollY;
+      if (!armed || !down) return;
+      armed = false; // re-arms once the footer has left the window, so scrolling back up is never trapped
+      window.scrollTo({ top: footer.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+    }, { threshold: 0.02 }).observe(footer);
+  })();
   /* ---------- Accordion (x-accordion) ----------
      Markup ships open (aria-expanded="true") so content survives without JS. Here every panel
      closes, collapsed panels become inert (no focus, hidden from assistive tech), and the
