@@ -172,7 +172,9 @@
       comp.style.transform = `translateY(${(vh - 696 * k) / 2}px) scale(${k})`;          // centred vertically in the panel
       Object.assign(winFull.style, { left: '', top: '', width: '', height: '' });
       full.style.transform = `scale(${542 / 1440})`;
-      crop.style.transform = `translate(${CROP.ox}px, ${CROP.oy}px) scale(${CROP.s})`;
+      // zoom, not transform: scale(): the crop's text is laid out at its enlarged size, so it stays sharp
+      // while it animates (a scaled layer is drawn small and stretched until the animation settles)
+      Object.assign(crop.style, { transform: 'none', zoom: CROP.s, left: CROP.ox / CROP.s + 'px', top: CROP.oy / CROP.s + 'px' });
     }
   }
   new ResizeObserver(fit).observe(viewport); fit();

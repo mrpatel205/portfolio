@@ -200,6 +200,8 @@
   html.embed body { background: transparent; }
   html.embed main { max-width: none; padding: 0; }
   html.embed h1, html.embed .lede, html.embed .demo__caption { display: none; }
+  /* Screens sit at 80% of the grey panel's width, centred (Ash, 2026-11-17) */
+  @media (min-width: 700px) { .demo__viewport { width: 80%; margin-inline: auto; } }
   html[data-only="flow"] #deposit-resp, html[data-only="resp"] #deposit-flow { display: none; }
 </style>
 </head>

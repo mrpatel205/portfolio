@@ -28,6 +28,14 @@
   .screen.is-on { opacity: 1; }
   .screen img { display: block; width: 1440px; height: auto; }
   .screen--account .scroller { transition: transform 1.1s var(--ease); }
+  /* App shell stays fixed (as in the deposit demo): the form scrolls under the top bars and beside the side menu */
+  .screen--shell { height: 1000px; }
+  .screen--shell .pane { position: absolute; left: 296px; top: 100px; width: 1144px; height: 900px; overflow: hidden; }
+  .screen--shell .sheet { position: relative; margin: -100px 0 0 -296px; width: 1440px; }
+  .chrome { position: absolute; overflow: hidden; }
+  .chrome--top { left: 0; top: 0; width: 1440px; height: 100px; }
+  .chrome--side { left: 0; top: 100px; width: 296px; height: 900px; }
+  .chrome--side img { margin-top: -100px; }
 
   /* Typed amount sits exactly over the hidden value layer in Figma (565,601 · Source Sans 3 16/24) */
   .typed { position: absolute; left: 585px; top: 601px; height: 24px; font: 400 16px/24px "Source Sans 3", sans-serif; color: #000; white-space: pre; }
@@ -73,6 +81,8 @@
   html.embed body { background: transparent; }
   html.embed main { max-width: none; padding: 0; }
   html.embed h1, html.embed .lede, html.embed .demo__caption { display: none; }
+  /* Screens sit at 80% of the grey panel's width, centred (Ash, 2026-11-17) */
+  @media (min-width: 700px) { .demo__viewport { width: 80%; margin-inline: auto; } }
   html[data-only="flow"] #deposit-resp, html[data-only="resp"] #deposit-flow { display: none; }
 </style>
 </head>
@@ -85,13 +95,15 @@
     <div class="demo__viewport" role="img"
          aria-label="Animated demo. A teller enters $35,000 and the Hub lists ID check, Scam form, Transaction authorisation and Cash break up. They go back, change the amount to $5,000, and the Hub lists only ID check and Cash break up.">
       <div class="demo__stage">
-        <div class="screen screen--account is-on" data-screen="account">
-          <div class="scroller">
+        <div class="screen screen--account screen--shell is-on" data-screen="account">
+          <div class="pane"><div class="scroller"><div class="sheet">
             <img src="img/account.png" width="1440" height="1598" alt="">
             <div class="field-focus"></div>
             <div class="typed"><span class="typed__text"></span><span class="caret"></span></div>
             <div class="press" data-press="next" style="left:1120px;top:1406px;width:68px;height:40px;border-radius:4px"></div>
-          </div>
+          </div></div></div>
+          <div class="chrome chrome--top"><img src="img/account.png" width="1440" height="1598" alt=""></div>
+          <div class="chrome chrome--side"><img src="img/account.png" width="1440" height="1598" alt=""></div>
         </div>
         <div class="screen" data-screen="hub-full">
           <img src="img/hub-full.png" width="1440" height="1254" alt="">
