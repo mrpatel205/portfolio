@@ -1,13 +1,13 @@
 <!-- current: work -->
-<x-case-study slug="teller" page="work/teller" layout="single" body="paragraph"
+<x-case-study slug="teller" page="work/teller" layout="single" body="paragraph" title-size="h4"
   title="Modernising the teller experience · Major bank case study · MRPATEL"
   description="Designing a major bank's branch teller transactions one transaction type at a time, for a single big-bang release.">
-<!-- Step counters and read time.
+<!-- Built from the 13 Nov Teller Figma (Exploration: Teller rewrites › section 3233:19305, frame 3233:19306).
      Built from components: see tools/components.py for what each x- tag does.
-     Titles follow Figma Work/Teller V4: eyebrow pill (heading) + H3 (subheading) + Large Body.
-     Open: challenge 06 second skill (Usability testing) is my pick for the Figma "[Skill]" placeholder; Final designs 1+3 are not built (placeholders in Figma). -->
+     Screen demos live in public/demos/ (copied from mockups/*-demo, 2x screens from the Elevate file);
+     the relationship map is site-src/illustrations/orm-map.svg (tools/orm_map.py). -->
 
-<x-hero read-time="6 min read" back-href="/work/teller/summary/" back-label="Back to summary" image="/assets/img/teller/hero.png" width="1312" height="656"
+<x-hero read-time="5 min read" back-href="/work/teller/summary/" back-label="Back to summary" image="/assets/img/teller/hero.png" width="1312" height="656"
   alt="A teller's monitor in a bank branch showing the Deposit screen: Count cash and deposit amount, with counted notes, coins and a total.">
   <x-notice>Some information in this case study has been removed or recreated.</x-notice>
   <x-title>Modernising the teller experience</x-title>
@@ -15,7 +15,7 @@
     <x-item label="Company">Major bank</x-item>
     <x-item label="Industry">Fin-Tech</x-item>
     <x-item label="Duration">Oct 24 to Jun 26</x-item>
-    <x-item label="Channel">React mini web app</x-item>
+    <x-item label="Role">Senior Product Designer</x-item>
   </x-meta>
 </x-hero>
 
@@ -28,11 +28,11 @@
 <x-scene id="situation-switching" step="01 / 06" heading="Situation" subheading="Tellers held the missing instructions">
   <p>A significant withdrawal could mean switching between up to eight systems to check thresholds, authorise cash and work out what came next. Tellers memorised shortcodes and policy rules to keep work moving.</p>
   <p>That knowledge made the legacy system dependable for experienced bankers, but hard to learn and costly to maintain. Replacing it risked moving the complexity onto tellers.</p>
-  <x-visual src="/assets/img/teller/situation-shortcodes.png" width="640" height="496" caption="Teller transaction shortcodes"
+  <x-visual src="/assets/img/teller/situation-shortcodes.png" width="640" height="496"
     alt="A teller's desk with a handwritten note of transaction shortcodes beside the keyboard."/>
 </x-scene>
 
-<x-scene id="situation-response" step="01 / 06" heading="Situation" subheading="Rebuilding the colleague banking channel">
+<x-scene id="situation-channel" step="01 / 06" heading="Situation" subheading="Rebuilding the colleague banking channel">
   <p>The programme moved withdrawal, deposit and payment transactions into the colleague banking channel. The design challenge was moving the work, its decision logic and its links to branch hardware with it.</p>
 </x-scene>
 
@@ -53,15 +53,22 @@
 </x-skills>
 
 <x-pause id="approach" step="03 / 06" heading="Approach" subheading="Rigour set upfront, flexed by time">
-  <p>The programme planned one release across withdrawals, deposits and payments. We designed each transaction type separately, starting with a PM and SME kick-off against NAB’s design-quality framework. Withdrawals and deposits rated Silver, but the programme’s must-win status lifted it to Gold, setting the minimum design activities.</p>
-  <p>Where time allowed, branch observations, moderated tests and SME workshops revealed keyboard-first habits and cash-recycler dependencies. Under time pressure, I moved from discovery to mid-fi with fewer test rounds, while maintaining Gold requirements. Design and peer reviews continued throughout, with the most testing on the riskiest steps: cash break-up and dispense.</p>
+  <p>The programme planned one release across withdrawals, deposits and payments, and each transaction type was rated against the bank’s design-quality framework. Its must-win status lifted withdrawals and deposits from Silver to Gold, which set the minimum design activities.</p>
+  <x-inset>Under pressure, I moved to mid-fi with fewer test rounds but kept the Gold bar, and focused testing on the riskiest steps: cash break-up and dispense.</x-inset>
+  <p>When time allowed, branch observation, moderated testing and SME workshops shaped the work.</p>
 </x-pause>
 
-<x-metrics id="research" step="04 / 06" heading="Research" subheading="Validate the risky steps">
+<x-story id="tellers-language" variant="map" heading="Challenges" subheading="Learning the tellers' language first" svg="orm-map" stages="3">
+  <p>Tellers used terms I did not know: cash recyclers, authorisations, policy thresholds. Requirements alone would have put my assumptions between them and their work. So I mapped their vocabulary: each circle is something tellers handle, each arrow a rule, like ‘a power of attorney can replace an authority’. That let me design flows where each screen showed what tellers expected next.</p>
+</x-story>
+
+<x-inset block>Designing for tellers meant solving problems that never showed on a screen: a domain I did not know, a design system with few patterns for fast, complex colleague work, an API that did not arrive and six designers on one journey. Each one put the teller's experience at risk, so each one changed how I worked.</x-inset>
+
+<x-metrics id="research" layout="stack" heading="Research" subheading="Validate the risky steps">
   <p>Five days in branches and 82 observed transactions gave Deposits real-world context. Moderated rounds and surveys then helped validate high-risk interactions before handover.</p>
   <x-headline value="30" label="Rounds of moderated testing"/>
   <x-group heading="Deposits">
-    <x-stat value="5" label="Days observing in branch" note="82 transactions · ~10 tellers at the counter" callout/>
+    <x-stat value="5" label="Days observing in branch"/>
     <x-stat value="16" label="Rounds of moderated testing"/>
   </x-group>
   <x-group heading="Withdrawals">
@@ -70,65 +77,48 @@
   </x-group>
 </x-metrics>
 
-<x-final-visuals id="final-designs-1" heading="Final designs: desktop, tablet and mobile"
-  src="/assets/img/teller/final-1.png" width="1312" height="800"
-  steps-label="The Withdrawal screen on desktop, tablet and mobile"
-  alt="The Withdrawal screen, Calculate cash break up, shown on desktop, tablet and mobile: Automatic and Custom options, the amount requested, and the teller cash recycler and cash drawer note counts.">
-  <x-screen src="/assets/img/teller/f1-a.png" width="1000" height="711" alt="Desktop: Withdrawal, Calculate cash break up, with the teller cash recycler and cash drawer in three columns."/>
-  <x-screen src="/assets/img/teller/f1-b.png" width="750" height="1000" alt="Tablet: the same screen with the cash drawer below the teller cash recycler."/>
-  <x-screen src="/assets/img/teller/f1-c.png" width="461" height="1000" alt="Mobile: the same screen in a single column."/>
-</x-final-visuals>
+<x-principles id="principles" heading="Research" subheading="Principles that guided every flow">
+  <p>The design principles set by the previous team were born out of the need to speed up bankers’ time, reduce errors and remove the cognitive load. There were more than these, although these are the ones that guided our design thinking for interaction design and content.</p>
+  <x-principle name="System-guided">Context arrives when it's needed.</x-principle>
+  <x-principle name="Obvious">Dynamic fields. Clear confirmations.</x-principle>
+  <x-principle name="Flexible">Move back and forth. Inputs stay.</x-principle>
+  <x-principle name="Simplified">No codes or shortcuts to start.</x-principle>
+</x-principles>
 
-<x-final-visuals id="final-designs-3" heading="Final designs: Withdrawal core flow"
-  src="/assets/img/teller/final-3.png" width="1312" height="800"
-  steps-label="The Withdrawal core flow, in four screens"
-  alt="The Withdrawal core flow in four screens: account and transaction details empty and filled in, the Tasks complete summary, and the Withdrawal summary with a success message.">
-  <x-screen src="/assets/img/teller/f3-a.png" width="1000" height="882" alt="Account and transaction details, empty, with a transaction type and amount to fill in."/>
-  <x-screen src="/assets/img/teller/f3-b.png" width="901" height="1000" alt="Account and transaction details, filled in, with authority details added."/>
-  <x-screen src="/assets/img/teller/f3-c.png" width="1000" height="625" alt="Tasks complete: a summary of each completed task with a Complete transaction button."/>
-  <x-screen src="/assets/img/teller/f3-d.png" width="961" height="1000" alt="Withdrawal summary: a success message, then account, authority and amount details."/>
-</x-final-visuals>
+<x-scene id="solution" heading="Solution" subheading="One journey, many hands" body="lg">
+  <p>A teller moves through one journey, but it was designed by many hands. Withdrawals was the most complex transaction, with the most steps, and six designers shaped it. Deposits I owned end to end. The moments below are a small slice of a release that ran to hundreds of screens, chosen to show where my work shaped what tellers see.</p>
+</x-scene>
 
-<x-accordion variant="read-more" id="challenges" step="05 / 06" heading="Key challenges">
-  <p>Six challenges shaped the work: system switching, teller habits, missed requirements, device dependencies, colleague-ready patterns and cross-team alignment.</p>
-  <x-panel id="system-switching" heading="Removing system switching">
-    <x-context>A significant cash withdrawal could mean switching between up to 8 systems. Tellers held the order and the policy rules in their heads. That worked for veterans, but not for new tellers without legacy-system muscle memory.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>I led the elaboration of the Hub, a dynamic task list for withdrawals and payments, building on the previous team’s first version. The design system team made the page-versus-side-sheet and component calls in Elevate support sessions. The Hub consolidated steps, showed only the tasks relevant to each transaction, and carried policy checks into the flow. Deposits were different: observation showed about 80% were simple, so we left the Hub out to avoid adding steps.</p>
-  </x-panel>
-  <x-panel id="branch-observation" heading="Branch observation: uncovering what the requirements missed">
-    <x-context>Withdrawal observation happened in fragments: half-days squeezed between other work, under pressure to deliver high-fidelity screens. Deposits carried far more machine interaction, so designing it without real branch context was too big a risk.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>For Deposits, I arranged a four-day immersion across four branches before design, using observation to check the brief against teller practice. I found two missing requirements: the TCR’s inventory warning colour and a way to roll back cash already fed during a count. I brought both into the design, making machine feedback and recovery part of the transaction flow.</p>
-  </x-panel>
-  <x-panel id="devices" heading="The devices: No one saw the full picture">
-    <x-context>The legacy system read and wrote live state to the TCR and card terminals, which made Deposits far more complex than Withdrawals. Tellers also ran it on fixed 24-inch monitors, often across several resized windows the brief never mentioned.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>I designed the Deposits flows end to end for simple, mixed, third-party and cheque acceptance, including device and API states that could interrupt a transaction: an occupied TCR, unavailable inventory, no cash, or a transaction already in progress. For fixed 24-inch teller screens, I reorganised the TCR panel for narrow windows instead of simply shrinking it. The narrow-window layout still needs validation.</p>
-  </x-panel>
-  <x-panel id="old-habits" heading="Removing old teller habits">
-    <x-context>Tellers read the new system through a legacy lens, expecting the teller cash recycler (TCR) to balance itself as it always had. Neither TCR screen had an existing pattern to start from, and with cash there was no margin for error.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>To keep legacy TCR assumptions from carrying into the new colleague banking channel, I separated standard accounting inputs from device-specific controls and tested the riskiest interactions first. For withdrawals, I added an Automatic/Custom choice so denomination fields appeared only when needed. For deposits, I combined the count into one live screen and added Roll back to recount. In testing, “Amounts match” and “Counted: $X” gave tellers reassurance.</p>
-  </x-panel>
-  <x-panel id="design-system" heading="Unfamiliar platform, unready design system">
-    <x-context>The new system’s design system was built for customer apps, with few shared patterns for colleague-facing work. I was also new to Figma and the bank’s atomic design conventions, learning the tool and the system’s logic at the same time.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>I learned Figma and the bank’s atomic design conventions while adapting a customer-focused library for colleague work. I contributed reusable patterns, including a horizontal radio group, and worked with a Business Lending designer to enhance the progress tracker for colleague-facing needs, though that wasn’t part of launch. Through the Design Guild, I shared colleague use cases and helped extend the library into colleague journeys; other teams adopted some of the patterns.</p>
-  </x-panel>
-  <x-panel id="team" heading="The team: a wider net than usual">
-    <x-context>Teller spanned several designers, product, SMEs, BAs and an offshore team working on Deposits. Shared patterns, like the Hub’s cards and error states, needed agreement across all of them, not just sign-off at the end.</x-context>
-    <p class="accordion__label">What I did</p>
-    <p>I set up quick huddles with Product, SMEs and BAs to resolve requirement questions, and ran weekly tests to validate flows. I iterated the Hub card in Elevate design sessions, took part in the error-state workshops another designer drove, and ran cross-designer flow reviews so shared patterns stayed consistent. I also supported the lead researcher with an end-to-end withdrawal test in a mock branch lab.</p>
-  </x-panel>
-</x-accordion>
+<x-feature id="what-next" heading="Solution" subheading="Know what needs to happen next" principles="System-guided, Flexible">
+  <p>Complex withdrawals needed more than a sequence of screens. I developed the inherited Hub design into a task list that showed what mattered for the transaction, working with the design-system team on its format. Tellers could see what was complete and step back to edit.</p>
+  <x-demo src="/demos/hub/?embed" title="Demo: the Hub task list for a withdrawal"
+    desc="A looping demo. A teller enters a $35,000 withdrawal and the Hub lists ID check, scam form, transaction authorisation and cash break up. They step back, change the amount to $5,000, and the Hub drops the scam form and authorisation tasks."/>
+</x-feature>
 
-<x-impact step="06 / 06" lead="190,000 banker hours projected saved yearly"
-  stamp="Impact snapshot · October 2026">
-  <p>Business case · planning estimate</p>
-  <x-metric label="Branches live at pilot start · 6 Aug 2026" value="3"/>
+<x-feature id="deposits-quick" heading="Solution" subheading="Keep everyday deposits quick" principles="Flexible">
+  <p>Branch observation showed that most deposits were simple and completed in under two minutes in the legacy system. We left the Hub out of Deposits. Applying the same pattern everywhere would have added a step where tellers did not need it.</p>
+  <x-demo src="/demos/deposit/?embed&amp;only=flow" title="Demo: a simple cash deposit"
+    desc="A looping demo of a $5,000 cash deposit: account and amount, Count notes on the cash recycler, Amounts match, then Confirm transaction and the deposit summary."/>
+  <x-demo src="/demos/deposit/?embed&amp;only=resp" title="Demo: the count screen at desktop, tablet and mobile widths"
+    desc="A looping demo of the Count cash screen as the window narrows from desktop to mobile width and back: the side menu collapses, the summary moves above the count, and the cash recycler cards stack."/>
+</x-feature>
+
+<x-feature id="live-status" heading="Solution" subheading="Live status against the total" principles="Obvious">
+  <p>The running total updates as tellers type. Orange turns green once every input adds up. One of the small things that keeps tellers fast: they see the colour change in their periphery, without looking at the total.</p>
+  <x-demo src="/demos/live-total/?embed" title="Demo: live totals while a teller enters a cash break up" ratio="1312 / 760"
+    desc="A looping demo. As the teller types each note amount, the totals update and a status pill shows Amounts mismatch in orange, then Amounts match in green when the break up equals $10,040.10. A close-up of the totals mirrors the change."/>
+</x-feature>
+
+<x-impact id="impact" layout="hero" heading="Impact" lead="About 3 in 4 in-scope transactions now run in the new system" note="Product team update (approximate)">
+  <x-metric value="100+" label="Branches live · Nov 2026, up from 3 at pilot"/>
   <x-signal heading="Quick to learn">Early pilot feedback suggested tellers picked up the guided flow quickly.</x-signal>
-  <x-signal heading="The flow lands">Bankers responded positively to the overall flow.</x-signal>
+  <x-signal heading="Projected savings">The business case estimates 190,000 banker hours saved a year.</x-signal>
 </x-impact>
+
+<x-scene id="reflections" step="07 / 07" heading="Reflections" subheading="What I’d do differently">
+  <p><strong>See other epics’ requirements sooner.</strong> I couldn’t see them, so shared patterns diverged. I’d push for visibility early, so patterns align before release.</p>
+  <p><strong>Don’t bank on an external API.</strong> I’d explore a fallback with the PM early, rather than absorb about five sprints of rework.</p>
+  <p><strong>Do more field research up front.</strong> Seeing tellers work earlier, in full days, would change my planning and bring Withdrawals’ first design closer.</p>
+</x-scene>
 
 </x-case-study>

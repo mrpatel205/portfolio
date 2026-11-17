@@ -27,13 +27,13 @@
   --text-h3-size: 2rem;         --text-h3-lh: 2.5rem;
   --text-h4-size: 1.5rem;       --text-h4-lh: 2rem;
   --text-metric-xl-size: 6rem;  --text-metric-xl-lh: 6.5rem;
-  --text-body-lg-size: 1.125rem; --text-body-lg-lh: 1.75rem;
+  --text-body-lg-size: 1.25rem;  --text-body-lg-lh: 1.75rem;  /* Large Body 20/28 (was 18/28, 2026-11-14) */
   --text-paragraph-size: 1rem;  --text-paragraph-lh: 1.5rem;
   --text-caption-size: 0.875rem; --text-caption-lh: 1.25rem;
-  --text-eyebrow-sm-size: 0.75rem; --text-eyebrow-sm-lh: 1.25rem; --text-eyebrow-sm-tracking: 0.07em;
-  --text-eyebrow-lg-size: 1.25rem; --text-eyebrow-lg-lh: 1.75rem;  --text-eyebrow-lg-tracking: 0.04em;
-  --tracking-heading: -0.01em;
-  --tracking-metric: -0.02em;
+  --text-eyebrow-sm-size: 0.75rem; --text-eyebrow-sm-lh: 1.25rem; --text-eyebrow-sm-tracking: 0;
+  --text-eyebrow-lg-size: 1.25rem; --text-eyebrow-lg-lh: 1.75rem;  --text-eyebrow-lg-tracking: 0;
+  --tracking-heading: 0; /* letter spacing is 0 across the portfolio (Ash, 2026-11-17) */
+  --tracking-metric: 0;
 
   /* Spacing: component scale */
   --space-1: 0.25rem;  /* 4 */
@@ -232,8 +232,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .cs-heading { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-4); }
 .cs-pill { /* Figma eyebrow pill */
   display: inline-block; margin: 0; padding: var(--space-1) var(--space-3); border-radius: 999px; background: var(--grey-10); color: var(--black);
-  font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-semibold);
-  letter-spacing: 0; /* Figma Typography/Eyebrow/Pill: 12/20 Semi Bold, 0% */
+  font-size: var(--text-eyebrow-sm-size); line-height: var(--text-eyebrow-sm-lh); font-weight: var(--weight-regular);
+  letter-spacing: 0; /* Figma Typography/Eyebrow/Pill: 12/20 Regular, 0% (Ash, 2026-11-17) */
 }
 
 /* Two-column content block: copy left, visual right */
@@ -246,7 +246,6 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 .cs-visual__frame {
   background: var(--grey-10);
-  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 .cs-visual__frame img { width: 100%; }
@@ -553,7 +552,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .accordion--read-more .accordion__body { display: block; padding: var(--space-5) 0 0; }
 
 /* ---------- Final visuals ---------- */
-.final-visuals__full { width: 100%; border-radius: var(--radius-xl); }
+.final-visuals__full { width: 100%; }
 .final-visuals__steps { display: none; }
 
 /* ---------- Next / previous ---------- */
@@ -586,7 +585,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .site-footer__icon--sm { width: 1.5rem; height: 1.5rem; }
 .site-footer__logo { display: inline-block; vertical-align: middle; margin-left: var(--space-1); width: 1.5rem; height: 1.5rem; background-color: var(--grey-70); -webkit-mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; mask: url(/assets/img/home/slow-grain-logo.svg) center / contain no-repeat; }
 .site-footer__timeline { margin-top: 0; }
-.site-footer__row { display: flex; align-items: flex-start; margin-top: var(--spacer-small); }
+.site-footer__row { display: flex; flex-wrap: wrap; row-gap: var(--space-4); align-items: flex-start; margin-top: var(--spacer-small); } /* mid widths: the woodcraft link drops under the credits instead of squeezing into a narrow column */
 .site-footer__credits { flex: none; margin-right: var(--spacer-small); } /* Figma: credits 640px wide, woodcraft link starts at its right edge */
 .site-footer__built, .site-footer__colophon, .site-footer__small-link { font-weight: var(--weight-regular, 400); } /* MRPATEL in the credit line stays bold via <strong> */
 .site-footer__colophon { max-width: 39.25rem; margin: 0; color: var(--grey-70); }
@@ -661,6 +660,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
     --text-h2-size: 2rem;    --text-h2-lh: 2.5rem;
     --text-h3-size: 1.5rem;  --text-h3-lh: 2rem;
     --text-h4-size: 1.25rem; --text-h4-lh: 1.75rem;
+    --text-body-lg-size: 1.125rem; --text-body-lg-lh: 1.75rem; /* Large Body Mobile 18/28 */
     --text-metric-xl-size: 4rem; --text-metric-xl-lh: 4.5rem;
   }
 
@@ -679,7 +679,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .cs-meta__group { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5) var(--gutter); }
   .cs-meta__group--right { grid-template-columns: 1fr; }
   .cs-hero__image { margin-top: var(--spacer-medium); }
-  .cs-hero__image img, .final-visuals__full { border-radius: calc(var(--radius-lg) / 2); }
+  .cs-hero__image img { border-radius: calc(var(--radius-lg) / 2); }
 
   /* Scenes: copy stacks above its image, nothing pins */
   .scene,
@@ -743,9 +743,9 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
     display: grid; grid-template-columns: minmax(0, 18rem); justify-content: center; gap: var(--space-6);
     margin: 0; padding: var(--spacer-tiny) var(--space-5);
     list-style: none;
-    background: var(--grey-10); border-radius: calc(var(--radius-lg) / 2);
+    background: var(--grey-10);
   }
-  .final-visuals__steps img { width: 100%; border-radius: calc(var(--radius-md) / 2); }
+  .final-visuals__steps img { width: 100%; }
 
   /* Accordion: narrower number column; the panel stacks copy over its image, full width */
   .accordion__trigger { grid-template-columns: 2.5rem 1fr auto; column-gap: var(--space-3); padding: var(--space-5) 0; }
@@ -762,7 +762,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
   .seq-nav .seq__text .t-body-lg { font-size: var(--text-caption-size); line-height: var(--text-caption-lh); }
 
   /* Mobile footer: one stack, left aligned: Let's talk, email, LinkedIn, credits + colophon, woodcraft, wordmark */
-  .site-footer__row { flex-direction: column; margin-top: var(--spacer-medium); }
+  .site-footer__row { flex-direction: column; row-gap: 0; margin-top: var(--spacer-medium); }
   .site-footer__credits { flex: none; max-width: none; color: var(--black); }
   .site-footer__credits p { display: inline; margin: 0; max-width: none; font-size: var(--text-caption-size); line-height: var(--text-caption-lh); color: inherit; }
   .site-footer__built { margin-top: 0; }
@@ -807,7 +807,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .metrics__subheading { color: var(--white); }
 .metrics__lead { max-width: 32.5rem; }
 .metrics__big {
-  font-size: min(15rem, 27vh); line-height: 0.92; font-weight: 700; letter-spacing: -0.04em;
+  font-size: min(15rem, 27vh); line-height: 0.92; font-weight: 700; letter-spacing: 0;
   font-variant-numeric: tabular-nums;
 }
 .metrics__big-label, .metrics__group-head {
@@ -863,7 +863,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 
 .work { padding-top: var(--spacer-medium); }
 .work--other { padding-top: var(--spacer-tiny); }
-.work__title { letter-spacing: -0.01em; }
+.work__title { letter-spacing: 0; }
 .work__title { margin-bottom: var(--spacer-tiny); } /* Figma: H1 → first card 48 */
 .work__intro { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--spacer-tiny); }
 .work__intro p { max-width: 47.5rem; }
@@ -937,16 +937,16 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-hero.is-faded::before { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .home-hero::before { transition: none; } }
 .home-hero .container { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(max(40rem, 100vh) - var(--nav-height)); min-height: calc(max(40rem, 100svh) - var(--nav-height)); }
-.home-hero__title { letter-spacing: -0.01em; padding-bottom: var(--space-6); } /* 32px under the tagline, matching the cover */
+.home-hero__title { letter-spacing: 0; padding-bottom: var(--space-6); } /* 32px under the tagline, matching the cover */
 .home-hero__mark {
   display: flex; align-items: flex-start; margin: 0 0 0 -0.047em; padding-top: 4.25rem; /* -0.047em cancels the M's left side bearing so the ink lines up with the caption and nav logo */ /* wordmark top sits 106px from the page top */
-  font-size: min(16.875rem, 18.8vw); line-height: 1; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap;
+  font-size: min(15.75rem, 16.6vw); line-height: 1; font-weight: 900; letter-spacing: 0; /* ~7% smaller: fits at 0 tracking (was -4%) */ text-transform: uppercase; white-space: nowrap;
 }
 .home-hero__mark span { font-size: 0.27em; font-weight: 400; letter-spacing: 0; line-height: 1; margin-left: 0.1em; margin-top: 0.1em; }
 .home-hero + .container { padding-top: var(--spacer-small); } /* 64 from the seam to the intro, as Figma */
 
 .home-lead { max-width: 51.5rem; }
-.home-lead p { font-size: 2.125rem; line-height: 3rem; font-weight: 500; letter-spacing: -0.03em; }
+.home-lead p { font-size: 2.125rem; line-height: 3rem; font-weight: 500; letter-spacing: 0; }
 .home-lead p + p { margin-top: var(--spacer-tiny); }
 .home-lead mark { background: none; color: #ea4e22; }
 
@@ -981,7 +981,7 @@ main:has(.cover) + .site-footer { margin-top: 0; } /* cover sheets: Figma has on
 .home-quote { margin: 0; padding: var(--spacer-small) 0; border-bottom: 1px solid var(--grey-10); max-width: 68.75rem; }
 .home-quote:first-child { padding-top: 0; }
 .home-quote:last-child { border-bottom: 0; padding-bottom: 0; }
-.home-quote__text { margin: 0 0 var(--space-6); font-size: 3rem; line-height: 3.625rem; font-weight: 500; letter-spacing: -0.02em; }
+.home-quote__text { margin: 0 0 var(--space-6); font-size: 3rem; line-height: 3.625rem; font-weight: 500; letter-spacing: 0; }
 
 .home-slow { background: var(--black); color: var(--white); margin-top: var(--spacer-medium); padding: var(--spacer-medium) 0; }  /* full-bleed black band: 96 above, 96 inside */
 .home-slow__inner { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: var(--space-4) 7.5rem; align-items: start; }
@@ -1325,3 +1325,127 @@ body.cs-single .scene.scene > .scene__visual { margin-top: var(--spacer-tiny); }
 .metrics__header .cs-pill, .impact__heading .cs-pill { align-self: flex-start; margin-bottom: var(--space-2); }
 .cs-hero__read { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); color: var(--grey-70); font-weight: var(--weight-semibold); }
 .cs-hero__read .icon { width: 1rem; height: 1rem; }
+
+/* ---------- Pull quote (<x-quote>): the line a scanner should take away ---------- */
+.cs-quote { margin: var(--spacer-tiny) 0; padding-left: var(--space-5); border-left: 4px solid var(--black); }
+.cs-quote p, .cs-quote blockquote { margin: 0; }
+.cs-quote__cite { margin-top: var(--space-3); color: var(--grey-70); }
+.cs-single article > .cs-quote { max-width: var(--col); margin: var(--spacer-medium) auto 0; }
+
+/* ---------- Section rail (body.has-section-nav; built by site.js) ----------
+   Figma Contextual nav: 192 wide, "In this case study" over a 4px track; the section being read is black
+   with an orange bar, the rest grey-70. Fixed in the left page margin, so it needs the 640 column to leave
+   room (1280px and up); below that the page reads as before. */
+.section-nav { display: none; }
+@media (min-width: 1280px) {
+  .section-nav {
+    display: block; position: fixed; z-index: 40; width: 12rem;
+    left: max(var(--page-margin), calc((100vw - var(--content-max)) / 2));
+    top: calc(var(--nav-height) + var(--spacer-medium));
+    opacity: 0; visibility: hidden; transition: opacity var(--duration-hover) var(--ease), visibility 0s linear var(--duration-hover);
+  }
+  .section-nav.is-visible { opacity: 1; visibility: visible; transition-delay: 0s; }
+}
+.section-nav__title { margin: 0 0 var(--space-5); font-size: 1rem; line-height: 1.5rem; font-weight: var(--weight-medium); color: var(--black); }
+.section-nav__list { list-style: none; margin: 0; padding: 0; position: relative; }
+.section-nav__list::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 2px; background: var(--grey-10); }
+.section-nav__link {
+  display: block; position: relative; padding: var(--space-2) 0 var(--space-2) var(--space-5);
+  font-size: 0.875rem; line-height: 1.25rem; font-weight: var(--weight-medium); color: var(--grey-70); text-decoration: none;
+  transition: color var(--duration-hover) var(--ease);
+}
+.section-nav__link::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 2px;
+  background: var(--orange); opacity: 0; transition: opacity var(--duration-hover) var(--ease);
+}
+.section-nav__link:hover, .section-nav__link[aria-current] { color: var(--black); }
+.section-nav__link[aria-current]::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .section-nav, .section-nav__link, .section-nav__link::before { transition: none; } }
+
+/* ---------- Teller 13 Nov build (Figma Exploration: Teller rewrites › 3233:19305) ---------- */
+:root { --border-width-thick: 8px; } /* Figma borderWidth/thick */
+
+/* Quiet inset (Figma Quote / Quiet inset 3309:2201): 8px grey/30 rule, Large Body */
+.cs-inset { margin: 0; padding: var(--space-1) 0 var(--space-1) var(--space-5); border-left: var(--border-width-thick) solid var(--grey-30); }
+.cs-inset p, .cs-inset blockquote { margin: 0; }
+.cs-inset__cite { margin-top: var(--space-2); color: var(--grey-70); }
+.prose > .cs-inset { margin-block: var(--space-6); }
+.cs-inset-block { max-width: var(--col, 40rem); margin: var(--spacer-medium) auto 0; padding-block: var(--spacer-small); }
+
+/* Solution blocks: copy in the 640 column, demos full width below */
+.feature__copy { max-width: var(--col, 40rem); margin-inline: auto; }
+.feature__media { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--spacer-tiny); }
+.cs-demo { margin: 0; }
+.cs-demo__frame { display: block; width: 100%; border: 0; }
+
+/* Principle tags under a solution's copy: icon 24 + 14/20 Medium, 24 apart */
+.principle-tags { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+.principle-tags li { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--weight-medium); }
+.principle-tags .principle-icon { width: 1.5rem; height: 1.5rem; flex: none; }
+
+/* Design principles: 4-up row, top rule, icon 40, title 20/28 Medium, line in grey/70 */
+.principles__row { list-style: none; padding: 0; margin: var(--spacer-tiny) 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
+.principle { border-top: 1px solid var(--grey-90); padding-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
+.principle .principle-icon { width: 2.5rem; height: 2.5rem; }
+.principle__title { margin: 0; font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-lh); font-weight: var(--weight-medium); }
+.principle__text { margin: 0; color: var(--grey-70); }
+@media (max-width: 1023px) { .principles__row { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--spacer-tiny); } }
+@media (max-width: 599px) { .principles__row { grid-template-columns: 1fr; row-gap: var(--space-6); } }
+
+/* Object relationship map: an x-story whose 3 stages are circles → lines draw → rule labels */
+.story--map { --spacer-illustration: var(--space-6); --story-figure-max: 82rem; }
+.story--map .story__figure { background: var(--grey-10); }
+.story--map .orm { display: block; width: 100%; height: auto; }
+.js .story--map .orm-node { opacity: 0; transition: opacity 0.5s var(--ease); }
+.story--map.is-s1 .orm-node { opacity: 1; transition-delay: calc(var(--i) * 140ms); }
+.js .story--map .orm-curve { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.6s var(--ease); }
+.js .story--map .orm-head { opacity: 0; transition: opacity 0.2s linear; }
+.story--map.is-s2 .orm-curve { stroke-dashoffset: 0; transition-delay: calc(var(--i) * 90ms); }
+.story--map.is-s2 .orm-head { opacity: 1; transition-delay: calc(var(--i) * 90ms + 0.45s); }
+.js .story--map .orm-label { opacity: 0; transition: opacity 0.5s var(--ease); }
+.story--map.is-s3 .orm-label { opacity: 1; transition-delay: calc(var(--i) * 90ms); }
+
+/* Research, 17 Nov layout (3325:3552): header, 30 with its label beside it, 4 stat columns */
+.metrics--stack { width: 100%; display: flex; flex-direction: column; gap: var(--space-6); min-height: 0; padding: var(--spacer-tiny) var(--spacer-small); }
+.metrics--stack .metrics__header { max-width: 40rem; }
+.metrics--stack .metrics__lead { color: var(--grey-30); }
+.metrics--stack .metrics__headline { display: flex; align-items: center; gap: var(--space-6); }
+.metrics--stack .metrics__big-label { margin: 0; max-width: 14.375rem; }
+.metrics__row { list-style: none; padding: 0; margin: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-6); }
+.metrics__col { display: flex; flex-direction: column; }
+.metrics__col .metrics__group-head { padding-bottom: var(--space-5); }
+.metrics__col span.metrics__group-head { visibility: hidden; } /* keeps every column's number on one line */
+.metrics--stack .metrics__value { font-size: 4.5rem; line-height: 5rem; font-weight: 700; }
+.metrics--stack .metrics__label { margin-top: var(--space-2); }
+@media (max-width: 899px) {
+  .metrics__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; row-gap: var(--space-6); }
+}
+@media (max-width: 699px), (max-height: 520px) and (orientation: landscape) {
+  .metrics--stack { padding: var(--spacer-tiny) var(--space-5); }
+  .metrics--stack .metrics__headline { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .metrics--stack .metrics__value { font-size: 3.5rem; line-height: 4rem; }
+}
+
+/* Impact, 17 Nov layout (3334:3568). The signals column is sized from Inter's metrics so its first
+   line's glyph top meets the top of the big number and its last baseline sits on the number's
+   baseline (240/220: glyph top 20.07px down, baseline 197.3px; 16/24 body: glyph top 5.7, baseline 17.8). */
+.impact--hero { display: flex; flex-direction: column; gap: var(--spacer-medium); padding: var(--spacer-medium); }
+.impact--hero p, .impact--hero ul { margin: 0; }
+.impact__top { display: flex; flex-direction: column; align-items: flex-start; }
+.impact__top .cs-pill { margin-bottom: var(--space-4); }
+.impact__top h2 { max-width: 32rem; margin: 0 0 var(--space-2); }
+.impact__muted { color: var(--grey-30); }
+.impact__row { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacer-tiny); }
+.impact__hero { display: flex; flex-direction: column; gap: var(--space-3); }
+.impact__big { font-size: 15rem; line-height: 13.75rem; font-weight: 700; letter-spacing: 0; white-space: nowrap; }
+.impact__big-label { font-size: var(--text-eyebrow-lg-size); line-height: var(--text-eyebrow-lg-lh); font-weight: var(--weight-semibold); }
+.impact__signals { list-style: none; padding: 0.898rem 0 0; width: 20rem; height: 12.7175rem; display: flex; flex-direction: column; justify-content: space-between; flex: none; }
+.impact__signals li p + p { margin-top: var(--space-2); }
+@media (max-width: 1199px) {
+  .impact__row { flex-direction: column; }
+  .impact__signals { height: auto; width: auto; max-width: 40rem; padding: 0; gap: var(--space-6); }
+}
+@media (max-width: 699px) {
+  .impact--hero { padding: var(--spacer-tiny) var(--space-5); gap: var(--spacer-tiny); }
+  .impact__big { font-size: min(8rem, 28vw); line-height: 1; } /* Metric Hero Mobile 128, scaled down so "100+" fits a 320–375 phone */
+}
