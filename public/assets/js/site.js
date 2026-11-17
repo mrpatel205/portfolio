@@ -460,6 +460,18 @@
     if (reduceMotion) { for (var i = 1; i <= n; i++) story.classList.add('is-s' + i); return; }
     counts.forEach(function (c) { c.el.textContent = '0'; });
 
+    /* Research (single column) pins a panel shorter than the screen at the top of a screen-tall pin: the
+       spare height would show as a gap under it when it scrolls on, so the next section is pulled up by it. */
+    function closeGap() {
+      if (!story.classList.contains('story--metrics') || !document.body.classList.contains('cs-single')) return;
+      if (STATIC || !figure) { story.style.marginBottom = ''; return; }
+      var cs = getComputedStyle(pin);
+      var spare = pin.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - figure.offsetHeight;
+      story.style.marginBottom = spare > 0 ? -Math.round(spare) + 'px' : '';
+    }
+    closeGap();
+    window.addEventListener('resize', closeGap);
+
     function measure() { if (!copy) return; story.style.setProperty('--story-head-h', copy.offsetHeight + 'px'); story.style.setProperty('--story-copy-h', (copy.offsetHeight + (after ? after.offsetHeight : 0)) + 'px'); }
     measure();
     window.addEventListener('resize', measure);
