@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live total demo test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --grey-10: #e6e6e6; --grey-70: #4d4d4d; --black: #000; --ease: cubic-bezier(0.16, 1, 0.3, 1); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--black); font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 64px 16px 96px; }
+  h1 { font-size: 32px; line-height: 40px; font-weight: 500; margin: 0 0 8px; }
+  .lede { font-size: 16px; line-height: 24px; color: var(--grey-70); max-width: 640px; margin: 0 0 40px; }
+
+  /* Frame = the Figma image slot (1312 × 696). No inner padding: the close-crop panel sits flush to its top, right and bottom edges */
+  .demo { margin: 0; container: demo / inline-size; }
+  .demo__viewport { position: relative; width: 100%; aspect-ratio: 1312 / 696; overflow: hidden; background: var(--grey-10); }
+
+  /* Composition from the Figma slot (1312 × 696): full screen 542 × 444 on the left;
+     close crop is a white panel from x629 to the right edge, full height, framing the pill + totals */
+  .comp { position: absolute; left: 0; top: 0; width: 1312px; height: 696px; transform-origin: 0 0; }
+  .win { position: absolute; overflow: hidden; background: #fff; }
+  .win--full { left: 37px; top: 126px; width: 542px; height: 444px; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .win--crop { left: 629px; top: 0; width: 683px; height: 696px; }
+  /* Below the summary card (card bottom = y633 × 3.17 − 1516 = 491) the crop shows the panel grey, not the screen's white */
+  .crop-fill { position: absolute; left: 0; right: 0; top: 491px; bottom: 0; background: var(--grey-10); }
+  /* 4px white border on the left edge only, dividing the close crop from the full screen */
+  .crop-frame { position: absolute; inset: 0; box-shadow: inset 4px 0 0 0 #fff; pointer-events: none; }
+  .stage { position: absolute; left: 0; top: 0; width: 1440px; height: 1177px; transform-origin: 0 0; }
+  .stage > img { display: block; }
+
+  /* Mobile: full screen only, crop dropped */
+  @container demo (max-width: 700px) {
+    .demo { background: var(--grey-10); padding: 16px; }
+    .demo__viewport { aspect-ratio: 1440 / 1177; }
+    .win--crop { display: none; }
+  }
+
+  /* Overlays (Elevate styles, Figma coordinates) */
+  .ov { position: absolute; white-space: nowrap; font-family: "Source Sans 3", sans-serif; }
+  .in { font-size: 16px; line-height: 24px; color: #000; }
+  .caret { display: inline-block; width: 1px; height: 20px; margin-left: 1px; vertical-align: -4px; background: #000; opacity: 0; }
+  .in.is-focused .caret { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  .ring { position: absolute; width: 258px; height: 48px; border: 2px solid #000; border-radius: 4px; opacity: 0; transition: opacity .15s var(--ease); }
+  .ring.is-on { opacity: 1; }
+  .sum { right: calc(1440px - 728px); font-size: 14px; line-height: 20px; text-align: right; }
+  .sum--total { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+  .tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 999px; font: 600 12px/16px "Source Sans 3", sans-serif;
+         transition: background-color .3s var(--ease), color .3s var(--ease), opacity .2s linear; }
+  .tag[data-state="none"] { opacity: 0; }
+  .tag[data-state="mismatch"] { background: #f5d8c6; color: #ab481c; }
+  .tag[data-state="match"] { background: #e1f0d7; color: #2b641d; }
+  .fade { transition: opacity .35s linear; }
+  .fade.is-out { opacity: 0; }
+
+  /* Cursor: arrow / pointing hand / I-beam, hidden while typing */
+  .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform var(--move, .7s) var(--ease), opacity .12s linear; }
+  .cursor svg { display: none; width: 26px; height: 26px; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)); }
+  .cursor[data-shape="arrow"] .c-arrow, .cursor[data-shape="hand"] .c-hand, .cursor[data-shape="text"] .c-text { display: block; }
+  .cursor.is-hidden { opacity: 0; }
+
+  .demo__bar { display: flex; align-items: center; gap: 16px; margin-top: 16px; }
+  .demo__btn { font: 500 14px/20px "Inter", sans-serif; color: #000; background: #fff; border: 1px solid #000; padding: 6px 14px; cursor: pointer; }
+  .demo__btn:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+  .demo__caption { font-size: 14px; line-height: 20px; color: var(--grey-70); margin: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor, .ring, .demo__btn { display: none; }
+    .tag, .fade { transition: none; }
+  }
+</style>
+<!-- Embedded in a case study (iframe ?embed): page chrome hidden, only the demo shows. -->
+<script>
+  (() => { const q = new URLSearchParams(location.search);
+    if (q.has('embed')) document.documentElement.classList.add('embed');
+    if (q.get('only')) document.documentElement.dataset.only = q.get('only'); })();
+</script>
+<style>
+  html.embed body { background: transparent; }
+  html.embed main { max-width: none; padding: 0; }
+  html.embed h1, html.embed .lede, html.embed .demo__caption { display: none; }
+  html[data-only="flow"] #deposit-resp, html[data-only="resp"] #deposit-flow { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Live status against the total</h1>
+  <p class="lede">Test of a coded screen demo (no video). The teller enters the cash break up; the summary totals update with every keystroke, and the pill turns from orange to green when the amounts add up. The close crop mirrors the summary. On small screens only the full screen shows.</p>
+
+  <template id="cursor-tpl">
+    <div class="cursor" data-shape="arrow" aria-hidden="true">
+      <svg class="c-arrow" viewBox="0 0 26 26"><path d="M3 2.5v18.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#000" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <svg class="c-hand" viewBox="0 0 26 26">
+        <g fill="#000" stroke="#000" stroke-width="2.4" stroke-linejoin="round">
+          <rect x="8" y="1.5" width="4" height="13" rx="2"/><rect x="12" y="8" width="3.6" height="8" rx="1.8"/>
+          <rect x="15.4" y="9" width="3.4" height="7" rx="1.7"/><rect x="18.6" y="10.5" width="3" height="6" rx="1.5"/>
+          <rect x="8" y="12" width="13.6" height="11" rx="3.5"/><rect x="3.6" y="11.5" width="3.2" height="7.5" rx="1.6" transform="rotate(-35 5.2 15.2)"/>
+        </g>
+        <g fill="#fff">
+          <rect x="8" y="1.5" width="4" height="13" rx="2"/><rect x="12" y="8" width="3.6" height="8" rx="1.8"/>
+          <rect x="15.4" y="9" width="3.4" height="7" rx="1.7"/><rect x="18.6" y="10.5" width="3" height="6" rx="1.5"/>
+          <rect x="8" y="12" width="13.6" height="11" rx="3.5"/><rect x="3.6" y="11.5" width="3.2" height="7.5" rx="1.6" transform="rotate(-35 5.2 15.2)"/>
+        </g>
+        <path d="M12 9.5v5.5M15.5 10.5v5M18.7 12v4" stroke="#000" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      <svg class="c-text" viewBox="0 0 26 26">
+        <path d="M10 4.5c1.5 0 3 .6 3 2v13c0 1.4 1.5 2 3 2M16 4.5c-1.5 0-3 .6-3 2v13c0 1.4-1.5 2-3 2M11 13h4" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M10 4.5c1.5 0 3 .6 3 2v13c0 1.4 1.5 2 3 2M16 4.5c-1.5 0-3 .6-3 2v13c0 1.4-1.5 2-3 2M11 13h4" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </template>
+
+  <template id="overlay-tpl">
+    <div class="fade" data-ov>
+      <span class="ov in" data-in="100" style="left:841px;top:309px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov in" data-in="50"  style="left:841px;top:449px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov in" data-in="20"  style="left:841px;top:589px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov in" data-in="10"  style="left:841px;top:729px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov in" data-in="5"   style="left:841px;top:869px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov in" data-in="0.1" style="left:1171px;top:709px"><span class="t"></span><span class="caret"></span></span>
+      <span class="ov sum" data-sum="tcr" style="top:491px">$0.00</span>
+      <span class="ov sum" data-sum="drawer" style="top:544px">$0.00</span>
+      <span class="ov sum sum--total" style="top:597px"><span class="tag" data-state="none">Amounts mismatch</span><span data-sum="total">$0.00</span></span>
+    </div>
+  </template>
+
+  <figure class="demo" id="live-total">
+    <div class="demo__viewport" role="img"
+         aria-label="Animated demo. A teller enters the cash break up for a $10,040.10 withdrawal. As each amount is typed, the totals from the teller cash recycler and cash drawer update, and the status pill changes from orange 'Amounts mismatch' to green 'Amounts match' when the total equals the amount requested. A close crop of the summary mirrors the change.">
+      <div class="comp">
+        <div class="win win--full"><div class="stage" data-stage="full"><img src="img/base.png" width="1440" height="1177" alt=""></div></div>
+        <div class="win win--crop" aria-hidden="true"><div class="stage" data-stage="crop"><img src="img/base.png" width="1440" height="1177" alt=""></div><div class="crop-fill"></div><div class="crop-frame"></div></div>
+      </div>
+    </div>
+    <div class="demo__bar">
+      <button class="demo__btn" type="button" aria-pressed="false">Pause</button>
+      <p class="demo__caption" aria-hidden="true"></p>
+    </div>
+  </figure>
+</main>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.getElementById('live-total');
+  const viewport = root.querySelector('.demo__viewport');
+  const comp = root.querySelector('.comp');
+  const full = root.querySelector('[data-stage="full"]'), crop = root.querySelector('[data-stage="crop"]');
+  const winFull = root.querySelector('.win--full');
+  const caption = root.querySelector('.demo__caption');
+
+  // Same overlay in both stages, so the crop always mirrors the full screen
+  for (const st of [full, crop]) st.appendChild(document.getElementById('overlay-tpl').content.cloneNode(true));
+  const ring = document.createElement('div'); ring.className = 'ring'; full.appendChild(ring);
+  const cursor = document.getElementById('cursor-tpl').content.firstElementChild.cloneNode(true); full.appendChild(cursor);
+
+  // Layout: desktop = composition scaled to the panel; mobile = full screen fills the panel
+  const CROP = { s: 3.17, ox: -1674, oy: -1516 };                   // shifted 58px right (room for 'Amounts mismatch') and lifted 40px so the dark divider under 'Amount requested' (y474) sits above the panel
+  function fit() {
+    const w = viewport.clientWidth, mobile = getComputedStyle(root.querySelector('.win--crop')).display === 'none';
+    if (mobile) {
+      comp.style.transform = 'none'; comp.style.top = '0'; comp.style.width = w + 'px'; comp.style.height = viewport.clientHeight + 'px';
+      Object.assign(winFull.style, { left: '0', top: '0', width: w + 'px', height: viewport.clientHeight + 'px' });
+      full.style.transform = `scale(${w / 1440})`;
+    } else {
+      const k = w / 1312, vh = viewport.clientHeight;
+      comp.style.width = '1312px'; comp.style.height = '696px'; comp.style.top = '0';
+      comp.style.transform = `translateY(${(vh - 696 * k) / 2}px) scale(${k})`;          // centred vertically in the panel
+      Object.assign(winFull.style, { left: '', top: '', width: '', height: '' });
+      full.style.transform = `scale(${542 / 1440})`;
+      crop.style.transform = `translate(${CROP.ox}px, ${CROP.oy}px) scale(${CROP.s})`;
+    }
+  }
+  new ResizeObserver(fit).observe(viewport); fit();
+
+  // State, mirrored into both stages
+  const FIELDS = [
+    { key: '100', type: '8,000.00', x: 933, y: 321 },
+    { key: '50',  type: '1,500.00', x: 933, y: 461 },
+    { key: '20',  type: '400.00',   x: 933, y: 601 },
+    { key: '10',  type: '100.00',   x: 933, y: 741 },
+    { key: '5',   type: '40.00',    x: 933, y: 881 },
+    { key: '0.1', type: '0.10',     x: 1263, y: 721 },
+  ];
+  const REQUESTED = 10040.10;
+  const typed = {};
+  const all = sel => [...full.querySelectorAll(sel), ...crop.querySelectorAll(sel)];
+  const money = v => '$' + v.toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const num = s => parseFloat((s || '').replace(/,/g, '')) || 0;
+  function render() {
+    const notes = ['100', '50', '20', '10', '5'].reduce((a, k) => a + num(typed[k]), 0);
+    const coins = num(typed['0.1']);
+    const total = Math.round((notes + coins) * 100) / 100;
+    for (const [k, v] of Object.entries({ tcr: notes, drawer: coins, total })) all(`[data-sum="${k}"]`).forEach(e => e.textContent = money(v));
+    const any = Object.values(typed).some(v => v);
+    const state = !any ? 'none' : total === REQUESTED ? 'match' : 'mismatch';
+    all('.tag').forEach(t => { t.dataset.state = state; t.textContent = state === 'match' ? 'Amounts match' : 'Amounts mismatch'; });
+    for (const f of FIELDS) all(`[data-in="${f.key}"] .t`).forEach(e => e.textContent = typed[f.key] || '');
+    return state;
+  }
+  function focus(key) {
+    all('.in').forEach(e => e.classList.toggle('is-focused', e.dataset.in === key));
+    const f = FIELDS.find(f => f.key === key);
+    if (f) { ring.style.left = (key === '0.1' ? 1134 : 804) + 'px'; ring.style.top = (f.y - 24) + 'px'; ring.classList.add('is-on'); }
+    else ring.classList.remove('is-on');
+  }
+
+  if (reduce) { for (const f of FIELDS) typed[f.key] = f.type; render(); return; }
+  render();
+
+  // Pausable clock, plays only when in view
+  let paused = false, inView = false;
+  new IntersectionObserver(([e]) => { inView = e.intersectionRatio >= 0.5; }, { threshold: [0, 0.5, 1] }).observe(viewport);
+  const btn = root.querySelector('.demo__btn');
+  btn.addEventListener('click', () => { paused = !paused; btn.textContent = paused ? 'Play' : 'Pause'; btn.setAttribute('aria-pressed', String(paused)); });
+  const sleep = ms => new Promise(res => { let left = ms, last = performance.now();
+    const tick = now => { if (!paused && inView) left -= now - last; last = now; left <= 0 ? res() : requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+
+  // Cursor (same rules as the other demos)
+  const HOT = { arrow: [3, 2.5], hand: [10, 1.5], text: [13, 13] };
+  let cx = 1100, cy = 1000, shape = 'arrow';
+  const place = () => { const [hx, hy] = HOT[shape]; cursor.style.transform = `translate(${cx - hx}px, ${cy - hy}px)`; };
+  const setShape = s => { shape = s; cursor.dataset.shape = s; place(); };
+  async function moveTo(x, y, target = 'arrow', ms = 700) {
+    cursor.classList.remove('is-hidden'); cursor.style.setProperty('--move', ms + 'ms');
+    if (shape !== 'arrow') setShape('arrow');
+    cx = x; cy = y; place(); await sleep(ms * 0.55); if (target !== 'arrow') setShape(target); await sleep(ms * 0.45);
+  }
+  const say = t => { caption.textContent = t; };
+
+  async function loop() {
+    setShape('arrow');
+    for (;;) {
+      for (const k of Object.keys(typed)) delete typed[k];
+      focus(null); render(); say('Amount requested $10,040.10, everything else at $0');
+      all('[data-ov]').forEach(o => o.classList.remove('is-out'));
+      await sleep(1100);
+      for (const f of FIELDS) {
+        await moveTo(f.x, f.y, 'text', f.key === '0.1' ? 850 : 650);
+        focus(f.key); await sleep(180);
+        cursor.classList.add('is-hidden');
+        typed[f.key] = '';
+        for (const ch of f.type) {
+          typed[f.key] += ch;
+          const state = render();
+          say(state === 'match' ? 'Total matches the amount requested' : 'Totals update as the teller types');
+          await sleep(ch === ',' || ch === '.' ? 150 : 85);
+        }
+        await sleep(250);
+      }
+      focus(null);
+      await moveTo(1180, 1010, 'arrow', 700);
+      await sleep(2400);
+      all('[data-ov]').forEach(o => o.classList.add('is-out'));          // clear for the next loop
+      await sleep(400);
+    }
+  }
+  loop();
+})();
+</script>
+</body>
+</html>

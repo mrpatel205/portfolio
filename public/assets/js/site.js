@@ -252,7 +252,7 @@
   (function () {
     var footer = document.getElementById('contact');
     if (!footer) return;
-    var lastY = window.scrollY, armed = true, gliding = false, upRun = 0;
+    var lastY = window.scrollY, armed = true, gliding = false, upRun = 0, upTimer = 0;
     function glide() {
       var from = window.scrollY, to = footer.getBoundingClientRect().top + from, t0 = null, dur = 550;
       gliding = true;
@@ -276,14 +276,19 @@
       lastY = y;
       var p = Math.max(0, Math.min(1, (vh - top) / vh));
       if (top >= vh * 0.98) { armed = true; setLit(0, false); return; }          // footer fully out of the window
-      if (top <= 8) { delete document.documentElement.dataset.footerNav; armed = false; setLit(1, false); return; } // landed on the footer (any way)
+      /* landed on the footer (any way). iOS: the toolbar collapsing makes the viewport taller than the footer's 100svh, so at the
+         very end of the page top can stay well below 8; treat the page bottom (incl. rubber-band overscroll and its bounce back) as landed */
+      var atBottom = y + vh >= document.documentElement.scrollHeight - 2;
+      if (top <= 8 || atBottom) { delete document.documentElement.dataset.footerNav; armed = false; upRun = 0; setLit(1, false); return; }
       if (gliding) { setLit(p, false); return; }
       if (dy > 0) {
         upRun = 0;
         setLit(p, false);                                                         // swiping down: orange follows the gesture
         if (armed && p > 0.4 && !reduceMotion && !document.documentElement.dataset.footerNav) { armed = false; glide(); } // orange is well in: glide the footer into place
       } else if (dy < 0) {
-        upRun += dy;                                                              // ignore the small bounce/settle when a swipe stops: only a deliberate scroll up (24px+) fades the orange out
+        upRun += dy;
+        clearTimeout(upTimer); upTimer = setTimeout(function () { upRun = 0; }, 150); // a pause ends the swipe: the next one starts its 24px count afresh
+                                                                    // ignore the small bounce/settle when a swipe stops: only a deliberate scroll up (24px+) fades the orange out
         if (upRun < -24) setLit(0, true);                                         // scrolling back up: orange fades out slowly
       }
     }
@@ -463,11 +468,13 @@
     if ('IntersectionObserver' in window) {
       var playObs = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
+          // 60% in view, or half the screen for blocks taller than the screen (Research panel on phones)
           if (!STATIC || played || !e.isIntersecting) return;
+          if (e.intersectionRatio < 0.6 && e.intersectionRect.height < window.innerHeight * 0.5) return;
           played = true;
           for (var s = 1; s <= n; s++) (function (s) { setTimeout(function () { setStage(s); }, (s - 1) * 1100); })(s);
         });
-      }, { threshold: 0.6 });
+      }, { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6] });
       playObs.observe(figure);
     }
 
@@ -493,5 +500,85 @@
     }, { passive: true });
     window.addEventListener('resize', update);
     update();
+  });
+  /* ---------- Section rail (body.has-section-nav) ----------
+     A sticky left rail, "In this case study", listing every [data-nav] section. The section the reader
+     is in is black with an orange bar; the rest are grey. Clicking an entry scrolls to it. The rail
+     fades out while it would sit on a wide block (dark panels, full-width designs) or before the first
+     section, and is hidden on narrow screens (CSS). Built here, so it only exists with JS. */
+  (function () {
+    if (!document.body.classList.contains('has-section-nav')) return;
+    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+    if (!sections.length) return;
+
+    var nav = document.createElement('nav');
+    nav.className = 'section-nav';
+    nav.setAttribute('aria-label', 'In this case study');
+    var list = sections.map(function (el, i) {
+      var id = el.getAttribute('aria-labelledby') || el.id || 'section-' + i;
+      return '<li><a class="section-nav__link" href="#' + id + '" data-i="' + i + '">' + el.getAttribute('data-nav') + '</a></li>';
+    }).join('');
+    nav.innerHTML = '<p class="section-nav__title" aria-hidden="true">In this case study</p><ol class="section-nav__list">' + list + '</ol>';
+    document.body.appendChild(nav);
+    var links = Array.prototype.slice.call(nav.querySelectorAll('.section-nav__link'));
+    var avoid = Array.prototype.slice.call(document.querySelectorAll('.panel, .final-visuals, .cs-hero__image'));
+    var current = -1, ticking = false;
+
+    function setCurrent(i) {
+      if (i === current) return;
+      current = i;
+      links.forEach(function (a, n) {
+        if (n === i) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
+    }
+
+    function update() {
+      ticking = false;
+      var line = window.innerHeight * 0.4;   // the section crossing this line is the one being read
+      var first = sections[0].getBoundingClientRect().top;
+      var last = sections[sections.length - 1].getBoundingClientRect();
+      var idx = -1;
+      sections.forEach(function (el, i) { if (el.getBoundingClientRect().top <= line) idx = i; });
+      setCurrent(Math.max(idx, 0));
+      var visible = first < window.innerHeight * 0.6 && last.bottom > window.innerHeight * 0.3;
+      var r = nav.getBoundingClientRect();
+      var covered = avoid.some(function (el) {
+        var b = el.getBoundingClientRect();
+        return b.top < r.bottom && b.bottom > r.top;
+      });
+      nav.classList.toggle('is-visible', visible && !covered);
+    }
+    function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('.section-nav__link');
+      if (!a) return;
+      e.preventDefault();
+      var el = sections[+a.dataset.i];
+      var top = el.getBoundingClientRect().top + window.scrollY - document.querySelector('.site-nav').offsetHeight - 24;
+      window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+      track('section_nav', { section: a.textContent });
+    });
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    update();
+  })();
+  /* ---------- Screen demos (x-demo): same-origin iframes sized to their content ----------
+     The demo pages (public/demos/…?embed) lay themselves out to the frame's width; the frame
+     then takes the page's height, and follows it when the width changes. */
+  document.querySelectorAll('iframe.cs-demo__frame').forEach(function (f) {
+    function fit() {
+      try {
+        var d = f.contentDocument;
+        if (!d || !d.body || !d.body.firstElementChild) return;
+        f.style.aspectRatio = 'auto';
+        f.style.height = Math.ceil(d.body.getBoundingClientRect().height) + 'px';
+      } catch (e) { /* cross-origin: keep the aspect ratio */ }
+    }
+    f.addEventListener('load', function () {
+      fit();
+      try { new ResizeObserver(fit).observe(f.contentDocument.body); } catch (e) {}
+    });
+    if (f.contentDocument && f.contentDocument.readyState === 'complete') fit();
   });
 })();

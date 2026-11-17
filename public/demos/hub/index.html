@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub demo test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Sans+3:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --grey-10: #e6e6e6; --grey-70: #4d4d4d; --black: #000;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --fade: 0.5s;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--black); font-family: "Inter", "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 64px 16px 96px; }
+  h1 { font-size: 32px; line-height: 40px; font-weight: 500; margin: 0 0 8px; }
+  .lede { font-size: 16px; line-height: 24px; color: var(--grey-70); max-width: 640px; margin: 0 0 40px; }
+
+  /* Panel: grey/10, square corners (case study image rule) */
+  .demo { background: var(--grey-10); padding: clamp(16px, 4vw, 48px); }
+  .demo__viewport { position: relative; width: 100%; aspect-ratio: 1440 / 1000; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  /* Stage is laid out at Figma size (1440 × 1000) and scaled to fit, so overlay coordinates match Figma 1:1 */
+  .demo__stage { position: absolute; left: 0; top: 0; width: 1440px; height: 1000px; transform-origin: 0 0; }
+  .screen { position: absolute; inset: 0 auto auto 0; width: 1440px; opacity: 0; transition: opacity var(--fade) var(--ease); }
+  .screen.is-on { opacity: 1; }
+  .screen img { display: block; width: 1440px; height: auto; }
+  .screen--account .scroller { transition: transform 1.1s var(--ease); }
+
+  /* Typed amount sits exactly over the hidden value layer in Figma (565,601 · Source Sans 3 16/24) */
+  .typed { position: absolute; left: 585px; top: 601px; height: 24px; font: 400 16px/24px "Source Sans 3", sans-serif; color: #000; white-space: pre; }
+  .typed.is-selected .typed__text { background: #b4d5fe; }
+  .caret { display: inline-block; width: 1px; height: 20px; margin-left: 1px; vertical-align: -4px; background: #000; opacity: 0; }
+  .typed.is-focused .caret { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  .field-focus { position: absolute; left: 548px; top: 589px; width: 520px; height: 48px; border: 2px solid #000; border-radius: 4px; opacity: 0; transition: opacity .15s var(--ease); pointer-events: none;
+    /* leave a notch for the floating label (Figma 564–690 × 581–597) so the ring never strikes through it */
+    clip-path: polygon(0 0, 12px 0, 12px 10px, 146px 10px, 146px 0, 100% 0, 100% 100%, 0 100%); }
+  .field-focus.is-on { opacity: 1; }
+
+  /* Press feedback on the Next button and the hub tile */
+  .press { position: absolute; background: #000; opacity: 0; pointer-events: none; transition: opacity .12s ease-out; }
+  .press.is-down { opacity: .16; }
+
+  /* Cursor */
+  /* Cursor: desktop OS behaviour. Arrow by default, pointing hand over things you can click,
+     I-beam over a text field, and hidden while typing (macOS and Windows hide it on keystroke). */
+  .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform var(--move, .7s) var(--ease), opacity .12s linear; will-change: transform; }
+  .cursor svg { display: none; width: 26px; height: 26px; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)); }
+  .cursor[data-shape="arrow"] .c-arrow, .cursor[data-shape="hand"] .c-hand, .cursor[data-shape="text"] .c-text { display: block; }
+  .cursor.is-hidden { opacity: 0; }
+
+  .demo__bar { display: flex; align-items: center; gap: 16px; margin-top: 16px; }
+  .demo__btn { font: 500 14px/20px "Inter", sans-serif; color: #000; background: #fff; border: 1px solid #000; padding: 6px 14px; cursor: pointer; }
+  .demo__btn:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+  .demo__caption { font-size: 14px; line-height: 20px; color: var(--grey-70); margin: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen, .scroller, .cursor, .cursor svg { transition: none !important; }
+    .cursor, .typed, .field-focus, .press, .demo__btn { display: none; }
+  }
+</style>
+<!-- Embedded in a case study (iframe ?embed): page chrome hidden, only the demo shows. -->
+<script>
+  (() => { const q = new URLSearchParams(location.search);
+    if (q.has('embed')) document.documentElement.classList.add('embed');
+    if (q.get('only')) document.documentElement.dataset.only = q.get('only'); })();
+</script>
+<style>
+  html.embed body { background: transparent; }
+  html.embed main { max-width: none; padding: 0; }
+  html.embed h1, html.embed .lede, html.embed .demo__caption { display: none; }
+  html[data-only="flow"] #deposit-resp, html[data-only="resp"] #deposit-flow { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Know what needs to happen next</h1>
+  <p class="lede">Test of a coded screen demo (no video). The amount decides the tasks: over $30,000 the Hub adds Scam form and Transaction authorisation; under $10,000 it drops them.</p>
+
+  <figure class="demo" id="hub-demo" style="margin:0">
+    <div class="demo__viewport" role="img"
+         aria-label="Animated demo. A teller enters $35,000 and the Hub lists ID check, Scam form, Transaction authorisation and Cash break up. They go back, change the amount to $5,000, and the Hub lists only ID check and Cash break up.">
+      <div class="demo__stage">
+        <div class="screen screen--account is-on" data-screen="account">
+          <div class="scroller">
+            <img src="img/account.png" width="1440" height="1598" alt="">
+            <div class="field-focus"></div>
+            <div class="typed"><span class="typed__text"></span><span class="caret"></span></div>
+            <div class="press" data-press="next" style="left:1120px;top:1406px;width:68px;height:40px;border-radius:4px"></div>
+          </div>
+        </div>
+        <div class="screen" data-screen="hub-full">
+          <img src="img/hub-full.png" width="1440" height="1254" alt="">
+          <div class="press" data-press="tile" style="left:518px;top:244px;width:700px;height:110px;border-radius:8px"></div>
+        </div>
+        <div class="screen" data-screen="hub-short">
+          <img src="img/hub-short.png" width="1440" height="1254" alt="">
+          <div class="press" data-press="tile" style="left:518px;top:244px;width:700px;height:110px;border-radius:8px"></div>
+        </div>
+        <div class="cursor" data-shape="arrow" aria-hidden="true">
+          <!-- Arrow · hotspot at the tip (3, 2.5) -->
+          <svg class="c-arrow" viewBox="0 0 26 26"><path d="M3 2.5v18.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#000" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <!-- Pointing hand · hotspot at the fingertip (10, 1.5). White copy underneath gives one clean outline -->
+          <svg class="c-hand" viewBox="0 0 26 26">
+            <g fill="#000" stroke="#000" stroke-width="2.4" stroke-linejoin="round">
+              <rect x="8" y="1.5" width="4" height="13" rx="2"/><rect x="12" y="8" width="3.6" height="8" rx="1.8"/>
+              <rect x="15.4" y="9" width="3.4" height="7" rx="1.7"/><rect x="18.6" y="10.5" width="3" height="6" rx="1.5"/>
+              <rect x="8" y="12" width="13.6" height="11" rx="3.5"/><rect x="3.6" y="11.5" width="3.2" height="7.5" rx="1.6" transform="rotate(-35 5.2 15.2)"/>
+            </g>
+            <g fill="#fff">
+              <rect x="8" y="1.5" width="4" height="13" rx="2"/><rect x="12" y="8" width="3.6" height="8" rx="1.8"/>
+              <rect x="15.4" y="9" width="3.4" height="7" rx="1.7"/><rect x="18.6" y="10.5" width="3" height="6" rx="1.5"/>
+              <rect x="8" y="12" width="13.6" height="11" rx="3.5"/><rect x="3.6" y="11.5" width="3.2" height="7.5" rx="1.6" transform="rotate(-35 5.2 15.2)"/>
+            </g>
+            <!-- finger gaps, as on the macOS / Windows hand -->
+            <path d="M12 9.5v5.5M15.5 10.5v5M18.7 12v4" stroke="#000" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          <!-- I-beam · hotspot at the centre (13, 13) -->
+          <svg class="c-text" viewBox="0 0 26 26">
+            <path d="M10 4.5c1.5 0 3 .6 3 2v13c0 1.4 1.5 2 3 2M16 4.5c-1.5 0-3 .6-3 2v13c0 1.4-1.5 2-3 2M11 13h4" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M10 4.5c1.5 0 3 .6 3 2v13c0 1.4 1.5 2 3 2M16 4.5c-1.5 0-3 .6-3 2v13c0 1.4-1.5 2-3 2M11 13h4" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="demo__bar">
+      <button class="demo__btn" type="button" aria-pressed="false">Pause</button>
+      <p class="demo__caption" aria-hidden="true"></p>
+    </div>
+  </figure>
+</main>
+
+<script>
+(() => {
+  const root = document.getElementById('hub-demo');
+  const viewport = root.querySelector('.demo__viewport');
+  const stage = root.querySelector('.demo__stage');
+  const screens = Object.fromEntries([...root.querySelectorAll('.screen')].map(s => [s.dataset.screen, s]));
+  const scroller = root.querySelector('.scroller');
+  const typed = root.querySelector('.typed');
+  const typedText = root.querySelector('.typed__text');
+  const focusRing = root.querySelector('.field-focus');
+  const cursor = root.querySelector('.cursor');
+  const btn = root.querySelector('.demo__btn');
+  const caption = root.querySelector('.demo__caption');
+
+  // Scale the 1440 × 1000 stage to the viewport width
+  const fit = () => { stage.style.transform = `scale(${viewport.clientWidth / 1440})`; };
+  new ResizeObserver(fit).observe(viewport); fit();
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { show('hub-full'); return; }
+
+  // Pausable clock: time only advances while playing and in view
+  let paused = false, inView = false;
+  const sleep = ms => new Promise(res => {
+    let left = ms, last = performance.now();
+    const tick = now => { if (!paused && inView) left -= now - last; last = now; left <= 0 ? res() : requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  });
+
+  function show(name) { for (const [k, s] of Object.entries(screens)) s.classList.toggle('is-on', k === name); }
+  let scrollY = 0;
+  function scrollTo(y, instant) {
+    scrollY = y;
+    if (instant) scroller.style.transition = 'none';
+    scroller.style.transform = `translateY(${-y}px)`;
+    if (instant) { scroller.offsetHeight; scroller.style.transition = ''; }  // a new screen opens at the top; no visible scroll-up
+  }
+  // Cursor. Coordinates are the hotspot on the current screen; the account screen subtracts its scroll.
+  const HOT = { arrow: [3, 2.5], hand: [10, 1.5], text: [13, 13] };
+  let cx = 0, cy = 0, shape = 'arrow';
+  function place() { const [hx, hy] = HOT[shape]; cursor.style.transform = `translate(${cx - hx}px, ${cy - hy}px)`; }
+  function setShape(s) { shape = s; cursor.dataset.shape = s; place(); }
+  // Move like a real pointer: leave the current target (back to arrow), then the shape changes
+  // the moment the pointer crosses into the new target, before it comes to rest.
+  async function moveTo(x, y, onAccount, target = 'arrow', ms = 700) {
+    cursor.classList.remove('is-hidden');
+    cursor.style.setProperty('--move', ms + 'ms');
+    if (shape !== 'arrow') setShape('arrow');
+    cx = x; cy = y - (onAccount ? scrollY : 0); place();
+    await sleep(ms * 0.55);
+    if (target !== 'arrow') setShape(target);
+    await sleep(ms * 0.45);
+  }
+  async function click(pressEl) {  // the OS cursor does not change on press; the control does
+    pressEl && pressEl.classList.add('is-down');
+    await sleep(140);
+    pressEl && pressEl.classList.remove('is-down');
+  }
+  async function type(str) {
+    for (const ch of str) { typedText.textContent += ch; await sleep(ch === ',' || ch === '.' ? 160 : 95); }
+  }
+  const say = t => { caption.textContent = t; };
+
+  const nextPress = root.querySelector('[data-press="next"]');
+  const tilePress = s => screens[s].querySelector('[data-press="tile"]');
+
+  async function enterAmount(amount) {
+    await moveTo(760, 613, true, 'text', 800);               // over the amount field: I-beam
+    await click(); focusRing.classList.add('is-on'); typed.classList.add('is-focused');
+    if (typedText.textContent) {                              // select the old amount, then replace it
+      await sleep(200); typed.classList.add('is-selected'); await sleep(450);
+      typedText.textContent = ''; typed.classList.remove('is-selected');
+    }
+    await sleep(200);
+    cursor.classList.add('is-hidden');                        // pointer hides on the first keystroke
+    await type(amount); await sleep(500);
+    focusRing.classList.remove('is-on'); typed.classList.remove('is-focused');
+  }
+  async function scrollAndNext() {
+    scrollTo(598);                                            // page scrolls; pointer reappears and heads to Next
+    await moveTo(1150, 1426, true, 'hand', 1100);             // over Next: pointing hand
+    await sleep(100); await click(nextPress); await sleep(150);
+  }
+  async function backToAccount(hub) {
+    await moveTo(900, 290, false, 'hand', 650);               // over "Account and transaction details": hand
+    await sleep(80); await click(tilePress(hub)); await sleep(120);
+    scrollTo(0, true); show('account'); setShape('arrow');    // new screen, nothing clickable under the pointer
+    await sleep(600);
+  }
+
+  async function loop() {
+    show('account'); scrollTo(0, true); cx = 1000; cy = 760; setShape('arrow');
+    for (;;) {
+      say('Amount over $30,000');
+      await enterAmount('35,000.00');
+      await scrollAndNext();
+      show('hub-full'); setShape('arrow');                    // hub opens; pointer now over empty space
+      say('Over $30,000: the Hub adds Scam form and Transaction authorisation');
+      await sleep(900);                                       // short read, then straight to the tile
+      await backToAccount('hub-full');
+
+      say('Change the amount to under $10,000');
+      await enterAmount('5,000.00');
+      await scrollAndNext();
+      show('hub-short'); setShape('arrow');
+      say('Under $10,000: Scam form and Transaction authorisation drop off');
+      await sleep(900);
+      await backToAccount('hub-short');
+    }
+  }
+
+  new IntersectionObserver(([e]) => { inView = e.intersectionRatio >= 0.5; }, { threshold: [0, 0.5, 1] }).observe(viewport);
+  btn.addEventListener('click', () => {
+    paused = !paused; btn.textContent = paused ? 'Play' : 'Pause'; btn.setAttribute('aria-pressed', String(paused));
+  });
+  loop();
+})();
+</script>
+</body>
+</html>

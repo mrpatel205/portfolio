@@ -4,9 +4,11 @@ A case study page is written as a short outline of components, with the prose ke
 plain HTML inside them. Each tag below becomes the markup the CSS and site.js expect,
 so every case study shares one structure and a fix in one place fixes all four.
 
-  <x-case-study slug page title description [layout="single"]> … </x-case-study>
+  <x-case-study slug page title description [layout="single"] [section-nav]> … </x-case-study>
       The whole page: head, nav, <main><article>, footer. layout="single" = centred 640 column,
       nothing pins (body.cs-single); stories play once when they scroll into view.
+      section-nav: no eyebrow pills anywhere; a sticky left rail ("In this case study", built by site.js)
+      lists every component marked nav="Label" and shows which one the reader is in.
 
   <x-notice>Confidentiality line</x-notice>
       Grey banner with a "Confidentiality note" label. Standalone on summary pages (first child of
@@ -81,6 +83,10 @@ so every case study shares one structure and a fix in one place fixes all four.
     <x-signal heading>Text</x-signal> </x-impact>      signals = qualitative notes; stamp = "as of" line
 
   <x-next href title target [label]/>               link to the next case study
+
+  <x-quote [cite]>Line to remember</x-quote>        pull quote, H3-sized with a rule; cite="Tester, Oct 2025" makes
+                                                    it a quotation, no cite = the author's takeaway. Works between
+                                                    components or at the end of an <x-stage> (Key challenges).
 
 step="01 / 06" on <x-scene>, <x-story>, <x-metrics>, <x-accordion> and <x-impact> prefixes the eyebrow pill
 with a step counter (micro-pattern 05). Metrics and Impact have no pill otherwise, so step adds one.
@@ -167,22 +173,35 @@ def indent(html, spaces):
     return "\n".join(pad + line if line.strip() else line for line in html.strip("\n").split("\n"))
 
 
-def prose(node):
-    return f'<div class="prose {_BODY}">\n{indent(node.text(), 2)}\n</div>'
+INLINE = ("inset",)  # components that render in place inside a block's copy
+
+
+def prose(node, body=None):
+    """The block's own copy: its text plus any inline components (x-inset) in the order written."""
+    html_ = "".join(c if isinstance(c, str) else render(c) for c in node.children
+                    if isinstance(c, str) or c.name in INLINE).strip()
+    body = body or ("t-body-lg" if node.attrs.get("body") == "lg" else _BODY)
+    return f'<div class="prose {body}">\n{indent(html_, 2)}\n</div>'
 
 
 # ---------- Components ----------
 
+_NAV = False  # set by case_study (section-nav): no eyebrow pills, sections carry data-nav for the rail
 _SINGLE = False  # set by case_study: lets child components pick their single-column form
+_TITLE = "t-h3"  # section title class; <x-case-study title-size="h4"> switches to t-h4 (Teller 13 Nov Figma: titles 24/32)
 _BODY = "t-body-lg"  # body copy class; <x-case-study body="paragraph"> switches Situation, Task, Approach, Research lead and Skills to t-paragraph (Key challenges and Impact keep their own)
 
 
 def case_study(n):
-    global _SINGLE, _BODY
+    global _SINGLE, _BODY, _NAV, _TITLE
+    _TITLE = "t-h4" if n.attrs.get("title-size") == "h4" else "t-h3"
+    _NAV = bool(n.attrs.get("section-nav"))
     _SINGLE = n.attrs.get("layout") == "single"
     _BODY = "t-paragraph" if n.attrs.get("body") == "paragraph" else "t-body-lg"
     body = "\n\n".join(render(c).strip("\n") for c in n.children if isinstance(c, Node))
     cls = ["cs-single"] if _SINGLE else []
+    if _NAV:
+        cls.append("has-section-nav")
     if _SINGLE and n.attrs.get("visual-gap") == "medium":
         cls.append("cs-single--roomy")
     body_cls = f' class="{" ".join(cls)}"' if cls else ""
@@ -247,6 +266,12 @@ def hero(n):
 </header>"""
 
 
+def nav_attr(n):
+    """data-nav="Label" marks a component as an entry in the section rail (section-nav pages only)."""
+    label = n.attrs.get("nav")
+    return f' data-nav="{label}"' if _NAV and label else ""
+
+
 def step_label(n, label):
     """Pills show the section name only (Figma Tag/Skill › Eyebrow); the step number is not printed."""
     return label
@@ -261,7 +286,7 @@ def same_label(a, b):
 def step_pill(n, label, dark=False, title=None):
     """A standalone pill for sections that otherwise have none (Metrics, Impact), only when step is set.
     Skipped when the pill text equals the title (see same_label)."""
-    if not n.attrs.get("step") or same_label(label, title):
+    if _NAV or not n.attrs.get("step") or same_label(label, title):
         return ""
     cls = "cs-pill cs-pill--on-dark" if dark else "cs-pill"
     return f'<p class="{cls}">{step_label(n, label)}</p>'
@@ -298,17 +323,20 @@ def heading_block(n):
     pill is the heading. A scene with only a subheading (no pill) is a bare H3."""
     id_ = n.req("id")
     h, sub = n.attrs.get("heading"), n.attrs.get("subheading")
+    if _NAV:  # no eyebrow: the rail names the section, so the title stands alone
+        title = sub or h
+        return f'<h2 class="{_TITLE} cs-heading" id="{id_}">{title}</h2>' if title else ""
     if h:
         h = step_label(n, h)
     if h and sub and same_label(h, sub):
-        return f'<h2 class="t-h3 cs-heading" id="{id_}">{sub}</h2>'
+        return f'<h2 class="{_TITLE} cs-heading" id="{id_}">{sub}</h2>'
     if h and sub:
         return (f'<div class="cs-heading">\n  <p class="cs-pill">{h}</p>\n'
-                f'  <h2 class="t-h3" id="{id_}">{sub}</h2>\n</div>')
+                f'  <h2 class="{_TITLE}" id="{id_}">{sub}</h2>\n</div>')
     if h:
         return f'<div class="cs-heading">\n  <h2 class="cs-pill" id="{id_}">{h}</h2>\n</div>'
     if sub:
-        return f'<h2 class="t-h3 cs-heading" id="{id_}">{sub}</h2>'
+        return f'<h2 class="{_TITLE} cs-heading" id="{id_}">{sub}</h2>'
     return ""
 
 
@@ -316,7 +344,7 @@ def scene(n):
     """Copy pins first, then its image rises to meet it (Situation, Task)."""
     id_ = n.req("id")
     label = f' aria-labelledby="{id_}"' if "heading" in n.attrs or "subheading" in n.attrs else ""
-    return f"""<section class="scene"{label} data-section="{n.attrs.get('section', id_)}">
+    return f"""<section class="scene"{label} data-section="{n.attrs.get('section', id_)}"{nav_attr(n)}>
   <div class="scene__copy">
 {indent(heading_block(n), 4)}
 {indent(prose(n), 4)}
@@ -345,7 +373,7 @@ def skills(n):
 def pause(n):
     """Text-only block: pins centred with white space all round, holds, scrolls on."""
     id_ = n.req("id")
-    return f"""<section class="cs-pause" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}">
+    return f"""<section class="cs-pause" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"{nav_attr(n)}>
   <div class="cs-pause__inner cs-block">
     <div class="cs-block__copy">
 {indent(heading_block(n), 6)}
@@ -366,7 +394,8 @@ def story(n):
     after = n.kid("after")
     after_html = (f'\n    <div class="story__after prose {_BODY}">\n{indent(after.text(), 6)}\n    </div>'
                   if after else "")
-    return f"""<section class="story" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"
+    variant = f" story--{n.attrs['variant']}" if n.attrs.get("variant") else ""
+    return f"""<section class="story{variant}" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"{nav_attr(n)}
          data-stages="{stages}" style="--stages: {stages}; --story-ratio: {ratio}">
   <div class="story__pin">
     <div class="story__copy">
@@ -381,6 +410,8 @@ def story(n):
 
 
 def metrics(n):
+    if n.attrs.get("layout") == "stack":
+        return metrics_stack(n)
     """Research metrics: a dark panel that pins like x-story and steps through 4 stages.
     Numbers carry data-count-stage and count up from 0 when their stage is reached
     (site.js); the real value is in the HTML, so no-JS and reduced motion see it as is."""
@@ -414,7 +445,7 @@ def metrics(n):
 {indent(chr(10).join(rows), 4)}
   </ul>
 </div>""")
-    return f"""<section class="story story--metrics" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"
+    return f"""<section class="story story--metrics" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"{nav_attr(n)}
          data-stages="{stages}" style="--stages: {stages}">
   <div class="story__pin">
     <div class="panel metrics" data-play-target>
@@ -464,16 +495,20 @@ def challenges_flat(n, id_):
         tid = t.req("id")
         for i, st in enumerate(t.kids("stage"), 1):
             head = ""
-            if i == 1:
+            if i == 1 and _NAV:
+                head = f'<h3 class="t-h3 cs-heading" id="{tid}">{t.req("heading")}</h3>\n'
+            elif i == 1:
                 head = (f'<div class="cs-heading">\n  <p class="cs-pill" aria-hidden="true">{step_label(n, pill)}</p>\n'
                         f'  <h3 class="t-h3" id="{tid}">{t.req("heading")}</h3>\n</div>\n')
             section = f"challenge-{tid}" + (f"-{i}" if len(t.kids("stage")) > 1 else "")
+            q = st.kid("quote")
+            body = st.text() + ("\n" + quote(q) if q else "")  # a stage's <x-quote> closes its copy
             out.append(f"""<div class="scene" data-section="{section}">
   <div class="scene__copy prose t-paragraph">
-{indent(head + st.text(), 4)}
+{indent(head + body, 4)}
   </div>{scene_visual(st)}
 </div>""")
-    return f"""<section class="cs-challenges-flat" aria-labelledby="{id_}">
+    return f"""<section class="cs-challenges-flat" aria-labelledby="{id_}"{nav_attr(n)}>
   <h2 class="visually-hidden" id="{id_}">{pill}</h2>
 {indent(chr(10).join(out), 2)}
 </section>"""
@@ -667,7 +702,7 @@ def final_visuals(n):
   <ol class="final-visuals__steps" aria-label="{n.attrs.get('steps-label', n.req('alt'))}">
 {indent(screens, 4)}
   </ol>"""
-    return f"""<section class="cs-section final-visuals" aria-labelledby="{id_}" data-section="{id_}">
+    return f"""<section class="cs-section final-visuals" aria-labelledby="{id_}" data-section="{id_}"{nav_attr(n)}>
   <h2 class="visually-hidden" id="{id_}">{n.attrs.get('heading', 'Final designs')}</h2>
   <img class="final-visuals__full" data-reveal src="{n.req('src')}" width="{n.req('width')}" height="{n.req('height')}" loading="lazy"
        alt="{n.req('alt')}">{steps}
@@ -675,6 +710,8 @@ def final_visuals(n):
 
 
 def impact(n):
+    if n.attrs.get("layout") == "hero":
+        return impact_hero(n)
     """Dark panel; metrics count up from 0 when seen. Marks the end of the reading progress bar."""
     id_ = n.attrs.get("id", "impact")
     metrics = "\n".join(
@@ -689,7 +726,7 @@ def impact(n):
     signals_html = f'\n    <ul class="impact__signals">\n{indent(signals, 6)}\n    </ul>' if signals else ""
     stamp_html = (f'\n    <p class="impact__stamp t-caption"><span class="impact__stamp-dot" aria-hidden="true"></span>'
                   f'{n.attrs["stamp"]}</p>') if n.attrs.get("stamp") else ""
-    return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}" data-progress-end>
+    return f"""<section class="cs-section cs-section--dark-gap panel impact" aria-labelledby="{id_}" data-section="{id_}"{nav_attr(n)} data-progress-end>
   <div class="impact__copy">
     <div class="impact__heading">
 {indent(step_pill(n, n.attrs.get('heading', 'Impact'), True, n.attrs.get('heading', 'Impact')), 6)}
@@ -704,6 +741,16 @@ def impact(n):
     </dl>{signals_html}
   </div>
 </section>"""
+
+
+def quote(n):
+    """Pull quote: the line a scanner should take away. With cite= it is a quotation
+    (blockquote + source caption); without, the author's own takeaway (aside)."""
+    cite = n.attrs.get("cite")
+    if cite:
+        return (f'<figure class="cs-quote"><blockquote class="t-h3">{n.text()}</blockquote>'
+                f'<figcaption class="cs-quote__cite t-caption">{cite}</figcaption></figure>')
+    return f'<aside class="cs-quote" aria-label="Key takeaway"><p class="t-h3">{n.text()}</p></aside>'
 
 
 def next_link(n):
@@ -733,6 +780,143 @@ def next_link(n):
 </nav>"""
 
 
+# ---------- Teller 13 Nov build (Figma Exploration: Teller rewrites, section 3233:19305) ----------
+
+def inset(n):
+    """Figma Quote / Quiet inset (3309:2201): 8px grey/30 rule, Large Body. Inline inside a block's
+    copy, or standalone between sections with `block` (64px clear above and below)."""
+    body = f'<p class="t-body-lg">{n.text()}</p>'
+    cite = n.attrs.get("cite")
+    if cite:
+        html_ = (f'<figure class="cs-inset"><blockquote>{body}</blockquote>'
+                 f'<figcaption class="cs-inset__cite t-caption">{cite}</figcaption></figure>')
+    else:
+        html_ = f'<aside class="cs-inset" aria-label="Key point">{body}</aside>'
+    return f'<div class="cs-inset-block">{html_}</div>' if n.attrs.get("block") else html_
+
+
+PRINCIPLES = {"System-guided": "system-guided", "Obvious": "obvious", "Flexible": "flexible", "Simplified": "simplified"}
+
+
+def principle_icon(name):
+    return (ROOT / "site-src" / "illustrations" / "principles" / f"{PRINCIPLES[name]}.svg").read_text().strip()
+
+
+def principle_tags(attr):
+    """The design principles a solution answers: icon + label row under its copy."""
+    names = [x.strip() for x in attr.split(",") if x.strip()]
+    items = "".join(f'<li>{principle_icon(x)}<span>{x}</span></li>' for x in names)
+    return f'<ul class="principle-tags" aria-label="Design principles">{items}</ul>'
+
+
+def principles(n):
+    """Heading + intro in the copy column, then the principles in a 4-up row (each with a top rule)."""
+    id_ = n.req("id")
+    cards = "\n".join(
+        f'<li class="principle">{principle_icon(c.req("name"))}'
+        f'<h3 class="principle__title">{c.req("name")}</h3><p class="t-paragraph principle__text">{c.text()}</p></li>'
+        for c in n.kids("principle"))
+    return f"""<section class="cs-section principles" aria-labelledby="{id_}" data-section="{id_}"{nav_attr(n)}>
+  <div class="feature__copy">
+{indent(heading_block(n), 4)}
+{indent(prose(n), 4)}
+  </div>
+  <ul class="principles__row">
+{indent(cards, 4)}
+  </ul>
+</section>"""
+
+
+def demo(n):
+    """A coded screen demo (public/demos/…, built from mockups/*-demo) in a same-origin iframe.
+    site.js sizes the frame to its content; the demo plays only while half in view and has a Pause button."""
+    ratio = n.attrs.get("ratio", "1312 / 1100")
+    return (f'<figure class="cs-demo"><iframe class="cs-demo__frame" src="{n.req("src")}" title="{n.req("title")}" '
+            f'loading="lazy" style="aspect-ratio: {ratio}"></iframe>'
+            f'<figcaption class="visually-hidden">{n.req("desc")}</figcaption></figure>')
+
+
+def feature(n):
+    """Solution block: eyebrow + title + copy (+ principle tags) in the copy column, then full-width demos."""
+    id_ = n.req("id")
+    media = "\n".join(render(c) for c in n.children if isinstance(c, Node) and c.name in ("demo", "visual"))
+    tags = "\n" + principle_tags(n.attrs["principles"]) if n.attrs.get("principles") else ""
+    return f"""<section class="cs-section feature" aria-labelledby="{id_}" data-section="{id_}"{nav_attr(n)}>
+  <div class="feature__copy">
+{indent(heading_block(n), 4)}
+{indent(prose(n), 4)}{indent(tags, 4)}
+  </div>
+  <div class="feature__media">
+{indent(media, 4)}
+  </div>
+</section>"""
+
+
+def metrics_stack(n):
+    """Research metrics, Figma 17 Nov layout (3325:3552): header, the headline number with its label
+    beside it, then four stat columns in one row. Same pin + stages as x-metrics:
+    1 header + headline, 2 Deposits, 3 Withdrawals (stage names [s1]–[s4] in Figma)."""
+    id_ = n.req("id")
+
+    def num(value, stage, ms, cls):
+        return (f'<span class="{cls}" aria-hidden="true" data-count-stage="{stage}" '
+                f'data-count-ms="{ms}">{value}</span><span class="visually-hidden">{value}</span>')
+
+    h = n.kid("headline")
+    cols = []
+    for gi, g in enumerate(n.kids("group")):
+        stage = 2 + gi
+        for si, st in enumerate(g.kids("stat")):
+            head = (f'<h3 class="metrics__group-head">{g.req("heading")}</h3>' if si == 0
+                    else '<span class="metrics__group-head" aria-hidden="true">&nbsp;</span>')
+            cols.append(f'<li class="metrics__col" data-from="{stage}" style="--i: {si}">{head}'
+                        f'{num(st.req("value"), stage, 800, "metrics__value")}'
+                        f'<span class="metrics__label">{st.req("label")}</span></li>')
+    return f"""<section class="story story--metrics" aria-labelledby="{id_}" data-section="{n.attrs.get('section', id_)}"{nav_attr(n)}
+         data-stages="3" style="--stages: 3">
+  <div class="story__pin">
+    <div class="panel metrics metrics--stack" data-play-target>
+      <div class="metrics__header" data-from="1">
+        <p class="cs-pill cs-pill--on-dark">{n.req('heading')}</p>
+        <h2 class="t-h3 metrics__subheading" id="{id_}">{n.attrs.get('subheading') or n.req('heading')}</h2>
+{indent(n.text().replace('<p>', '<p class="t-paragraph metrics__lead">'), 8)}
+      </div>
+      <div class="metrics__headline" data-from="1" style="--i: 1">
+        <p class="metrics__big">{num(h.req('value'), 1, 1400, 'metrics__big-value')}</p>
+        <p class="metrics__big-label">{h.req('label')}</p>
+      </div>
+      <ul class="metrics__row">
+{indent(chr(10).join(cols), 8)}
+      </ul>
+    </div>
+  </div>
+</section>"""
+
+
+def impact_hero(n):
+    """Impact, Figma 17 Nov layout (3334:3568): pill + H3 lead + note on top; the big metric and its
+    label bottom-left; signals bottom-right, top aligned to the metric's cap height and the last line
+    on its baseline (see .impact--hero in site.css)."""
+    id_ = n.attrs.get("id", "impact")
+    m = n.kid("metric")
+    signals = "\n".join(
+        f'<li><p class="t-paragraph-bold">{g.req("heading")}</p><p class="t-paragraph impact__muted">{g.text()}</p></li>'
+        for g in n.kids("signal"))
+    return f"""<section class="cs-section cs-section--dark-gap panel impact--hero" aria-labelledby="{id_}" data-section="{id_}"{nav_attr(n)} data-progress-end>
+  <div class="impact__top">
+    <p class="cs-pill cs-pill--on-dark">{n.attrs.get('heading', 'Impact')}</p>
+    <h2 class="t-h3" id="{id_}">{n.req('lead')}</h2>
+    <p class="t-body-lg impact__muted">{n.req('note')}</p>
+  </div>
+  <div class="impact__row">
+    <p class="impact__hero"><span class="impact__big">{m.req('value')}</span><span class="impact__big-label">{m.req('label')}</span></p>
+    <ul class="impact__signals">
+{indent(signals, 6)}
+    </ul>
+  </div>
+</section>"""
+
+
 COMPONENTS = {
     "case-study": case_study,
     "hero": hero,
@@ -747,5 +931,10 @@ COMPONENTS = {
     "final-visuals": final_visuals,
     "impact": impact,
     "next": next_link,
+    "quote": quote,
     "visual": visual,
+    "inset": inset,
+    "principles": principles,
+    "feature": feature,
+    "demo": demo,
 }
